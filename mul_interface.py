@@ -7,7 +7,7 @@
 # Fall 2015, Combo algorithm implemented Spring 2016
 #############################################################################
 
-import sys, argparse, recontree as RT, reconcore as RC, mul_recon_base as ALG
+import sys, argparse, lib.recontree as RT, lib.reconcore as RC, lib.mul_recon as ALG
 
 # h "51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO"
 # c "LACTH,KLUWA,SACKL,ASHGO,KLULA"
