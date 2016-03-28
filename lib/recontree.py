@@ -56,11 +56,13 @@ def buildMultree(h,p,tree,tree_info):
 				tree = tree.replace(node, node+"_1");
 				copy = copy.replace(node, node+"_1")
 	# Some re-labeling if necessary.
+	tree = re.sub('<[\d]+>','',tree);
 
 	if tree_info[h][3] == 'tip':
 			mul_clade = "(" + copy + "," + hybrid + "*)";
 	else:
-			mul_clade = "(" + copy + "," + hybrid + ")";\
+			mul_clade = "(" + copy + "," + hybrid + ")";
+
 	mul_tree = tree.replace(copy,mul_clade);
 	# Combines the clades and replaces the copy clade in the original tree to create the MUL-tree.
 
