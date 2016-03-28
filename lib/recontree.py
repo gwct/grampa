@@ -43,11 +43,12 @@ def buildMultree(h,p,tree,tree_info):
 		copy = p;
 	else:
 		copy = getSubtree(p,tree);
+		copy = re.sub('<[\d]+>','',copy);
 	# Gets the subtree of the copy node.
 
 	if copy in hybrid or tree_info[p][3] == 'root':
 		return "NULL";
-	# Copy nodes shouldn't be within the hybrid subtree.
+	# Copy nodes shouldn't be within the hybrid subtree and shouldn't be at the root.
 
 	if tree_info[h][3] != 'tip':
 		for node in tree_info:

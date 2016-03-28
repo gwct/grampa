@@ -152,7 +152,7 @@ if copy_list == ['']:
 	RC.printWrite(outfilename, 1, "# No copy node defined\n# Searching all possible copy nodes.");
 # Identifying the hybrid and copy node in the species tree.
 if check_nums:
-	RC.printWrite(outfilename, 1, "--checknums set. NOT doing reconciliations, just running some numbers for you...");
+	RC.printWrite(outfilename, 1, "# --checknums set. NOT doing reconciliations, just running some numbers for you...");
 RC.printWrite(outfilename, 1, "# ---------");
 ### End input info block!
 
