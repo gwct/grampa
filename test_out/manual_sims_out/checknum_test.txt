@@ -1,0 +1,208 @@
+# =========================================================================
+#			MUL-tree reconciliation
+#			03.28.2016 | 06:32:49
+# The input species tree with internal nodes labeled:            (((a,(x,(y,z)<1>)<2>)<3>,b)<4>,(c,d)<5>)<6>
+# The polyploid clade:                                           x, y, z
+# Result will be written to file:                                test_out/manual_sims_out/checknum_test.txt
+# Hybrid node identified as:                                     <2>
+# No copy node defined
+# Searching all possible copy nodes.
+# --checknums set. NOT doing reconciliations, just running some numbers for you...
+# ---------
+MT-1	Tree:((((a,(x*,(y*,z*)<1>)<2>)<3>,(x,(y,z)<4>)<5>)<6>,b)<7>,(c,d)<8>)<9>	CopyNode:a
+Trees	# Singles	# Groups	# Fixed	# Combinations
+GT-1 to MT-1	0	2	0	4
+GT-2 to MT-1	0	1	1	2
+GT-3 to MT-1	0	1	1	2
+GT-4 to MT-1	0	1	1	2
+GT-5 to MT-1	0	1	1	2
+GT-6 to MT-1	0	1	1	2
+GT-7 to MT-1	0	1	1	2
+GT-8 to MT-1	0	1	1	2
+GT-9 to MT-1	0	1	1	2
+GT-10 to MT-1	0	0	1	1
+GT-11 to MT-1	0	2	0	4
+GT-12 to MT-1	0	2	0	4
+GT-13 to MT-1	0	4	0	16
+GT-14 to MT-1	0	4	0	16
+GT-15 to MT-1	0	4	0	16
+GT-16 to MT-1	0	0	1	1
+GT-17 to MT-1	0	2	0	4
+GT-18 to MT-1	0	1	1	2
+GT-19 to MT-1	0	2	2	4
+GT-20 to MT-1	0	2	2	4
+GT-21 to MT-1	0	1	1	2
+GT-22 to MT-1	0	1	1	2
+GT-23 to MT-1	0	2	1	4
+GT-24 to MT-1	0	2	1	4
+GT-25 to MT-1	1	1	1	4
+GT-26 to MT-1	0	0	1	1
+MT-2	Tree:(((a,(x,(y,z)<1>)<2>)<3>,b)<4>,((c,(x*,(y*,z*)<5>)<6>)<7>,d)<8>)<9>	CopyNode:c
+Trees	# Singles	# Groups	# Fixed	# Combinations
+GT-1 to MT-2	0	2	0	4
+GT-2 to MT-2	0	1	1	2
+GT-3 to MT-2	0	1	1	2
+GT-4 to MT-2	0	1	1	2
+GT-5 to MT-2	0	1	1	2
+GT-6 to MT-2	0	0	2	1
+GT-7 to MT-2	0	1	1	2
+GT-8 to MT-2	0	1	1	2
+GT-9 to MT-2	0	1	1	2
+GT-10 to MT-2	0	0	1	1
+GT-11 to MT-2	0	2	0	4
+GT-12 to MT-2	0	2	0	4
+GT-13 to MT-2	0	4	0	16
+GT-14 to MT-2	0	4	0	16
+GT-15 to MT-2	0	4	0	16
+GT-16 to MT-2	0	0	1	1
+GT-17 to MT-2	0	2	0	4
+GT-18 to MT-2	0	1	1	2
+GT-19 to MT-2	0	2	2	4
+GT-20 to MT-2	0	2	2	4
+GT-21 to MT-2	0	1	1	2
+GT-22 to MT-2	0	0	2	1
+GT-23 to MT-2	0	2	1	4
+GT-24 to MT-2	0	1	2	2
+GT-25 to MT-2	1	1	1	4
+GT-26 to MT-2	0	0	1	1
+MT-3	Tree:(((a,(x,(y,z)<1>)<2>)<3>,(b,(x*,(y*,z*)<4>)<5>)<6>)<7>,(c,d)<8>)<9>	CopyNode:b
+Trees	# Singles	# Groups	# Fixed	# Combinations
+GT-1 to MT-3	0	2	0	4
+GT-2 to MT-3	0	1	1	2
+GT-3 to MT-3	0	1	1	2
+GT-4 to MT-3	0	1	1	2
+GT-5 to MT-3	0	0	2	1
+GT-6 to MT-3	0	1	1	2
+GT-7 to MT-3	0	1	1	2
+GT-8 to MT-3	0	1	1	2
+GT-9 to MT-3	0	1	1	2
+GT-10 to MT-3	0	0	1	1
+GT-11 to MT-3	0	2	0	4
+GT-12 to MT-3	0	2	0	4
+GT-13 to MT-3	0	4	0	16
+GT-14 to MT-3	0	4	0	16
+GT-15 to MT-3	0	4	0	16
+GT-16 to MT-3	0	0	1	1
+GT-17 to MT-3	0	2	0	4
+GT-18 to MT-3	0	1	1	2
+GT-19 to MT-3	0	2	2	4
+GT-20 to MT-3	0	2	2	4
+GT-21 to MT-3	0	1	1	2
+GT-22 to MT-3	0	1	1	2
+GT-23 to MT-3	0	2	1	4
+GT-24 to MT-3	0	2	1	4
+GT-25 to MT-3	1	1	1	4
+GT-26 to MT-3	0	0	1	1
+MT-4	Tree:(((a,(x,(y,z)<1>)<2>)<3>,b)<4>,(c,(d,(x*,(y*,z*)<5>)<6>)<7>)<8>)<9>	CopyNode:d
+Trees	# Singles	# Groups	# Fixed	# Combinations
+GT-1 to MT-4	0	2	0	4
+GT-2 to MT-4	0	1	1	2
+GT-3 to MT-4	0	1	1	2
+GT-4 to MT-4	0	1	1	2
+GT-5 to MT-4	0	1	1	2
+GT-6 to MT-4	0	1	1	2
+GT-7 to MT-4	0	0	2	1
+GT-8 to MT-4	0	1	1	2
+GT-9 to MT-4	0	1	1	2
+GT-10 to MT-4	0	0	1	1
+GT-11 to MT-4	0	2	0	4
+GT-12 to MT-4	0	2	0	4
+GT-13 to MT-4	0	4	0	16
+GT-14 to MT-4	0	4	0	16
+GT-15 to MT-4	0	4	0	16
+GT-16 to MT-4	0	0	1	1
+GT-17 to MT-4	0	2	0	4
+GT-18 to MT-4	0	1	1	2
+GT-19 to MT-4	0	2	2	4
+GT-20 to MT-4	0	2	2	4
+GT-21 to MT-4	0	0	2	1
+GT-22 to MT-4	0	1	1	2
+GT-23 to MT-4	0	0	3	1
+GT-24 to MT-4	0	1	2	2
+GT-25 to MT-4	1	0	2	2
+GT-26 to MT-4	0	0	1	1
+MT-5	Tree:((((a,(x,(y,z)<1>)<2>)<3>,(x*,(y*,z*)<4>)<5>)<6>,b)<7>,(c,d)<8>)<9>	CopyNode:<3>
+Trees	# Singles	# Groups	# Fixed	# Combinations
+GT-1 to MT-5	0	2	0	4
+GT-2 to MT-5	0	1	1	2
+GT-3 to MT-5	0	1	1	2
+GT-4 to MT-5	0	1	1	2
+GT-5 to MT-5	0	1	1	2
+GT-6 to MT-5	0	1	1	2
+GT-7 to MT-5	0	1	1	2
+GT-8 to MT-5	0	1	1	2
+GT-9 to MT-5	0	1	1	2
+GT-10 to MT-5	0	0	1	1
+GT-11 to MT-5	0	2	0	4
+GT-12 to MT-5	0	2	0	4
+GT-13 to MT-5	0	4	0	16
+GT-14 to MT-5	0	4	0	16
+GT-15 to MT-5	0	4	0	16
+GT-16 to MT-5	0	0	1	1
+GT-17 to MT-5	0	2	0	4
+GT-18 to MT-5	0	1	1	2
+GT-19 to MT-5	0	2	2	4
+GT-20 to MT-5	0	2	2	4
+GT-21 to MT-5	0	1	1	2
+GT-22 to MT-5	0	1	1	2
+GT-23 to MT-5	0	2	1	4
+GT-24 to MT-5	0	2	1	4
+GT-25 to MT-5	1	1	1	4
+GT-26 to MT-5	0	0	1	1
+MT-6	Tree:((((a,(x,(y,z)<1>)<2>)<3>,b)<4>,(x*,(y*,z*)<5>)<6>)<7>,(c,d)<8>)<9>	CopyNode:<4>
+Trees	# Singles	# Groups	# Fixed	# Combinations
+GT-1 to MT-6	0	2	0	4
+GT-2 to MT-6	0	1	1	2
+GT-3 to MT-6	0	1	1	2
+GT-4 to MT-6	0	1	1	2
+GT-5 to MT-6	0	1	1	2
+GT-6 to MT-6	0	1	1	2
+GT-7 to MT-6	0	1	1	2
+GT-8 to MT-6	0	1	1	2
+GT-9 to MT-6	0	1	1	2
+GT-10 to MT-6	0	0	1	1
+GT-11 to MT-6	0	2	0	4
+GT-12 to MT-6	0	2	0	4
+GT-13 to MT-6	0	4	0	16
+GT-14 to MT-6	0	4	0	16
+GT-15 to MT-6	0	4	0	16
+GT-16 to MT-6	0	0	1	1
+GT-17 to MT-6	0	2	0	4
+GT-18 to MT-6	0	1	1	2
+GT-19 to MT-6	0	2	2	4
+GT-20 to MT-6	0	2	2	4
+GT-21 to MT-6	0	1	1	2
+GT-22 to MT-6	0	1	1	2
+GT-23 to MT-6	0	2	1	4
+GT-24 to MT-6	0	2	1	4
+GT-25 to MT-6	1	1	1	4
+GT-26 to MT-6	0	0	1	1
+MT-7	Tree:(((a,(x,(y,z)<1>)<2>)<3>,b)<4>,((c,d)<5>,(x*,(y*,z*)<6>)<7>)<8>)<9>	CopyNode:<5>
+Trees	# Singles	# Groups	# Fixed	# Combinations
+GT-1 to MT-7	0	2	0	4
+GT-2 to MT-7	0	1	1	2
+GT-3 to MT-7	0	1	1	2
+GT-4 to MT-7	0	1	1	2
+GT-5 to MT-7	0	1	1	2
+GT-6 to MT-7	0	0	2	1
+GT-7 to MT-7	0	0	2	1
+GT-8 to MT-7	0	0	2	1
+GT-9 to MT-7	0	1	1	2
+GT-10 to MT-7	0	0	1	1
+GT-11 to MT-7	0	2	0	4
+GT-12 to MT-7	0	2	0	4
+GT-13 to MT-7	0	4	0	16
+GT-14 to MT-7	0	4	0	16
+GT-15 to MT-7	0	4	0	16
+GT-16 to MT-7	0	0	1	1
+GT-17 to MT-7	0	2	0	4
+GT-18 to MT-7	0	1	1	2
+GT-19 to MT-7	0	2	2	4
+GT-20 to MT-7	0	2	2	4
+GT-21 to MT-7	0	0	2	1
+GT-22 to MT-7	0	0	2	1
+GT-23 to MT-7	0	0	3	1
+GT-24 to MT-7	0	0	3	1
+GT-25 to MT-7	1	0	2	2
+GT-26 to MT-7	0	0	1	1
+# =========================================================================
