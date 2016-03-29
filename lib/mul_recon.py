@@ -158,6 +158,8 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, v, check_nums):
 	if v == -2:
 		print "sisters", sisters;
 
+	##############
+
 	tmp_singles = [];
 	tmp_groups = {};
 	tmp_fixed = {};
@@ -168,7 +170,7 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, v, check_nums):
 			if g[g.index("_")+1:] in hybrid_clade:
 				tmp_singles.append(g);
 	# First, all hybrid species nodes in the gene tree are added to the singles list.
-	## GET SINGLETONS
+	## GETS SINGLETONS
 
 	for g in ginfo:
 		if ginfo[g][3] != 'tip':
@@ -183,7 +185,6 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, v, check_nums):
 			# The clades for the descendants of both nodes are retrieved, and their corresponding
 			# species are stored.
 
-
 			if all(s in hybrid_clade for s in d1_spec_clade) and all(s in hybrid_clade for s in d2_spec_clade):
 			# If the descendants from both nodes are all hybrid clade species, then we may be able to group them.
 				if not any(s in d2_spec_clade for s in d1_spec_clade):
@@ -195,8 +196,7 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, v, check_nums):
 						if s in tmp_singles:
 							tmp_singles.remove(s);
 					# If these nodes are grouped, we must remove them from the singles list.
-			## CHECK GROUPINGS
-
+			## CHECKS GROUPINGS
 
 			if all(s in hybrid_clade for s in d1_spec_clade) and all(d1_spec_clade.count(s) <= 1 for s in hybrid_clade):
 				for poss_map in sisters:
@@ -211,7 +211,7 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, v, check_nums):
 			# For either descendant clade, if it contains only hybrid species (each with a count of 1 or 0) and the other
 			# descendant contains only sister species that match those from the hybrid or copy clade in the MUL-tree, then
 			# this clade can be fixed with the corresponding map.
-			## FIX CLADES
+			## FIXES CLADES
 
 	##############
 
@@ -258,14 +258,16 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, v, check_nums):
 		return len(tmp_singles), init_num_groups, len(tmp_fixed), num_groups;
 	# If --checknums is True, we don't do any of the hard calcs, we just return some numbers as info.
 
-	if num_groups > 15:
+	if num_groups > 11:
 		return 0, 0, 0
 
 	#combo_ind = list(itertools.product(['','*'], repeat=len(node_ind)));
 	#if v == -2:
 	#	print "num combos", len(combo_ind);
 	# We get all combinations of mappings for each node group. This is the time constraining step.
+	map_num = 1;
 
+	#combos = list(itertools.product(['','*'], repeat=len(node_ind)));
 	for combo in itertools.product(['','*'], repeat=len(node_ind)):
 		hc_map = [];
 		for i in range(len(combo)):
@@ -279,7 +281,8 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, v, check_nums):
 		# This adds the fixed maps onto the current combination of group mappings.
 
 		if v == -2:
-			print "curmap:", hc_map;
+			print map_num, "curmap:"#, hc_map;
+			map_num = map_num + 1;
 
 		# Now we do LCA mapping for the current combination of maps for the hybrid clade species.
 		maps = {};

@@ -211,7 +211,7 @@ for copy_node in copy_nodes:
 	gene_num = 1;
 
 	if check_nums:
-		RC.printWrite(outfilename, v, "Trees\t# Singles\t# Groups\t# Fixed\t# Combinations")
+		RC.printWrite(outfilename, v, "Trees\t# Singles\t# Groups\t# Fixed\tTotal groups\t# Combinations")
 
 	for gene_tree in gene_trees:
 		if v == 0:
@@ -237,7 +237,7 @@ for copy_node in copy_nodes:
 			dup_score, loss_score, maps = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, v, check_nums);
 		else:
 			num_singles, num_groups, num_fixed, num_total = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, v, check_nums);
-			outline += str(num_singles) + "\t" + str(num_groups) + "\t" + str(num_fixed) + "\t" + str(2**num_total);
+			outline += str(num_singles) + "\t" + str(num_groups) + "\t" + str(num_fixed) + "\t" + str(num_singles + num_groups) + "\t" + str(2**num_total);
 			RC.printWrite(outfilename, v, outline);
 			continue;
 		mut_score = dup_score + loss_score;
