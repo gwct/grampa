@@ -166,7 +166,8 @@ RC.printWrite(outfilename, 1, "# ---------");
 ### End input info block!
 
 if v == 0:
-	print "Beginning reconciliations...\n"
+	if not check_nums:
+		print "Beginning reconciliations...\n"
 
 	numiters = len(copy_nodes) * len(gene_trees);
 	numbars = 0;
