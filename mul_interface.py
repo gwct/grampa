@@ -9,8 +9,17 @@
 
 import sys, argparse, lib.recontree as RT, lib.reconcore as RC, lib.mul_recon as ALG
 
-# h "51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO"
-# c "LACTH,KLUWA,SACKL,ASHGO,KLULA"
+# Yeast hybrid and copy nodes:
+# 	Hybrid:	"51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO"
+# 	Copy:	"LACTH,KLUWA,SACKL,ASHGO,KLULA"
+#
+# Test commands:
+#	Manual checknum:		mul_interface.py -s test_in/manual_sims/s.tre -t s -y "x,y,z" -g test_in/manual_sims/tree_list.txt -o test_out/manual_sims_out/checknum_test.txt --checknum
+#	Manual test:			mul_interface.py -s test_in/manual_sims/s.tre -t s -y "x,y,z" -g test_in/manual_sims/tree_list.txt -o test_out/manual_sims_out/full_test.txt
+#	Yeast 1 tree checknum:	mul_interface.py -s test_in/yeast/yeast_spec_abb.tre -t s -y "51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO" -c "LACTH,KLUWA,SACKL,ASHGO,KLULA" -g test_in/yeast/fastree_list_rbs.txt -o test_out/yeast_out/checknum_yeast.txt --checknum
+#	Yeast 1 tree test:		mul_interface.py -s test_in/yeast/yeast_spec_abb.tre -t s -y "51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO" -c "LACTH,KLUWA,SACKL,ASHGO,KLULA" -g test_in/yeast/fastree_list_rbs.txt -o test_out/yeast_out/test_yeast.txt
+#	Yeast full checknum:	mul_interface.py -s test_in/yeast/yeast_spec_abb.tre -t s -y "51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO" -g test_in/yeast/fastree_list_rbs.txt -o test_out/yeast_out/checknum_yeast_full.txt --checknum
+#	Yeast full test:		mul_interface.py -s test_in/yeast/yeast_spec_abb.tre -t s -y "51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO" -g test_in/yeast/fastree_list_rbs.txt -o test_out/yeast_out/test_yeast_full.txt
 # python .\interface.py -s .\trees\s.tre -y "x,y,z" -o .\testout.txt -g .\trees\g05.tre -c "b"
 
 ############################################
