@@ -228,6 +228,11 @@ for copy_node in copy_nodes:
 			itercount = itercount + 1;
 		# Only the loading bar displays when the program is running if -v is set to 0.
 
+		if gene_tree.strip() == '':
+			RC.printWrite(outfilename, v, "GT-" + str(gene_num) + "\tEmpty line -- skipping.");
+			gene_num = gene_num + 1;
+			continue;
+
 		gene_tree = RT.remBranchLength(gene_tree);
 
 		ginfo, gt = RT.treeParseNew(gene_tree,2);
