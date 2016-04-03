@@ -42,7 +42,7 @@ def reconLCA(lca_ginfo, sinfo, lca_maps):
 				dups[g] = dups[g] + 1;
 			#Now, if the map of g is identical to one of its descendants, it is a duplication node.
 
-	numdups = len({node for node in dups if dups[node] != 0})
+	numdups = len([node for node in dups if dups[node] != 0]);
 	numloss = mulLossCount(lca_ginfo, sinfo, lca_maps, dups);
 	# Call the functions to count the number of losses.
 
