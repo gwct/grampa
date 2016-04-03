@@ -1,0 +1,248 @@
+# =========================================================================
+#			MUL-tree reconciliation
+#			04.03.2016 | 10:24:06
+# The input species tree with internal nodes labeled:            (((a,(x,(y,z)<1>)<2>)<3>,b)<4>,(c,d)<5>)<6>
+# The polyploid clade:                                           x, y, z
+# Result will be written to file:                                test_out/manual_sims_out/full_test.txt
+# Hybrid node identified as:                                     <2>
+# No copy node defined
+# Searching all possible copy nodes.
+# ---------
+MT-1	Tree:((((a,(x*,(y*,z*)<1>)<2>)<3>,(x,(y,z)<4>)<5>)<6>,b)<7>,(c,d)<8>)<9>	CopyNode:a
+GT-1 to MT-1	1	1	2
+GT-2 to MT-1	0	0	0
+GT-3 to MT-1	1	3	4
+GT-4 to MT-1	0	0	0
+GT-5 to MT-1	1	3	4
+GT-6 to MT-1	2	7	9
+GT-7 to MT-1	2	7	9
+GT-8 to MT-1	1	4	5
+GT-9 to MT-1	1	4	5
+GT-10 to MT-1	0	1	1
+GT-11 to MT-1	0	1	1
+GT-12 to MT-1	1	2	3
+GT-13 to MT-1	3	1	4
+GT-14 to MT-1	3	2	5
+GT-15 to MT-1	3	3	6
+GT-16 to MT-1	0	1	1
+GT-17 to MT-1	0	1	1
+GT-18 to MT-1	0	1	1
+GT-19 to MT-1	1	0	1
+GT-20 to MT-1	1	1	2
+GT-21 to MT-1	3	7	10
+GT-22 to MT-1	1	5	6
+GT-23 to MT-1	4	12	16
+GT-24 to MT-1	3	10	13
+GT-25 to MT-1	2	8	10
+GT-26 to MT-1	0	1	1
+Total parsimony score for MT-1: 120
+# ---------
+MT-2	Tree:(((a,(x,(y,z)<1>)<2>)<3>,b)<4>,((c,(x*,(y*,z*)<5>)<6>)<7>,d)<8>)<9>	CopyNode:c
+GT-1 to MT-2	1	1	2
+GT-2 to MT-2	1	2	3
+GT-3 to MT-2	1	3	4
+GT-4 to MT-2	1	2	3
+GT-5 to MT-2	1	3	4
+GT-6 to MT-2	0	0	0
+GT-7 to MT-2	1	3	4
+GT-8 to MT-2	1	3	4
+GT-9 to MT-2	1	4	5
+GT-10 to MT-2	0	1	1
+GT-11 to MT-2	1	2	3
+GT-12 to MT-2	1	2	3
+GT-13 to MT-2	3	1	4
+GT-14 to MT-2	3	1	4
+GT-15 to MT-2	3	2	5
+GT-16 to MT-2	0	1	1
+GT-17 to MT-2	1	2	3
+GT-18 to MT-2	1	3	4
+GT-19 to MT-2	3	3	6
+GT-20 to MT-2	3	4	7
+GT-21 to MT-2	2	3	5
+GT-22 to MT-2	0	1	1
+GT-23 to MT-2	3	6	9
+GT-24 to MT-2	2	4	6
+GT-25 to MT-2	1	4	5
+GT-26 to MT-2	0	1	1
+Total parsimony score for MT-2: 97
+# ---------
+MT-3	Tree:(((a,(x,(y,z)<1>)<2>)<3>,(b,(x*,(y*,z*)<4>)<5>)<6>)<7>,(c,d)<8>)<9>	CopyNode:b
+GT-1 to MT-3	1	1	2
+GT-2 to MT-3	1	2	3
+GT-3 to MT-3	1	3	4
+GT-4 to MT-3	1	2	3
+GT-5 to MT-3	0	0	0
+GT-6 to MT-3	2	7	9
+GT-7 to MT-3	2	7	9
+GT-8 to MT-3	1	4	5
+GT-9 to MT-3	1	4	5
+GT-10 to MT-3	0	1	1
+GT-11 to MT-3	1	1	2
+GT-12 to MT-3	1	1	2
+GT-13 to MT-3	3	1	4
+GT-14 to MT-3	3	2	5
+GT-15 to MT-3	3	2	5
+GT-16 to MT-3	0	1	1
+GT-17 to MT-3	1	1	2
+GT-18 to MT-3	0	1	1
+GT-19 to MT-3	3	4	7
+GT-20 to MT-3	2	3	5
+GT-21 to MT-3	3	7	10
+GT-22 to MT-3	1	5	6
+GT-23 to MT-3	4	12	16
+GT-24 to MT-3	3	10	13
+GT-25 to MT-3	2	8	10
+GT-26 to MT-3	0	1	1
+Total parsimony score for MT-3: 131
+# ---------
+MT-4	Tree:(((a,(x,(y,z)<1>)<2>)<3>,b)<4>,(c,(d,(x*,(y*,z*)<5>)<6>)<7>)<8>)<9>	CopyNode:d
+GT-1 to MT-4	1	1	2
+GT-2 to MT-4	1	2	3
+GT-3 to MT-4	1	3	4
+GT-4 to MT-4	1	2	3
+GT-5 to MT-4	1	3	4
+GT-6 to MT-4	1	3	4
+GT-7 to MT-4	0	0	0
+GT-8 to MT-4	1	3	4
+GT-9 to MT-4	1	4	5
+GT-10 to MT-4	0	1	1
+GT-11 to MT-4	1	2	3
+GT-12 to MT-4	1	2	3
+GT-13 to MT-4	3	1	4
+GT-14 to MT-4	3	1	4
+GT-15 to MT-4	3	2	5
+GT-16 to MT-4	0	1	1
+GT-17 to MT-4	1	2	3
+GT-18 to MT-4	1	3	4
+GT-19 to MT-4	3	3	6
+GT-20 to MT-4	3	4	7
+GT-21 to MT-4	1	0	1
+GT-22 to MT-4	0	1	1
+GT-23 to MT-4	1	0	1
+GT-24 to MT-4	1	1	2
+GT-25 to MT-4	0	1	1
+GT-26 to MT-4	0	1	1
+Total parsimony score for MT-4: 77
+# ---------
+MT-5	Tree:((((a,(x,(y,z)<1>)<2>)<3>,(x*,(y*,z*)<4>)<5>)<6>,b)<7>,(c,d)<8>)<9>	CopyNode:<3>
+GT-1 to MT-5	1	1	2
+GT-2 to MT-5	0	0	0
+GT-3 to MT-5	1	3	4
+GT-4 to MT-5	0	0	0
+GT-5 to MT-5	1	3	4
+GT-6 to MT-5	2	7	9
+GT-7 to MT-5	2	7	9
+GT-8 to MT-5	1	4	5
+GT-9 to MT-5	1	4	5
+GT-10 to MT-5	0	1	1
+GT-11 to MT-5	0	1	1
+GT-12 to MT-5	1	2	3
+GT-13 to MT-5	3	1	4
+GT-14 to MT-5	3	2	5
+GT-15 to MT-5	3	3	6
+GT-16 to MT-5	0	1	1
+GT-17 to MT-5	0	1	1
+GT-18 to MT-5	0	1	1
+GT-19 to MT-5	1	0	1
+GT-20 to MT-5	1	1	2
+GT-21 to MT-5	3	7	10
+GT-22 to MT-5	1	5	6
+GT-23 to MT-5	4	12	16
+GT-24 to MT-5	3	10	13
+GT-25 to MT-5	2	8	10
+GT-26 to MT-5	0	1	1
+Total parsimony score for MT-5: 120
+# ---------
+MT-6	Tree:(((a,((x,(y,z)<1>)<2>,(x*,(y*,z*)<3>)<4>)<5>)<6>,b)<7>,(c,d)<8>)<9>	CopyNode:<2>
+GT-1 to MT-6	0	0	0
+GT-2 to MT-6	1	3	4
+GT-3 to MT-6	1	4	5
+GT-4 to MT-6	1	3	4
+GT-5 to MT-6	1	4	5
+GT-6 to MT-6	2	8	10
+GT-7 to MT-6	2	8	10
+GT-8 to MT-6	1	5	6
+GT-9 to MT-6	1	5	6
+GT-10 to MT-6	0	1	1
+GT-11 to MT-6	0	1	1
+GT-12 to MT-6	0	1	1
+GT-13 to MT-6	1	0	1
+GT-14 to MT-6	1	0	1
+GT-15 to MT-6	1	1	2
+GT-16 to MT-6	0	1	1
+GT-17 to MT-6	0	1	1
+GT-18 to MT-6	1	4	5
+GT-19 to MT-6	3	6	9
+GT-20 to MT-6	3	7	10
+GT-21 to MT-6	3	8	11
+GT-22 to MT-6	1	6	7
+GT-23 to MT-6	4	14	18
+GT-24 to MT-6	3	12	15
+GT-25 to MT-6	2	9	11
+GT-26 to MT-6	0	1	1
+Total parsimony score for MT-6: 146
+# ---------
+MT-7	Tree:((((a,(x,(y,z)<1>)<2>)<3>,b)<4>,(x*,(y*,z*)<5>)<6>)<7>,(c,d)<8>)<9>	CopyNode:<4>
+GT-1 to MT-7	1	1	2
+GT-2 to MT-7	1	2	3
+GT-3 to MT-7	0	0	0
+GT-4 to MT-7	1	2	3
+GT-5 to MT-7	1	3	4
+GT-6 to MT-7	2	6	8
+GT-7 to MT-7	2	6	8
+GT-8 to MT-7	1	3	4
+GT-9 to MT-7	1	3	4
+GT-10 to MT-7	0	1	1
+GT-11 to MT-7	1	1	2
+GT-12 to MT-7	1	2	3
+GT-13 to MT-7	3	1	4
+GT-14 to MT-7	3	1	4
+GT-15 to MT-7	3	2	5
+GT-16 to MT-7	0	1	1
+GT-17 to MT-7	1	1	2
+GT-18 to MT-7	0	1	1
+GT-19 to MT-7	3	3	6
+GT-20 to MT-7	2	3	5
+GT-21 to MT-7	3	6	9
+GT-22 to MT-7	1	4	5
+GT-23 to MT-7	4	10	14
+GT-24 to MT-7	3	8	11
+GT-25 to MT-7	2	7	9
+GT-26 to MT-7	0	1	1
+Total parsimony score for MT-7: 119
+# ---------
+MT-8	Tree:(((a,(x,(y,z)<1>)<2>)<3>,b)<4>,((c,d)<5>,(x*,(y*,z*)<6>)<7>)<8>)<9>	CopyNode:<5>
+GT-1 to MT-8	1	1	2
+GT-2 to MT-8	1	2	3
+GT-3 to MT-8	1	3	4
+GT-4 to MT-8	1	2	3
+GT-5 to MT-8	1	3	4
+GT-6 to MT-8	1	3	4
+GT-7 to MT-8	1	3	4
+GT-8 to MT-8	0	0	0
+GT-9 to MT-8	1	3	4
+GT-10 to MT-8	0	1	1
+GT-11 to MT-8	1	2	3
+GT-12 to MT-8	1	2	3
+GT-13 to MT-8	3	1	4
+GT-14 to MT-8	3	1	4
+GT-15 to MT-8	3	2	5
+GT-16 to MT-8	0	1	1
+GT-17 to MT-8	1	2	3
+GT-18 to MT-8	1	3	4
+GT-19 to MT-8	3	3	6
+GT-20 to MT-8	3	4	7
+GT-21 to MT-8	2	3	5
+GT-22 to MT-8	0	1	1
+GT-23 to MT-8	3	6	9
+GT-24 to MT-8	2	4	6
+GT-25 to MT-8	1	4	5
+GT-26 to MT-8	0	1	1
+Total parsimony score for MT-8: 96
+# ---------
+
+Done!
+
+The MUL-tree with the minimum parsimony score is MT-4:	(((a,(x,(y,z)<1>)<2>)<3>,b)<4>,(c,(d,(x*,(y*,z*)<5>)<6>)<7>)<8>)<9>
+Score = 77
+# =========================================================================
