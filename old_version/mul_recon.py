@@ -42,87 +42,14 @@ def reconLCA(lca_ginfo, sinfo, lca_maps):
 				dups[g] = dups[g] + 1;
 			#Now, if the map of g is identical to one of its descendants, it is a duplication node.
 
-	numdups = len({node for node in dups if dups[node] != 0})
+	dups, mdups, numdups = mulDupCount(lca_ginfo, sinfo, lca_maps);
 	numloss = mulLossCount(lca_ginfo, sinfo, lca_maps, dups);
-	# Call the functions to count the number of losses.
+	# Call the functions to count the number of duplications and losses.
 
-	return lca_maps, numdups, numloss;
+	return lca_maps;
 	# Return the total number of duplication nodes.
-#############################################################################
-def collapseGroups(ginfo, hybrid_clade, v):
-
-	internal_nodes = [];
-	for g in ginfo:
-		if ginfo[g][3] != 'tip':
-			internal_nodes.append(int(g.replace("<","").replace(">","")));
-	internal_nodes = sorted(internal_nodes);
-	# Sort the internal nodes for a post order traversal.
-
-	singles = {};
-	groups = {};
-
-	for g in ginfo:
-		if ginfo[g][3] == 'tip':
-			if g[g.index("_")+1:] in hybrid_clade:
-				cur_anc = ginfo[g][1];
-				anc_clade = RT.getClade(cur_anc, ginfo);
-				anc_clade.remove(g);
-				singles[g] = anc_clade;
-	# First, all hybrid species nodes in the gene tree are added to the singles list.
-	## GETS SINGLETONS
-
-	for g in internal_nodes:
-		g = "<" + str(g) + ">";
-		# Next, for any non-tip node, we find out if the species that define it can be grouped
-		# or fixed.
-		#print g;
-		d1, d2 = RT.getDesc(g, ginfo);
-		d1_clade = RT.getClade(d1, ginfo);
-		d1_spec_clade = [spec[spec.index("_")+1:] for spec in d1_clade];
-		d2_clade = RT.getClade(d2,ginfo);
-		d2_spec_clade = [spec[spec.index("_")+1:] for spec in d2_clade];
-		# The clades for the descendants of both nodes are retrieved, and their corresponding
-		# species are stored.
-
-		if all(s in hybrid_clade for s in d1_spec_clade) and all(s in hybrid_clade for s in d2_spec_clade):
-		# If the descendants from both nodes are all hybrid clade species, then we may be able to group them.
-			if not any(s in d2_spec_clade for s in d1_spec_clade):
-			# However, only if there is not more than one copy of a species among the clades can they be grouped.
-				cur_clade = RT.getClade(g, ginfo);
-				cur_anc = ginfo[g][1];
-				anc_clade = RT.getClade(cur_anc, ginfo);
-				anc_clade = [spec for spec in anc_clade if spec not in cur_clade];
-
-				cur_nodes = RT.getCladeNode(g, ginfo);
-				for node in cur_nodes:
-					if node in groups:
-						del groups[node];
-
-				groups[g] = [cur_clade, anc_clade];
-		## CHECKS GROUPINGS
-
-	for group in groups:
-		for g in groups[group][0]:
-			if g in singles:
-				del singles[g];
-	# Removes any singles that are in a group.
-
-	final_groups = [];
-	for node in groups:
-		final_groups.append(groups[node]);
-	for single in singles:
-		final_groups.append([[single], singles[single]]);
-	# Restructures the final groups and adds singles.
-
-	if v == -2:
-		print "singles:", singles;
-		print "groups:", groups;
-		print "final_groups:", final_groups;
-
-	return final_groups;
 
 #############################################################################
-
 def getSis(gs_node, check_node, check_clade, gs_dict):
 # Gets the hybrid and copy sister species.
 
@@ -137,6 +64,33 @@ def getSis(gs_node, check_node, check_clade, gs_dict):
 		return [];
 	else:
 		return sis_clade;
+
+#############################################################################
+
+def mulDupCount(dc_ginfo, dc_minfo, dc_maps):
+# Given two trees (dictionaries) and a mapping between them, this function
+# counts the number of duplication nodes.
+
+	dup_count = 0;
+	gt_dups = {};
+	mt_dups = {};
+	for m in dc_minfo:
+		mt_dups[m] = 0;
+	# The node classification of the species tree. [key]:[value] -> [species tree node]:[# of duplications along that branch]
+
+	for g in dc_ginfo:
+		if dc_ginfo[g][3] == 'tip':
+			gt_dups[g] = 0;
+			continue;
+		desc = RT.getDesc(g, dc_ginfo);
+		if dc_maps[g][0] == dc_maps[desc[0]][0] or dc_maps[g][0] == dc_maps[desc[1]][0]:
+			gt_dups[g] = 1;
+			mt_dups[dc_maps[g][0]] = mt_dups[dc_maps[g][0]] + 1;
+			dup_count += 1;
+		else:
+			gt_dups[g] = 0;
+
+	return gt_dups, mt_dups, dup_count;
 
 #############################################################################
 
@@ -163,7 +117,7 @@ def mulLossCount(lc_ginfo, lc_minfo, lc_maps, lc_dups):
 
 #############################################################################
 
-def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, v, check_nums):
+def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, v, check_nums):
 # The basis of the MUL-reconciliation algorithm is that there are now nodes that
 # have more than one possible map. We try all combinations of mappings for these
 # nodes and find which combination results in the most parsimonious mutation score
@@ -204,34 +158,104 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, v, check_nums):
 	if v == -2:
 		print "sisters", sisters;
 
-	groups = [];
-	fixed_groups = [];
+	##############
 
-	for group in cur_groups:
-		group_sis = [spec[spec.index("_")+1:] for spec in group[1]];
+	tmp_singles = [];
+	tmp_groups = {};
+	tmp_fixed = {};
+	# The three possible classification of nodes.
 
-		if all(spec in sisters[''] for spec in group_sis):
-			fixed_groups.append([group[0],'']);
-		elif all(spec in sisters['*'] for spec in group_sis):
-			fixed_groups.append([group[0],'*']);
-		else:
-			groups.append(group[0]);
-	# This checks the sister species of all the groups for the gene tree. If all the sister species
-	# of a group are also in the sister species of the hybrid or copy clade in the MUL-tree, then we
-	# can fix the mapping of that node.
+	for g in ginfo:
+		if ginfo[g][3] == 'tip':
+			if g[g.index("_")+1:] in hybrid_clade:
+				tmp_singles.append(g);
+	# First, all hybrid species nodes in the gene tree are added to the singles list.
+	## GETS SINGLETONS
+
+	for g in ginfo:
+		if ginfo[g][3] != 'tip':
+		# Next, for any non-tip node, we find out if the species that define it can be grouped
+		# or fixed.
+			#print g;
+			d1, d2 = RT.getDesc(g, ginfo);
+			d1_clade = RT.getClade(d1, ginfo);
+			d1_spec_clade = [spec[spec.index("_")+1:] for spec in d1_clade];
+			d2_clade = RT.getClade(d2,ginfo);
+			d2_spec_clade = [spec[spec.index("_")+1:] for spec in d2_clade];
+			# The clades for the descendants of both nodes are retrieved, and their corresponding
+			# species are stored.
+
+			if all(s in hybrid_clade for s in d1_spec_clade) and all(s in hybrid_clade for s in d2_spec_clade):
+			# If the descendants from both nodes are all hybrid clade species, then we may be able to group them.
+				if not any(s in d2_spec_clade for s in d1_spec_clade):
+				# However, only if there is not more than one copy of a species among the clades can they be grouped.
+					cur_clade = RT.getClade(g, ginfo);
+					tmp_groups[g] = cur_clade;
+
+					for s in cur_clade:
+						if s in tmp_singles:
+							tmp_singles.remove(s);
+					# If these nodes are grouped, we must remove them from the singles list.
+			## CHECKS GROUPINGS
+
+			if all(s in hybrid_clade for s in d1_spec_clade) and all(d1_spec_clade.count(s) <= 1 for s in hybrid_clade):
+				for poss_map in sisters:
+					if all(s in sisters[poss_map] for s in d2_spec_clade):
+						tmp_fixed[d1] = [d1_clade, poss_map];
+
+
+			elif all(s in hybrid_clade for s in d2_spec_clade) and all(d2_spec_clade.count(s) <= 1 for s in hybrid_clade):
+				for poss_map in sisters:
+					if all(s in sisters[poss_map] for s in d1_spec_clade):
+						tmp_fixed[d2] = [d2_clade, poss_map];
+			# For either descendant clade, if it contains only hybrid species (each with a count of 1 or 0) and the other
+			# descendant contains only sister species that match those from the hybrid or copy clade in the MUL-tree, then
+			# this clade can be fixed with the corresponding map.
+			## FIXES CLADES
+
+	##############
+
+	groups = tmp_groups.copy();
+	for group in tmp_groups:
+		cur_nodes = RT.getCladeNode(group, ginfo);
+		for node in cur_nodes:
+			if node in groups:
+				del groups[node];
+	# Removes any redundant descendant groups in the groups list.
+
+	for node in tmp_fixed:
+		if node in groups:
+			del groups[node];
+	# Removes any nodes from the groups list that are fixed.
 
 	if v == -2:
-		print "groups:",groups;
-		print "fixed:",fixed_groups;
+		print "singles:", tmp_singles;
+		print "tmp groups:", tmp_groups;
+		print "groups:", groups;
+		print "fixed:", tmp_fixed;
+
+	init_num_groups = len(groups);
+	hc_nodes = [];
+	for node in groups:
+		hc_nodes.append(groups[node]);
+	del groups;
+	for single in tmp_singles:
+		hc_nodes.append([single]);
+	# Converts the groups structure from a dictionary to a list. The ancestral nodes aren't important so we can discard
+	# that information.
+
+	if v == -2:
+		print 'nodes:', hc_nodes;
 
 	###############
 
-	num_groups = len(groups);
+	node_ind = range(len(hc_nodes));
+	num_groups = len(hc_nodes);
 	if v == -2:
-		print "num groups:", num_groups;
+		print "num nodes", len(node_ind);
 
 	if check_nums:
-		return num_groups, len(fixed_groups);
+		return len(tmp_singles), init_num_groups, len(tmp_fixed), num_groups;
 	# If --checknums is True, we don't do any of the hard calcs, we just return some numbers as info.
 
 	if num_groups > 11:
@@ -244,20 +268,20 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, v, check_nums):
 	map_num = 1;
 
 	#combos = list(itertools.product(['','*'], repeat=len(node_ind)));
-	for combo in itertools.product(['','*'], repeat=num_groups):
-		group_map = [];
+	for combo in itertools.product(['','*'], repeat=len(node_ind)):
+		hc_map = [];
 		for i in range(len(combo)):
-			for node in groups[i]:
-				group_map.append(node + combo[i]);
+			for node in hc_nodes[i]:
+				hc_map.append(node + combo[i]);
 		# This builds the current map for each group.
 
-		for fixed in fixed_groups:
-			for node in fixed[0]:
-				group_map.append(node + fixed[1]);
+		for fixed in tmp_fixed:
+			for node in tmp_fixed[fixed][0]:
+				hc_map.append(node + tmp_fixed[fixed][1]);
 		# This adds the fixed maps onto the current combination of group mappings.
 
 		if v == -2:
-			print map_num, "curmap:", group_map;
+			print map_num, "curmap:"#, hc_map;
 			map_num = map_num + 1;
 
 		# Now we do LCA mapping for the current combination of maps for the hybrid clade species.
@@ -265,10 +289,10 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, v, check_nums):
 		for g in ginfo:
 			if ginfo[g][3] == 'tip':
 				speclabel = g[g.index("_")+1:];
-				if g in group_map:
+				if g in hc_map:
 					maps[g] = [speclabel];
 				# If the node is in a hybrid clade, use the map in the current combination.
-				elif g + "*" in group_map:
+				elif g + "*" in hc_map:
 					maps[g] = [speclabel + "*"];
 				else:
 					maps[g] = [speclabel];
@@ -280,15 +304,19 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, v, check_nums):
 		# Initialization of the mapping dictionary, using the current combination of hybrid clade maps. 
 		# [key]:[value] -> [gene tree node]:[map]
 
-		maps, num_dups, num_loss = reconLCA(ginfo, minfo, maps)
+		maps = reconLCA(ginfo, minfo, maps)
 		# Once the current maps have been initialized, we can simply call the normal LCA mapping algorithm
 
-		cur_score = num_dups + num_loss;
+		dups, mdups, numdups = mulDupCount(ginfo, minfo, maps);
+		numloss = mulLossCount(ginfo, minfo, maps, dups);
+		# Call the functions to count the number of duplications and losses.
+
+		cur_score = numdups + numloss;
 
 		if cur_score < min_score:
 			min_score = cur_score;
-			min_dups = num_dups;
-			min_loss = num_loss;
+			min_dups = numdups;
+			min_loss = numloss;
 			min_maps = maps;
 		# If the current total score is smaller than the previous min, save it as the current min.
 

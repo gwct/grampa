@@ -48,7 +48,7 @@ def optParse(errorflag):
 		if args.output_file == None:
 			args.output_file = "MTR_out_" + RC.getLogTime() + ".txt";
 
-		if args.spec_tree_ty	pe.lower() not in ['m', 's']:
+		if args.spec_tree_type.lower() not in ['m', 's']:
 			RC.errorOut(2, "-m must take values of either m or s");
 			optParse(1);
 
@@ -73,7 +73,7 @@ def optParse(errorflag):
 
 spec_file, spec_type, gene_file, hybrid_list, copy_list, outfilename, v, check_nums = optParse(0);
 # Getting the input parameters.
-
+print check_nums;
 print "# Reading species tree...";
 try:
 	spec_tree = open(spec_file, "r").read().replace("\n", "").replace("\r","");
@@ -178,8 +178,6 @@ mul_dict = {};
 mul_num = 1;
 # Keeping track of scores for each MUL-tree
 
-gt_groups = {};
-
 for copy_node in copy_nodes:
 	if copy_node != "holder":
 	# Build the MUL-tree if the user has entered a non-MUL species tree.
@@ -219,10 +217,10 @@ for copy_node in copy_nodes:
 		mt = st;
 		mul_dict[mul_num] = [mt, "", 0];
 
-	gene_num = 0;
+	gene_num = 1;
 
 	if check_nums:
-		RC.printWrite(outfilename, v, "# Groups\t# Fixed\t# Combinations")
+		RC.printWrite(outfilename, v, "Trees\t# Singles\t# Groups\t# Fixed\tTotal groups\t# Combinations")
 
 	for gene_tree in gene_trees:
 		if v == 0:
@@ -230,21 +228,15 @@ for copy_node in copy_nodes:
 			itercount = itercount + 1;
 		# Only the loading bar displays when the program is running if -v is set to 0.
 
-		gene_num = gene_num + 1;
-
 		if gene_tree.strip() == '':
 			RC.printWrite(outfilename, v, "GT-" + str(gene_num) + "\tEmpty line -- skipping.");
+			gene_num = gene_num + 1;
 			continue;
 
 		gene_tree = RT.remBranchLength(gene_tree);
 
 		ginfo, gt = RT.treeParseNew(gene_tree,2);
 		# Parsing the current gene tree.
-
-		if mul_num == 1:
-			cur_groups = ALG.collapseGroups(ginfo, hybrid_clade, v);
-			gt_groups[gene_num] = cur_groups;
-			#print cur_groups;
 
 		# if v == 1:
 		#	print "# Gene tree " + str(gene_num) + " -- Running MUL-reconciliation algorithm...";
@@ -253,12 +245,13 @@ for copy_node in copy_nodes:
 		# Parsing the gene tree.
 		if v == -2:
 			print 'gt:', gt;
+		gene_num = gene_num + 1;
 
 		if not check_nums:
-			dup_score, loss_score, maps = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, gt_groups[gene_num], v, check_nums);
+			dup_score, loss_score, maps = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, v, check_nums);
 		else:
-			num_groups, num_fixed = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, gt_groups[gene_num], v, check_nums);
-			outline += str(num_groups) + "\t" + str(num_fixed) + "\t" + str(2**num_groups);
+			num_singles, num_groups, num_fixed, num_total = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, v, check_nums);
+			outline += str(num_singles) + "\t" + str(num_groups) + "\t" + str(num_fixed) + "\t" + str(num_singles + num_groups) + "\t" + str(2**num_total);
 			RC.printWrite(outfilename, v, outline);
 			continue;
 		mut_score = dup_score + loss_score;
