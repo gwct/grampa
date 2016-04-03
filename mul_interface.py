@@ -48,7 +48,7 @@ def optParse(errorflag):
 		if args.output_file == None:
 			args.output_file = "MTR_out_" + RC.getLogTime() + ".txt";
 
-		if args.spec_tree_ty	pe.lower() not in ['m', 's']:
+		if args.spec_tree_type.lower() not in ['m', 's']:
 			RC.errorOut(2, "-m must take values of either m or s");
 			optParse(1);
 
