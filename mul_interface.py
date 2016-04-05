@@ -21,6 +21,8 @@ import sys, argparse, lib.recontree as RT, lib.reconcore as RC, lib.mul_recon as
 #	Yeast full checknum:	mul_interface.py -s test_in/yeast/yeast_spec_abb.tre -t s -y "51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO" -g test_in/yeast/fastree_list_rbs.txt -o test_out/yeast_out/checknum_yeast_full.txt --checknum
 #	Yeast full test:		mul_interface.py -s test_in/yeast/yeast_spec_abb.tre -t s -y "51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO" -g test_in/yeast/fastree_list_rbs.txt -o test_out/yeast_out/test_yeast_full.txt
 
+# mul_interface.py -s yeast_spec_abb.tre -t s -y "51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO" -c "LACTH,KLUWA,SACKL,ASHGO,KLULA" -g yeast206_trees_r_filtered.txt -o yeast206_r_checknum.txt --checknum
+
 ############################################
 #Function Definitions
 ############################################
