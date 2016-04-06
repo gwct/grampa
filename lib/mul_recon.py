@@ -234,7 +234,7 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, v, check_nums):
 		return num_groups, len(fixed_groups);
 	# If --checknums is True, we don't do any of the hard calcs, we just return some numbers as info.
 
-	if num_groups > 11:
+	if num_groups > 8:
 		return 0, 0, 0
 
 	#combo_ind = list(itertools.product(['','*'], repeat=len(node_ind)));
