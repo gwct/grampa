@@ -238,15 +238,10 @@ for copy_node in copy_nodes:
 			RC.printWrite(outfilename, v, "GT-" + str(gene_num) + "\tEmpty line -- skipping.");
 			continue;
 
-		print gene_tree;
-
 		gene_tree = RT.remBranchLength(gene_tree);
-
 		ginfo, gt = RT.treeParseNew(gene_tree,2);
 		# Parsing the current gene tree.
 
-		print gt;
-		sys.exit();
 		if mul_num == 1:
 			cur_groups = ALG.collapseGroups(ginfo, hybrid_clade, v);
 			gt_groups[gene_num] = cur_groups;
