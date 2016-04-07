@@ -92,7 +92,7 @@ except:
 # Reading the species tree file.
 
 ### Begin error handling block.
-spec_check = spec_tree.replace("(","").replace(")","").split(",");
+spec_check = spec_tree.replace("(","").replace(")","").replace(";","").split(",");
 if not all(h in spec_check for h in hybrid_list):
 	RC.errorOut(5, "Not all hybrid species (-y) are present in your species tree!");
 	optParse(1);
