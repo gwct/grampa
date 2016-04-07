@@ -7,7 +7,7 @@
 # Fall 2015, Combo algorithm implemented Spring 2016
 #############################################################################
 
-import sys, argparse, lib.recontree as RT, lib.reconcore as RC, lib.mul_recon as ALG
+import sys, time, argparse, lib.recontree as RT, lib.reconcore as RC, lib.mul_recon as ALG
 
 # Yeast hybrid and copy nodes:
 # 	Hybrid:	"51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO"
@@ -70,6 +70,8 @@ def optParse(errorflag):
 ############################################
 #Main Block
 ############################################
+
+starttime = time.time();
 
 spec_file, spec_type, gene_file, hybrid_list, copy_list, outfilename, v, check_nums = optParse(0);
 # Getting the input parameters.
@@ -299,6 +301,9 @@ if not check_nums:
 
 	RC.printWrite(outfilename, 1, "The MUL-tree with the minimum parsimony score is MT-" + str(min_num) + ":\t" + min_tree);
 	RC.printWrite(outfilename, 1, "Score = " + str(min_score));
+endtime = time.time();
+totaltime = endtime - starttime;
+RC.printWrite(outfilename, 1, "# Total execution time: " + str(round(totaltime,3)) + " seconds.");
 RC.printWrite(outfilename, 1, "# =========================================================================");
 
 
