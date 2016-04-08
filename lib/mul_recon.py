@@ -163,7 +163,7 @@ def mulLossCount(lc_ginfo, lc_minfo, lc_maps, lc_dups):
 
 #############################################################################
 
-def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, v, check_nums):
+def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cap, v, check_nums):
 # The basis of the MUL-reconciliation algorithm is that there are now nodes that
 # have more than one possible map. We try all combinations of mappings for these
 # nodes and find which combination results in the most parsimonious mutation score
@@ -234,8 +234,8 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, v, check_nums):
 		return num_groups, len(fixed_groups);
 	# If --checknums is True, we don't do any of the hard calcs, we just return some numbers as info.
 
-	if num_groups > 8:
-		return 0, 0, 0
+	if num_groups > cap:
+		return "OVER", num_groups, 0;
 
 	#combo_ind = list(itertools.product(['','*'], repeat=len(node_ind)));
 	#if v == -2:

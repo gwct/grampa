@@ -78,6 +78,16 @@ def buildMultree(h,p,tree,tree_info):
 
 #############################################################################
 
+def mulPrint(mul_tree, hybrid_clade):
+# For a given MUL-tree, relabels the hybrid clade species to distinguish within tree viewers.
+
+	for spec in hybrid_clade:
+		mul_tree = re.sub(spec + '(?!=\*)', spec + '+', mul_tree);
+		mul_tree = mul_tree.replace("+*", "*");
+	return mul_tree;
+
+#############################################################################
+
 def getBranchLength(bltree, spec_label):
 # Returns the branch length of a species given a newick formatted tree. Used by treeParse.
 	d = 0;
