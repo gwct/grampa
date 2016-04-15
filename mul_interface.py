@@ -7,7 +7,7 @@
 # Fall 2015, Combo algorithm implemented Spring 2016
 #############################################################################
 
-import sys, time, argparse, lib.recontree as RT, lib.reconcore as RC, lib.mul_recon as ALG
+import sys, re, time, argparse, lib.recontree as RT, lib.reconcore as RC, lib.mul_recon as ALG
 
 # Yeast hybrid and copy nodes:
 # 	Hybrid:	"51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO"
@@ -32,8 +32,8 @@ def optParse(errorflag):
 	parser.add_argument("-s", dest="spec_tree", help="A bifurcating species tree in newick format on which to search for polyploid events.");
 	parser.add_argument("-t", dest="spec_tree_type", help="[m or s] -- m: input species tree is a MUL-tree. s: input species tree is a standard tree. Default: s", default="s");
 	parser.add_argument("-g", dest="gene_input", help="A file containing one or more newick formatted gene trees to reconcile. The labels in the gene tree must end with '_[species name]' and contain no other underscores.");
-	parser.add_argument("-h1", dest="h1_spec", help="A comma separated list of species labels that make up the polyploid clade. Example: 'x,y,z y,z'", default="");
-	parser.add_argument("-h2", dest="h2_spec", help="A comma separated list of species labels that make up the copy clade. If spec tree type (-t) is m, this option can be ignored. Example: 'c'", default="");
+	parser.add_argument("-h1", dest="h1_spec", help="A comma separated list of species labels that make up the polyploid clade. Example: 'x,y,z y,z'", default=False);
+	parser.add_argument("-h2", dest="h2_spec", help="A comma separated list of species labels that make up the copy clade. If spec tree type (-t) is m, this option can be ignored. Example: 'c'", default=False);
 	parser.add_argument("-p", dest="group_cap", help="The maxmimum number of groups to consider for any gene tree. Default: 8. Max value: 15.", type=int, default=8);
 	parser.add_argument("-o", dest="output_file", help="Output file name.")
 	parser.add_argument("-v", dest="verbosity", help="An option to control the amount of output printed to the screen. 0: print only a progress bar. 1: print some output. Default: 1", type=int, default=1);
@@ -53,9 +53,9 @@ def optParse(errorflag):
 			RC.errorOut(2, "-m must take values of either m or s");
 			optParse(1);
 
-		if args.spec_tree_type.lower() == "m" and args.h2_spec != None:
-			print "*** Message: With a MUL-tree as the input species tree (-t m) a copy node (-c) is not required.";
-			print "*** Your input for -c will be ignored."
+		if args.spec_tree_type.lower() == "m" and (args.h1_spec != False or args.h2_spec != False):
+			print "*** Message: With a MUL-tree as the input species tree (-t m) input for -h1 and -h2 are not required.";
+			print "*** Your input for -h1 and -h2 will be ignored."
 
 		if args.group_cap > 15:
 			RC.errorOut(3, "For computational reasons, -p should not be set higher than 15.");
@@ -67,11 +67,7 @@ def optParse(errorflag):
 			RC.errorOut(4, "-v must take values of either 0, or 1");
 			optParse(1);
 
-		#if " " in args.h1_spec:
-		#	args.h1_spec = args.h1_spec.split(" ");
-		#ar
-
-		return args.spec_tree, args.spec_tree_type.lower(), args.gene_input, args.h1_spec.replace(" ","").split(","), args.h2_spec.replace(" ","").split(","), args.group_cap, args.output_file, args.verbosity, args.check_num;
+		return args.spec_tree, args.spec_tree_type.lower(), args.gene_input, args.h1_spec, args.h2_spec, args.group_cap, args.output_file, args.verbosity, args.check_num;
 
 	elif errorflag == 1:
 		parser.print_help();
@@ -79,25 +75,51 @@ def optParse(errorflag):
 		sys.exit();
 
 ############################################
+def hInParse(h_list):
+# Parses the input h nodes.
+
+	if h_list:
+		if " " in h_list:
+			h_list = h_list.split(" ");
+			h_list = map(set, [tmp_h.split(",") for tmp_h in h_list]);
+		else:
+			h_list = map(set, [h_list.split(",")]);
+
+	return h_list;
+
+############################################
+def getHNodes(spec_list, tree_dict):
+# Takes input clades or MUL-tree clades and gets the ancestral node or errors out appropriately.
+
+	h_node, h_mono = RT.LCA(spec_list, tree_dict);
+	if not h_mono:
+		RC.errorOut(10, "All hybrid clades specified (either in your input MUL-tree or with h1 and h2) must be monophyletic!")
+		optParse(1);
+	return h_node;
+
+############################################
 #Main Block
 ############################################
 
 starttime = time.time();
 
-spec_file, spec_type, gene_file, hybrid_list, copy_list, cap, outfilename, v, check_nums = optParse(0);
+spec_file, spec_type, gene_file, hybrid_clades, copy_clades, cap, outfilename, v, check_nums = optParse(0);
 # Getting the input parameters.
 
-print hybrid_list;
-
+hybrid_clades = hInParse(hybrid_clades);
+copy_clades = hInParse(copy_clades);
 
 print "# Reading species tree...";
 try:
 	spec_tree = open(spec_file, "r").read().replace("\n", "").replace("\r","");
 	spec_tree = RT.remBranchLength(spec_tree);
+	spec_check = spec_tree.replace("(","").replace(")","").replace(";","").split(",");
 
 	if spec_type == "m":
-		for h in hybrid_list:
+		hybrid_spec = set([tip for tip in spec_check if spec_check.count(tip) != 1]);
+		for h in hybrid_spec:
 			spec_tree = spec_tree.replace(h, h+"*", 1);
+		hybrid_clades = [hybrid_spec];
 	# If the user entered a MUL-tree, some internal re-labeling must be done to those labels that appear twice.
 
 	sinfo, st = RT.treeParseNew(spec_tree,2);
@@ -108,12 +130,11 @@ except:
 # Reading the species tree file.
 
 ### Begin error handling block.
-spec_check = spec_tree.replace("(","").replace(")","").replace(";","").split(",");
-if hybrid_list != [''] and not all(h in spec_check for h in hybrid_list):
+if hybrid_clades and not all(h in spec_check for hybrid_list in hybrid_clades for h in hybrid_list):
 	RC.errorOut(6, "Not all hybrid species (-h1) are present in your species tree!");
-	optParse(1);
+	optParse(1)
 
-if copy_list != [''] and not all(c in spec_check for c in copy_list):
+if copy_clades and not all(c in spec_check for copy_list in copy_clades for c in copy_list):
 	RC.errorOut(7, "Not all copy species (-h2) are present in your species tree!");
 	optParse(1);
 
@@ -121,14 +142,9 @@ if spec_type == 's' and any(spec_check.count(n) > 1 for n in spec_check):
 	RC.errorOut(8, "You have entered a tree type (-t) of 's' but there are labels in your tree that appear more than once!");
 	optParse(1);
 
-if spec_type == 'm' and any(spec_check.count(h) != 2 for h in hybrid_list):
-	RC.errorOut(9, "You have entered a tree type (-t) of 'm', so all your hybrid species (-h1) should appear exactly twice.");
+if spec_type == 'm' and any(spec_check.count(h) not in [1,2] for h in spec_check):
+	RC.errorOut(9, "You have entered a tree type (-t) of 'm', species in your tree should appear exactly once or twice.");
 	optParse(1);
-
-if spec_type == 'm' and any(spec_check.count(s) != 1 for s in spec_check if s not in hybrid_list):
-	RC.errorOut(10, "You have entered a tree type (-t) of 'm', so all non-hybrid species should appear exactly once.");
-	optParse(1);
-
 # Error handling to make sure the species the user entered are all in their species tree.
 ### End error handling block.
 
@@ -156,7 +172,6 @@ outfile.close();
 # Output file prep.
 
 ### Begin input info block!
-hybrid_clade = set(hybrid_list);
 pad = 65
 
 RC.printWrite(outfilename, 1, "# =========================================================================");
@@ -167,23 +182,46 @@ RC.printWrite(outfilename, 1, "# Main results will be written to file:", outfile
 if not check_nums:
 	RC.printWrite(outfilename, 1, "# Detailed results will be written to file:", detoutfilename, pad);
 
-for s in sinfo:
-	s_clade = RT.getClade(s, sinfo);
-	if hybrid_list != [''] and hybrid_clade == set(s_clade):
-		RC.printWrite(outfilename, 1, "# The polyploid clade:", ", ".join(hybrid_list), pad);
-		RC.printWrite(outfilename, 1, "# H1 identified as:", s, pad);
-		hybrid_nodes = [s];
-	if copy_list != [''] and set(copy_list) == set(s_clade) and spec_type != 'm':
-		RC.printWrite(outfilename, 1, "# H2 identified as:", s, pad);
-		copy_nodes = [s];
+## Identifying the hybrid and copy node in the species tree.
+hybrid_nodes = [];
+copy_nodes = [];
 
-if hybrid_list == ['']:
-	hybrid_nodes = sinfo.keys();
-	RC.printWrite(outfilename, 1, "# No H1 node defined", "Searching all possible H1 nodes.", pad);
-if copy_list == ['']:
-	copy_nodes = sinfo.keys();
-	RC.printWrite(outfilename, 1, "# No H2 node defined", "Searching all possible H2 nodes.", pad);
-# Identifying the hybrid and copy node in the species tree.
+if spec_type == 's':
+	RC.printWrite(outfilename, 1, "# Input species tree is:", "MUL-tree", pad);
+
+	if not hybrid_clades:
+		hybrid_nodes = sinfo.keys();
+		RC.printWrite(outfilename, 1, "# No H1 node defined", "Searching all possible H1 nodes.", pad);
+	else:
+		for hybrid_clade in hybrid_clades:
+			hybrid_node = getHNodes(list(hybrid_clade), sinfo);
+			hybrid_nodes.append(hybrid_node);
+		RC.printWrite(outfilename, 1, "# H1 node(s) identified as:", ",".join(hybrid_nodes), pad);
+
+	if not copy_clades:
+		copy_nodes = sinfo.keys();
+		RC.printWrite(outfilename, 1, "# No H2 node defined", "Searching all possible H2 nodes.", pad);
+	else:
+		for copy_clade in copy_clades:
+			copy_node = getHNodes(list(copy_clade), sinfo);
+			copy_nodes.append(copy_node);
+		RC.printWrite(outfilename, 1, "# H2 node(s) identified as:", ",".join(copy_nodes), pad);
+
+elif spec_type == 'm':
+	hybrid_node = getHNodes(list(hybrid_clades[0]), sinfo);
+	copy_node = getHNodes([spec + "*" for spec in list(hybrid_clades[0])], sinfo);
+
+	RC.printWrite(outfilename, 1, "# Input species tree is:", "MUL-tree", pad);
+	RC.printWrite(outfilename, 1, "# H1 node identified as:", hybrid_node, pad);
+	RC.printWrite(outfilename, 1, "# H2 node identified as:", copy_node, pad);
+
+	hybrid_nodes.append(hybrid_node);
+	copy_nodes.append("holder");
+	# If the input species tree type is set to 'm', then no copy nodes need to be specified. A holder variable is
+	# used as a flag so no MUL-tree is built later.
+
+## End hybrid and copy node identification block.
+
 if check_nums:
 	RC.printWrite(outfilename, 1, "# --checknums set. NOT doing reconciliations, just running some numbers for you...");
 RC.printWrite(outfilename, 1, "# ---------");
@@ -207,25 +245,18 @@ hybrid_num = 0;
 gt_groups = {};
 
 for hybrid_node in hybrid_nodes:
-	itercount = itercount + 1;
 	if sinfo[hybrid_node][3] == 'root':
 		continue;
 
 	hybrid_num += 1;
-	RC.printWrite(outfilename, 0, "H1-" + str(hybrid_num) + " Node:\t" + hybrid_node);
+	#RC.printWrite(outfilename, 0, "H1-" + str(hybrid_num) + " Node:\t" + hybrid_node);
 	RC.printWrite(detoutfilename, 0, "H1-" + str(hybrid_num) + " Node:\t" + hybrid_node);
 
 	hybrid_clade = set(RT.getClade(hybrid_node, sinfo));
 
 	group_flag = 1;
 
-	if spec_type == 'm':
-		copy_nodes = ["holder"];
-	# If the input species tree type is set to 'm', then no copy nodes need to be specified. A holder variable is
-	# used as a flag so no MUL-tree is built later.
-
 	for copy_node in copy_nodes:
-		itercount = itercount + 1;
 		if copy_node != "holder":
 		# Build the MUL-tree if the user has entered a non-MUL species tree.
 			if v == 1:
@@ -323,7 +354,7 @@ for hybrid_node in hybrid_nodes:
 			RC.printWrite(detoutfilename, v, "Total parsimony score for MT-" + str(mul_num) + ": " + str(mul_dict[mul_num][2]));
 			RC.printWrite(detoutfilename, v, "# ---------------------------");
 
-			RC.printWrite(outfilename, 0, "MT-" + str(mul_num) + "\t" + copy_node + "\t" + RT.mulPrint(mt, hybrid_clade) + "\t" + str(mul_dict[mul_num][2]));
+			RC.printWrite(outfilename, 0, "MT-" + str(mul_num) + "\t" + hybrid_node + "\t" + copy_node + "\t" + RT.mulPrint(mt, hybrid_clade) + "\t" + str(mul_dict[mul_num][2]));
 
 		# Output total score for the current MUL-tree
 

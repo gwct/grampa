@@ -232,9 +232,9 @@ def LCA(spec_list, treedict):
 	lcp = [t for t in ancs.values()[0] if t in intersect_anc]
 
 	#lcp = sorted(set.intersection(*map(set, ancs.values())), key=lambda x: ancs.values()[0].index(x))
-	monophyletic = 0;
+	monophyletic = False;
 	if set(getClade(lcp[0],treedict)) == set(spec_list):
-		monophyletic = 1;
+		monophyletic = True;
 
 	return lcp[0], monophyletic;
 
