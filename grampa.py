@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #############################################################################
-# Gene tree reconciliation using multi-labeled trees (MUL-trees) to account
-# for polyploid events. This interface handles user options and tree searching.
+# Gene-tree Reconciliation Algorithm with MUL-trees for Polyploid Analysis.
+# This is the main interface and handles user options and tree searching.
 #
 # Gregg Thomas
 # Fall 2015, Combo algorithm implemented Spring 2016
@@ -27,7 +27,7 @@ import sys, re, time, argparse, lib.recontree as RT, lib.reconcore as RC, lib.mu
 def optParse(errorflag):
 # This function handles the command line options.
 
-	parser = argparse.ArgumentParser(description="Tree reconciliation using MUL-trees to find polyploidy events.");
+	parser = argparse.ArgumentParser(description="Gene-tree Reconciliation Algorithm with MUL-trees for Polyploid Analysis.");
 
 	parser.add_argument("-s", dest="spec_tree", help="A bifurcating species tree in newick format on which to search for polyploid events.");
 	parser.add_argument("-t", dest="spec_tree_type", help="[m or s] -- m: input species tree is a MUL-tree. s: input species tree is a standard tree. Default: s", default="s");
