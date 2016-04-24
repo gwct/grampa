@@ -1,0 +1,10 @@
+H1-1 Node:	<5>
+GT-1 to MT-1	0	1	1
+Number of trees skipped: 0
+Total parsimony score for MT-1: 1
+# ---------------------------
+The MUL-tree with the minimum parsimony score is MT-1:	((((a,(x,(y,z)<1>)<2>)<3>,b)<4>,(c*,d*)<5>)<6>,(c,d)<7>)<8>
+Score = 1
+
+Done!
+

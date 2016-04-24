@@ -159,6 +159,12 @@ def mulLossCount(lc_ginfo, lc_minfo, lc_maps, lc_dups):
 			glosses = glosses + 1;
 		loss_count = loss_count + glosses;
 
+	for m in lc_minfo:
+		if lc_minfo[m][3] == 'root' and [m] not in lc_maps.values():
+			loss_count = loss_count + 1;
+			break;
+	# Accounts for cases where h2 puts one clade at the root of the MUL-tree
+
 	return loss_count
 
 #############################################################################
