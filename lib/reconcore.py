@@ -88,8 +88,34 @@ def printWrite(o_name, v, o_line1, o_line2="", pad=0):
 
 #############################################################################
 
+def hErrorCheck(spec_check, sinfo, spec_type, hybrid_clades, copy_clades):
 
+	if hybrid_clades and not all(h in sinfo for hybrid_list in hybrid_clades for h in hybrid_list if not h.isdigit()):
+		errorOut(8, "Not all hybrid species (-h1) are present in your species tree!");
+		return 1
 
+	if hybrid_clades and not all("<" + h + ">" in sinfo for hybrid_list in hybrid_clades for h in hybrid_list if h.isdigit()):
+		errorOut(9, "Not all hybrid nodes (-h1) are present in your species tree!");
+		return 1
 
+	if copy_clades and not all(c in sinfo for copy_list in copy_clades for c in copy_list if not c.isdigit()):
+		errorOut(10, "Not all copy species (-h2) are present in your species tree!");
+		return 1;
+
+	if copy_clades and not all("<" + c + ">" in sinfo for copy_list in copy_clades for c in copy_list if c.isdigit()):
+		errorOut(11, "Not all copy nodes (-h2) are present in your species tree!");
+		return 1;
+
+	if spec_type == 's' and any(spec_check.count(n) > 1 for n in spec_check):
+		errorOut(12, "You have entered a tree type (-t) of 's' but there are labels in your tree that appear more than once!");
+		return 1;
+
+	if spec_type == 'm' and any(spec_check.count(h) not in [1,2] for h in spec_check):
+		errorOut(13, "You have entered a tree type (-t) of 'm', species in your tree should appear exactly once or twice.");
+		return 1;
+
+	return 0;
+
+#############################################################################
 
 

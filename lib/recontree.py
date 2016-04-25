@@ -120,6 +120,7 @@ def remBranchLength(treestring):
 
 	treestring = re.sub('[)][\d.eE-]+:[\d.eE-]+', ')', treestring);
 	treestring = re.sub(':[\d.eE-]+', '', treestring);
+	treestring = re.sub('<[\d]+>', '', treestring);
 
 	return treestring;
 

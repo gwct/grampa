@@ -1,0 +1,13 @@
+H1-1 Node:	<2>
+GT-1	This line may not contain a tree, or if so it may be unrooted -- skipping.
+GT-2	Empty line -- skipping.
+GT-3	This line may not contain a tree, or if so it may be unrooted -- skipping.
+GT-4 to MT-1	0	1	1
+Number of trees skipped: 0
+Total parsimony score for MT-1: 1
+# ---------------------------
+The MUL-tree with the minimum parsimony score is MT-1:	((((a,(x*,(y*,z*)<1>)<2>)<3>,(x+,(y+,z+)<4>)<5>)<6>,b)<7>,(c,d)<8>)<9>
+Score = 1
+
+Done!
+
