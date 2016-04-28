@@ -40,8 +40,14 @@ def optParse(errorflag):
 	parser.add_argument("--checknum", dest="check_num", help="Use this flag in conjunction with all other options to check the number of nodes, groups, and combinations for each gene tree and MUL-tree. In general, gene trees with more than 20 groups to map take a very long time.", action="store_true");
 	parser.add_argument("--labeltree", dest="label_opt", help="If this flag is set, the program will read your species tree and simply print it out with the internal nodes labeled.", action="store_true");
 	parser.add_argument("--multree", dest="mul_opt", help="Use this along with -s and possibly -h1 and -h2 to simply build MUL-trees from those options.", action="store_true");
+	parser.add_argument("--simpson", dest="s_opt", help=argparse.SUPPRESS, action="store_true");
+
 
 	args = parser.parse_args();
+
+	if args.s_opt:
+		RC.simpson();
+		sys.exit();
 
 	if errorflag == 0:
 		if args.label_opt and args.spec_tree == None:
