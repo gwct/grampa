@@ -18,5 +18,5 @@ The labels of the gene tree MUST be formatted such that they end with _[species 
 
 ### Output
 
-GRAMPA creates two main output files: The main one you specify with -o gives the total reconciliation score for each MUL-tree considered, along with information about the trees.
+GRAMPA creates two main output files: The main one you specify with -o gives the total reconciliation score for each MUL-tree considered, along with information about the trees. At the bottom of the file it will display the MUL-tree with the minimum reconciliation score.
 The secondary one (_det) is a detailed output describing the reconciliation scores from each gene tree to each MUL-tree.
