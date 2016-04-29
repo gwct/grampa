@@ -115,7 +115,7 @@ def getHNodes(spec_list, tree_dict):
 
 	h_node, h_mono = RT.LCA(spec_list, tree_dict);
 	if not h_mono:
-		RC.errorOut(14, "All hybrid clades specified (either in your input MUL-tree or with h1 and h2) must be monophyletic!")
+		RC.errorOut(15, "All hybrid clades specified (either in your input MUL-tree or with h1 and h2) must be monophyletic!")
 		optParse(1);
 	return h_node;
 
@@ -204,8 +204,8 @@ if not check_nums and not mul_opt:
 ## Identifying the hybrid and copy node in the species tree.
 hybrid_nodes = [];
 copy_nodes = [];
-print hybrid_clades;
-print copy_clades;
+# print hybrid_clades;
+# print copy_clades;
 if spec_type == 's':
 	RC.printWrite(outfilename, 1, "# Input species tree is:", "Standard", pad);
 
