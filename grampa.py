@@ -328,7 +328,7 @@ for hybrid_node in hybrid_nodes:
 			mul_dict[mul_num] = [mt, hybrid_clade, copy_node, 0];
 			# mul_dict stores, for each mul_tree, the tree, the copy node, and the summed mutation score over all gene trees.
 			if check_nums:
-				RC.printWrite(outfilename, v, "MT-" + str(mul_num) + "\tTree:" + mt + "\tCopyNode:" + copy_node);
+				RC.printWrite(outfilename, v, "MT-" + str(mul_num) + "\tTree:" + RT.mulPrint(mt, hybrid_clade) + "\tCopyNode:" + copy_node);
 			#else:
 			#	RC.printWrite(detoutfilename, v, "MT-" + str(mul_num) + "\tTree:" + mt + "\tCopyNode:" + copy_node);
 
@@ -383,6 +383,8 @@ for hybrid_node in hybrid_nodes:
 			else:
 				num_groups, num_fixed = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, gt_groups[gene_num], cap, v, check_nums);
 				outline += str(num_groups) + "\t" + str(num_fixed) + "\t" + str(2**num_groups);
+				if num_groups > cap:
+					outline += " -- Over Cap";
 				RC.printWrite(outfilename, v, outline);
 				continue;
 			# The call of the reconciliation algorithm! On the current gene tree with the current MUL-tree.
