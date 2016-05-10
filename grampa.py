@@ -282,6 +282,9 @@ for hybrid_node in hybrid_nodes:
 	if sinfo[hybrid_node][3] == 'root':
 		continue;
 
+	if v == -2:
+		print "h1", hybrid_node;
+
 	hybrid_num += 1;
 	#RC.printWrite(outfilename, 0, "H1-" + str(hybrid_num) + " Node:\t" + hybrid_node);
 	if not check_nums and not mul_opt:
@@ -292,6 +295,9 @@ for hybrid_node in hybrid_nodes:
 	group_flag = 1;
 
 	for copy_node in copy_nodes:
+		if v == -2:
+			print "h2", copy_node;
+
 		if copy_node != "holder":
 		# Build the MUL-tree if the user has entered a non-MUL species tree.
 			if v == 1:
@@ -320,7 +326,7 @@ for hybrid_node in hybrid_nodes:
 				RC.printWrite(outfilename, v, outline);
 				continue;
 
-			if v == -3:
+			if v == -2:
 				print "# The MUL-tree w/o internal nodes labeled:", mt_unlabel;
 				print "# The MUL-tree with internal nodes labeled:", mt;
 				print "# ---------------------------";
@@ -353,18 +359,26 @@ for hybrid_node in hybrid_nodes:
 			gene_num = gene_num + 1;
 
 			if gene_tree.strip() == '':
-				RC.printWrite(detoutfilename, v, "GT-" + str(gene_num) + "\tEmpty line -- skipping.");
+				if not check_nums:
+					RC.printWrite(detoutfilename, v, "GT-" + str(gene_num) + "\tEmpty line -- skipping.");
+				num_skipped += 1;
 				continue;
 
 			try:
 				gene_tree = RT.remBranchLength(gene_tree);
 				ginfo, gt = RT.treeParseNew(gene_tree,2);
 			except:
-				RC.printWrite(detoutfilename, v, "GT-" + str(gene_num) + "\tError reading this tree! -- skipping.");
+				if not check_nums:
+					RC.printWrite(detoutfilename, v, "GT-" + str(gene_num) + "\tError reading this tree! -- skipping.");
+				num_skipped += 1;
 				continue;
 
 			if len([g for g in ginfo if ginfo[g][3] != 'tip']) != len([g for g in ginfo if ginfo[g][3] == 'tip']) - 1:
-				RC.printWrite(detoutfilename, v, "GT-" + str(gene_num) + "\tThis line may not contain a tree, or if so it may be unrooted -- skipping.");
+				if not check_nums:
+					RC.printWrite(detoutfilename, v, "GT-" + str(gene_num) + "\tThis line may not contain a tree, or if so it may be unrooted -- skipping.");
+				else:
+					print "GT-" + str(gene_num) + "\tThis line may not contain a tree, or if so it may be unrooted -- skipping.";
+				num_skipped += 1;
 				continue;
 			# Parsing the current gene tree.
 
@@ -377,6 +391,7 @@ for hybrid_node in hybrid_nodes:
 			# Parsing the gene tree.
 			if v == -2:
 				print 'gt:', gt;
+				print "ginfo:", ginfo;
 
 			if not check_nums:
 				dup_score, loss_score, maps = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, gt_groups[gene_num], cap, v, check_nums);
