@@ -63,7 +63,11 @@ def collapseGroups(ginfo, hybrid_clade, v):
 
 	for g in ginfo:
 		if ginfo[g][3] == 'tip':
-			if g[g.index("_")+1:] in hybrid_clade:
+			if v == -2:
+				print g;
+				print g[g.rfind("_")+1:]
+
+			if g[g.rfind("_")+1:] in hybrid_clade:
 				cur_anc = ginfo[g][1];
 				anc_clade = RT.getClade(cur_anc, ginfo);
 				anc_clade.remove(g);
@@ -78,9 +82,9 @@ def collapseGroups(ginfo, hybrid_clade, v):
 		#print g;
 		d1, d2 = RT.getDesc(g, ginfo);
 		d1_clade = RT.getClade(d1, ginfo);
-		d1_spec_clade = [spec[spec.index("_")+1:] for spec in d1_clade];
+		d1_spec_clade = [spec[spec.rfind("_")+1:] for spec in d1_clade];
 		d2_clade = RT.getClade(d2,ginfo);
-		d2_spec_clade = [spec[spec.index("_")+1:] for spec in d2_clade];
+		d2_spec_clade = [spec[spec.rfind("_")+1:] for spec in d2_clade];
 		# The clades for the descendants of both nodes are retrieved, and their corresponding
 		# species are stored.
 
@@ -214,7 +218,7 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cap, v, check_nums)
 	fixed_groups = [];
 
 	for group in cur_groups:
-		group_sis = [spec[spec.index("_")+1:] for spec in group[1]];
+		group_sis = [spec[spec.rfind("_")+1:] for spec in group[1]];
 
 		if all(spec in sisters[''] for spec in group_sis):
 			fixed_groups.append([group[0],'']);
@@ -270,7 +274,7 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cap, v, check_nums)
 		maps = {};
 		for g in ginfo:
 			if ginfo[g][3] == 'tip':
-				speclabel = g[g.index("_")+1:];
+				speclabel = g[g.rfind("_")+1:];
 				if g in group_map:
 					maps[g] = [speclabel];
 				# If the node is in a hybrid clade, use the map in the current combination.

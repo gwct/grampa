@@ -392,7 +392,7 @@ for hybrid_node in hybrid_nodes:
 			if v == -2:
 				print 'gt:', gt;
 				print "ginfo:", ginfo;
-
+				sys.exit();
 			if not check_nums:
 				dup_score, loss_score, maps = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, gt_groups[gene_num], cap, v, check_nums);
 			else:
