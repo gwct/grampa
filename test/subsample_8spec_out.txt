@@ -1,0 +1,26 @@
+# =========================================================================
+#			MUL-tree reconciliation
+#			05.16.2016 | 01:15:20
+# The input species tree with internal nodes labeled:            (SCHPO,((KLULA,LACTH)<1>,((TORDC,ZYGRO)<2>,(TETPH,(NAUDC,YEAST)<3>)<4>)<5>)<6>)<7>
+# Main results will be written to file:                          subsample_8spec_out.txt
+# Detailed results will be written to file:                      subsample_8spec_out_det.txt
+# Input species tree is:                                         Standard
+# H1 node(s) identified as:                                      <4>
+# No H2 node defined                                             Searching all possible H2 nodes.
+# ---------
+MT-1	<4>	TORDC	(SCHPO,((KLULA,LACTH)<1>,(((TORDC,(TETPH*,(NAUDC*,YEAST*)<2>)<3>)<4>,ZYGRO)<5>,(TETPH+,(NAUDC+,YEAST+)<6>)<7>)<8>)<9>)<10>	52246
+MT-2	<4>	KLULA	(SCHPO,(((KLULA,(TETPH*,(NAUDC*,YEAST*)<1>)<2>)<3>,LACTH)<4>,((TORDC,ZYGRO)<5>,(TETPH+,(NAUDC+,YEAST+)<6>)<7>)<8>)<9>)<10>	67131
+MT-3	<4>	SCHPO	((SCHPO,(TETPH*,(NAUDC*,YEAST*)<1>)<2>)<3>,((KLULA,LACTH)<4>,((TORDC,ZYGRO)<5>,(TETPH+,(NAUDC+,YEAST+)<6>)<7>)<8>)<9>)<10>	63770
+MT-4	<4>	<2>	(SCHPO,((KLULA,LACTH)<1>,(((TORDC,ZYGRO)<2>,(TETPH*,(NAUDC*,YEAST*)<3>)<4>)<5>,(TETPH+,(NAUDC+,YEAST+)<6>)<7>)<8>)<9>)<10>	60802
+MT-5	<4>	<4>	(SCHPO,((KLULA,LACTH)<1>,((TORDC,ZYGRO)<2>,((TETPH+,(NAUDC+,YEAST+)<3>)<4>,(TETPH*,(NAUDC*,YEAST*)<5>)<6>)<7>)<8>)<9>)<10>	55815
+MT-6	<4>	<1>	(SCHPO,(((KLULA,LACTH)<1>,(TETPH*,(NAUDC*,YEAST*)<2>)<3>)<4>,((TORDC,ZYGRO)<5>,(TETPH+,(NAUDC+,YEAST+)<6>)<7>)<8>)<9>)<10>	71149
+MT-7	<4>	<7>	((SCHPO,((KLULA,LACTH)<1>,((TORDC,ZYGRO)<2>,(TETPH+,(NAUDC+,YEAST+)<3>)<4>)<5>)<6>)<7>,(TETPH*,(NAUDC*,YEAST*)<8>)<9>)<10>	61390
+MT-8	<4>	ZYGRO	(SCHPO,((KLULA,LACTH)<1>,((TORDC,(ZYGRO,(TETPH*,(NAUDC*,YEAST*)<2>)<3>)<4>)<5>,(TETPH+,(NAUDC+,YEAST+)<6>)<7>)<8>)<9>)<10>	51393
+MT-9	<4>	<6>	(SCHPO,(((KLULA,LACTH)<1>,((TORDC,ZYGRO)<2>,(TETPH+,(NAUDC+,YEAST+)<3>)<4>)<5>)<6>,(TETPH*,(NAUDC*,YEAST*)<7>)<8>)<9>)<10>	58460
+MT-10	<4>	LACTH	(SCHPO,((KLULA,(LACTH,(TETPH*,(NAUDC*,YEAST*)<1>)<2>)<3>)<4>,((TORDC,ZYGRO)<5>,(TETPH+,(NAUDC+,YEAST+)<6>)<7>)<8>)<9>)<10>	67340
+MT-11	<4>	<5>	(SCHPO,((KLULA,LACTH)<1>,(((TORDC,ZYGRO)<2>,(TETPH+,(NAUDC+,YEAST+)<3>)<4>)<5>,(TETPH*,(NAUDC*,YEAST*)<6>)<7>)<8>)<9>)<10>	60802
+# ---------
+# The MUL-tree with the minimum parsimony score is MT-8:	(SCHPO,((KLULA,LACTH)<1>,((TORDC,(ZYGRO,(TETPH*,(NAUDC*,YEAST*)<2>)<3>)<4>)<5>,(TETPH+,(NAUDC+,YEAST+)<6>)<7>)<8>)<9>)<10>
+# Score = 51393
+# Total execution time: 1748.62 seconds.
+# =========================================================================
