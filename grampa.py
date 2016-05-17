@@ -144,7 +144,7 @@ try:
 		hybrid_clades = [hybrid_spec];
 	# If the user entered a MUL-tree, some internal re-labeling must be done to those labels that appear twice.
 
-	sinfo, st = RT.treeParseNew(spec_tree,2);
+	sinfo, st = RT.treeParse(spec_tree);
 	# Parsing of the species tree.
 
 except:
@@ -279,7 +279,7 @@ hybrid_num = 0;
 gt_groups = {};
 
 for hybrid_node in hybrid_nodes:
-	if sinfo[hybrid_node][3] == 'root':
+	if sinfo[hybrid_node][2] == 'root':
 		continue;
 
 	if v == -2:
@@ -319,10 +319,10 @@ for hybrid_node in hybrid_nodes:
 				continue;
 			# Nodes within the hybrid subtree cannot be copy nodes.
 
-			minfo, mt = RT.treeParseNew(mt_unlabel,2);
+			minfo, mt = RT.treeParse(mt_unlabel);
 			# Labeling the MUL-tree as usual with RT.
 			if mul_opt:
-				outline = hybrid_node + "\t" + copy_node + "\t" + mt;
+				outline = hybrid_node + "\t" + copy_node + "\t" + RT.mulPrint(mt, hybrid_clade);
 				RC.printWrite(outfilename, v, outline);
 				continue;
 
@@ -366,14 +366,14 @@ for hybrid_node in hybrid_nodes:
 
 			try:
 				gene_tree = RT.remBranchLength(gene_tree);
-				ginfo, gt = RT.treeParseNew(gene_tree,2);
+				ginfo, gt = RT.treeParse(gene_tree);
 			except:
 				if not check_nums:
 					RC.printWrite(detoutfilename, v, "GT-" + str(gene_num) + "\tError reading this tree! -- skipping.");
 				num_skipped += 1;
 				continue;
 
-			if len([g for g in ginfo if ginfo[g][3] != 'tip']) != len([g for g in ginfo if ginfo[g][3] == 'tip']) - 1:
+			if len([g for g in ginfo if ginfo[g][2] != 'tip']) != len([g for g in ginfo if ginfo[g][2] == 'tip']) - 1:
 				if not check_nums:
 					RC.printWrite(detoutfilename, v, "GT-" + str(gene_num) + "\tThis line may not contain a tree, or if so it may be unrooted -- skipping.");
 				else:
@@ -390,6 +390,7 @@ for hybrid_node in hybrid_nodes:
 			outline = "GT-" + str(gene_num) + " to MT-" + str(mul_num) + "\t";
 			# Parsing the gene tree.
 			if v == -2:
+				print 'gene tree:', gene_tree;
 				print 'gt:', gt;
 				print "ginfo:", ginfo;
 				sys.exit();

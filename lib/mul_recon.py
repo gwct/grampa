@@ -20,7 +20,7 @@ def reconLCA(lca_ginfo, sinfo, lca_maps):
 	while [] in lca_maps.values():
 	# To get the maps, a single post-order traversal of the tree is done.
 		for g in lca_ginfo:
-			if lca_ginfo[g][3] == 'tip' or lca_maps[g] != []:
+			if lca_ginfo[g][2] == 'tip' or lca_maps[g] != []:
 				continue;
 			# If the node is a tip, a map is already defined.
 
@@ -53,7 +53,7 @@ def collapseGroups(ginfo, hybrid_clade, v):
 
 	internal_nodes = [];
 	for g in ginfo:
-		if ginfo[g][3] != 'tip':
+		if ginfo[g][2] != 'tip':
 			internal_nodes.append(int(g.replace("<","").replace(">","")));
 	internal_nodes = sorted(internal_nodes);
 	# Sort the internal nodes for a post order traversal.
@@ -62,10 +62,10 @@ def collapseGroups(ginfo, hybrid_clade, v):
 	groups = {};
 
 	for g in ginfo:
-		if ginfo[g][3] == 'tip':
-			if v == -2:
-				print g;
-				print g[g.rfind("_")+1:]
+		if ginfo[g][2] == 'tip':
+			# if v == -2:
+			# 	print g;
+			# 	print g[g.rfind("_")+1:]
 
 			if g[g.rfind("_")+1:] in hybrid_clade:
 				cur_anc = ginfo[g][1];
@@ -78,8 +78,8 @@ def collapseGroups(ginfo, hybrid_clade, v):
 	for g in internal_nodes:
 		g = "<" + str(g) + ">";
 		# Next, for any non-tip node, we find out if the species that define it can be grouped
-		# or fixed.
-		#print g;
+
+		# print g;
 		d1, d2 = RT.getDesc(g, ginfo);
 		d1_clade = RT.getClade(d1, ginfo);
 		d1_spec_clade = [spec[spec.rfind("_")+1:] for spec in d1_clade];
@@ -150,7 +150,7 @@ def mulLossCount(lc_ginfo, lc_minfo, lc_maps, lc_dups):
 
 	loss_count = 0;
 	for g in lc_ginfo:
-		if lc_ginfo[g][3] == 'root':
+		if lc_ginfo[g][2] == 'root':
 			continue;
 		curanc = lc_ginfo[g][1];
 		ancdepth = len(RT.nodeDepth(lc_maps[curanc][0],lc_minfo));
@@ -164,7 +164,7 @@ def mulLossCount(lc_ginfo, lc_minfo, lc_maps, lc_dups):
 		loss_count = loss_count + glosses;
 
 	for m in lc_minfo:
-		if lc_minfo[m][3] == 'root' and [m] not in lc_maps.values():
+		if lc_minfo[m][2] == 'root' and [m] not in lc_maps.values():
 			loss_count = loss_count + 1;
 			break;
 	# Accounts for cases where h2 puts one clade at the root of the MUL-tree
@@ -273,7 +273,7 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cap, v, check_nums)
 		# Now we do LCA mapping for the current combination of maps for the hybrid clade species.
 		maps = {};
 		for g in ginfo:
-			if ginfo[g][3] == 'tip':
+			if ginfo[g][2] == 'tip':
 				speclabel = g[g.rfind("_")+1:];
 				if g in group_map:
 					maps[g] = [speclabel];

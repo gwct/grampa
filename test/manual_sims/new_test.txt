@@ -1,0 +1,24 @@
+# =========================================================================
+#			MUL-tree reconciliation
+#			05.16.2016 | 10:39:48
+# The input species tree with internal nodes labeled:            (((a,(x,(y,z)<1>)<2>)<3>,b)<4>,(c,d)<5>)<6>
+# Main results will be written to file:                          new_test.txt
+# Detailed results will be written to file:                      new_test_det.txt
+# Input species tree is:                                         Standard
+# H1 node(s) identified as:                                      <2>
+# No H2 node defined                                             Searching all possible H2 nodes.
+# ---------
+MT-1	<2>	a	((((a,(x*,(y*,z*)<1>)<2>)<3>,(x+,(y+,z+)<4>)<5>)<6>,b)<7>,(c,d)<8>)<9>	120
+MT-2	<2>	c	(((a,(x+,(y+,z+)<1>)<2>)<3>,b)<4>,((c,(x*,(y*,z*)<5>)<6>)<7>,d)<8>)<9>	97
+MT-3	<2>	b	(((a,(x+,(y+,z+)<1>)<2>)<3>,(b,(x*,(y*,z*)<4>)<5>)<6>)<7>,(c,d)<8>)<9>	131
+MT-4	<2>	d	(((a,(x+,(y+,z+)<1>)<2>)<3>,b)<4>,(c,(d,(x*,(y*,z*)<5>)<6>)<7>)<8>)<9>	77
+MT-5	<2>	<3>	((((a,(x+,(y+,z+)<1>)<2>)<3>,(x*,(y*,z*)<4>)<5>)<6>,b)<7>,(c,d)<8>)<9>	120
+MT-6	<2>	<2>	(((a,((x+,(y+,z+)<1>)<2>,(x*,(y*,z*)<3>)<4>)<5>)<6>,b)<7>,(c,d)<8>)<9>	146
+MT-7	<2>	<6>	((((a,(x+,(y+,z+)<1>)<2>)<3>,b)<4>,(c,d)<5>)<6>,(x*,(y*,z*)<7>)<8>)<9>	133
+MT-8	<2>	<4>	((((a,(x+,(y+,z+)<1>)<2>)<3>,b)<4>,(x*,(y*,z*)<5>)<6>)<7>,(c,d)<8>)<9>	119
+MT-9	<2>	<5>	(((a,(x+,(y+,z+)<1>)<2>)<3>,b)<4>,((c,d)<5>,(x*,(y*,z*)<6>)<7>)<8>)<9>	96
+# ---------
+# The MUL-tree with the minimum parsimony score is MT-4:	(((a,(x+,(y+,z+)<1>)<2>)<3>,b)<4>,(c,(d,(x*,(y*,z*)<5>)<6>)<7>)<8>)<9>
+# Score = 77
+# Total execution time: 1.753 seconds.
+# =========================================================================
