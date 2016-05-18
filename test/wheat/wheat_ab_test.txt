@@ -1,0 +1,34 @@
+# =========================================================================
+#			MUL-tree reconciliation
+#			05.17.2016 | 02:09:53
+# The input species tree with internal nodes labeled:            ((((((TURA,TAES)<1>,ATAU)<2>,HVUL)<3>,BDIS)<4>,(OSAT,LPER)<5>)<6>,((ZMAY,SBIC)<7>,SITA)<8>)<9>
+# Main results will be written to file:                          wheat_ab_test.txt
+# Detailed results will be written to file:                      wheat_ab_test_det.txt
+# Input species tree is:                                         Standard
+# H1 node(s) identified as:                                      TAES
+# No H2 node defined                                             Searching all possible H2 nodes.
+# ---------
+MT-1	TAES	TAES	((((((TURA,(TAES+,TAES*)<1>)<2>,ATAU)<3>,HVUL)<4>,BDIS)<5>,(OSAT,LPER)<6>)<7>,((ZMAY,SBIC)<8>,SITA)<9>)<10>	112939
+MT-2	TAES	TURA	(((((((TURA,TAES*)<1>,TAES+)<2>,ATAU)<3>,HVUL)<4>,BDIS)<5>,(OSAT,LPER)<6>)<7>,((ZMAY,SBIC)<8>,SITA)<9>)<10>	117885
+MT-3	TAES	ZMAY	((((((TURA,TAES+)<1>,ATAU)<2>,HVUL)<3>,BDIS)<4>,(OSAT,LPER)<5>)<6>,(((ZMAY,TAES*)<7>,SBIC)<8>,SITA)<9>)<10>	125848
+MT-4	TAES	OSAT	((((((TURA,TAES+)<1>,ATAU)<2>,HVUL)<3>,BDIS)<4>,((OSAT,TAES*)<5>,LPER)<6>)<7>,((ZMAY,SBIC)<8>,SITA)<9>)<10>	125037
+MT-5	TAES	<3>	(((((((TURA,TAES+)<1>,ATAU)<2>,HVUL)<3>,TAES*)<4>,BDIS)<5>,(OSAT,LPER)<6>)<7>,((ZMAY,SBIC)<8>,SITA)<9>)<10>	119087
+MT-6	TAES	SITA	((((((TURA,TAES+)<1>,ATAU)<2>,HVUL)<3>,BDIS)<4>,(OSAT,LPER)<5>)<6>,((ZMAY,SBIC)<7>,(SITA,TAES*)<8>)<9>)<10>	124752
+MT-7	TAES	BDIS	((((((TURA,TAES+)<1>,ATAU)<2>,HVUL)<3>,(BDIS,TAES*)<4>)<5>,(OSAT,LPER)<6>)<7>,((ZMAY,SBIC)<8>,SITA)<9>)<10>	122840
+MT-8	TAES	<4>	(((((((TURA,TAES+)<1>,ATAU)<2>,HVUL)<3>,BDIS)<4>,TAES*)<5>,(OSAT,LPER)<6>)<7>,((ZMAY,SBIC)<8>,SITA)<9>)<10>	123248
+MT-9	TAES	SBIC	((((((TURA,TAES+)<1>,ATAU)<2>,HVUL)<3>,BDIS)<4>,(OSAT,LPER)<5>)<6>,((ZMAY,(SBIC,TAES*)<7>)<8>,SITA)<9>)<10>	126517
+MT-10	TAES	ATAU	((((((TURA,TAES+)<1>,(ATAU,TAES*)<2>)<3>,HVUL)<4>,BDIS)<5>,(OSAT,LPER)<6>)<7>,((ZMAY,SBIC)<8>,SITA)<9>)<10>	118441
+MT-11	TAES	<1>	(((((((TURA,TAES+)<1>,TAES*)<2>,ATAU)<3>,HVUL)<4>,BDIS)<5>,(OSAT,LPER)<6>)<7>,((ZMAY,SBIC)<8>,SITA)<9>)<10>	117885
+MT-12	TAES	<7>	((((((TURA,TAES+)<1>,ATAU)<2>,HVUL)<3>,BDIS)<4>,(OSAT,LPER)<5>)<6>,(((ZMAY,SBIC)<7>,TAES*)<8>,SITA)<9>)<10>	127148
+MT-13	TAES	HVUL	((((((TURA,TAES+)<1>,ATAU)<2>,(HVUL,TAES*)<3>)<4>,BDIS)<5>,(OSAT,LPER)<6>)<7>,((ZMAY,SBIC)<8>,SITA)<9>)<10>	120421
+MT-14	TAES	<8>	((((((TURA,TAES+)<1>,ATAU)<2>,HVUL)<3>,BDIS)<4>,(OSAT,LPER)<5>)<6>,(((ZMAY,SBIC)<7>,SITA)<8>,TAES*)<9>)<10>	126585
+MT-15	TAES	<9>	(((((((TURA,TAES+)<1>,ATAU)<2>,HVUL)<3>,BDIS)<4>,(OSAT,LPER)<5>)<6>,((ZMAY,SBIC)<7>,SITA)<8>)<9>,TAES*)<10>	118681
+MT-16	TAES	<6>	(((((((TURA,TAES+)<1>,ATAU)<2>,HVUL)<3>,BDIS)<4>,(OSAT,LPER)<5>)<6>,TAES*)<7>,((ZMAY,SBIC)<8>,SITA)<9>)<10>	125616
+MT-17	TAES	LPER	((((((TURA,TAES+)<1>,ATAU)<2>,HVUL)<3>,BDIS)<4>,(OSAT,(LPER,TAES*)<5>)<6>)<7>,((ZMAY,SBIC)<8>,SITA)<9>)<10>	124276
+MT-18	TAES	<5>	((((((TURA,TAES+)<1>,ATAU)<2>,HVUL)<3>,BDIS)<4>,((OSAT,LPER)<5>,TAES*)<6>)<7>,((ZMAY,SBIC)<8>,SITA)<9>)<10>	124799
+MT-19	TAES	<2>	(((((((TURA,TAES+)<1>,ATAU)<2>,TAES*)<3>,HVUL)<4>,BDIS)<5>,(OSAT,LPER)<6>)<7>,((ZMAY,SBIC)<8>,SITA)<9>)<10>	106204
+# ---------
+# The MUL-tree with the minimum parsimony score is MT-19:	(((((((TURA,TAES+)<1>,ATAU)<2>,TAES*)<3>,HVUL)<4>,BDIS)<5>,(OSAT,LPER)<6>)<7>,((ZMAY,SBIC)<8>,SITA)<9>)<10>
+# Score = 106204
+# Total execution time: 10330.66 seconds.
+# =========================================================================
