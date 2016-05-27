@@ -27,17 +27,17 @@ import sys, re, time, argparse, lib.recontree as RT, lib.reconcore as RC, lib.mu
 def optParse(errorflag):
 # This function handles the command line options.
 
-	parser = argparse.ArgumentParser(description="Gene-tree Reconciliation Algorithm with MUL-trees for Polyploid Analysis.");
+	parser = argparse.ArgumentParser(description="GRAMPA: Gene-tree Reconciliation Algorithm with MUL-trees for Polyploid Analysis.");
 
-	parser.add_argument("-s", dest="spec_tree", help="A bifurcating species tree in newick format on which to search for polyploid events.");
+	parser.add_argument("-s", dest="spec_tree", help="A file containing a bifurcating species tree in newick format on which to search for polyploid events.");
 	parser.add_argument("-t", dest="spec_tree_type", help="[m or s] -- m: input species tree is a MUL-tree. s: input species tree is a standard tree. Default: s", default="s");
 	parser.add_argument("-g", dest="gene_input", help="A file containing one or more newick formatted gene trees to reconcile. The labels in the gene tree must end with '_[species name]' and contain no other underscores.");
 	parser.add_argument("-h1", dest="h1_spec", help="A comma separated list of species labels that make up the polyploid clade. Example: 'x,y,z y,z'", default=False);
 	parser.add_argument("-h2", dest="h2_spec", help="A comma separated list of species labels that make up the copy clade. If spec tree type (-t) is m, this option can be ignored. Example: 'c'", default=False);
-	parser.add_argument("-p", dest="group_cap", help="The maxmimum number of groups to consider for any gene tree. Default: 8. Max value: 15.", type=int, default=8);
+	parser.add_argument("-c", dest="group_cap", help="The maxmimum number of groups to consider for any gene tree. Default: 8. Max value: 15.", type=int, default=8);
 	parser.add_argument("-o", dest="output_file", help="Output file name.")
 	parser.add_argument("-v", dest="verbosity", help="An option to control the amount of output printed to the screen. 0: print only a progress bar. 1: print some output. Default: 1", type=int, default=1);
-	parser.add_argument("--checknum", dest="check_num", help="Use this flag in conjunction with all other options to check the number of nodes, groups, and combinations for each gene tree and MUL-tree. In general, gene trees with more than 20 groups to map take a very long time.", action="store_true");
+	parser.add_argument("--checknum", dest="check_num", help="Use this flag in conjunction with all other options to check the number of nodes, groups, and combinations for each gene tree and MUL-tree. In general, gene trees with more than 15 groups to map take a very long time.", action="store_true");
 	parser.add_argument("--labeltree", dest="label_opt", help="If this flag is set, the program will read your species tree and simply print it out with the internal nodes labeled.", action="store_true");
 	parser.add_argument("--multree", dest="mul_opt", help="Use this along with -s and possibly -h1 and -h2 to simply build MUL-trees from those options.", action="store_true");
 	parser.add_argument("--simpson", dest="s_opt", help=argparse.SUPPRESS, action="store_true");
