@@ -104,7 +104,7 @@ def getBranchLength(bltree, spec_label):
 
 				indcheck = [opind,cpind,coind];
 
-				for a in xrange(len(indcheck)):
+				for a in range(len(indcheck)):
 					if indcheck[a] == -1:
 						indcheck[a] = 10000;
 
@@ -229,8 +229,8 @@ def LCA(spec_list, treedict):
 			curanc = treedict[curanc][1];
 			ancs[spec].append(curanc);
 
-	intersect_anc = set.intersection(*map(set, ancs.values()))
-	lcp = [t for t in ancs.values()[0] if t in intersect_anc]
+	intersect_anc = set.intersection(*list(map(set, list(ancs.values()))))
+	lcp = [t for t in list(ancs.values())[0] if t in intersect_anc]
 
 	#lcp = sorted(set.intersection(*map(set, ancs.values())), key=lambda x: ancs.values()[0].index(x))
 	monophyletic = False;
@@ -370,9 +370,9 @@ def treeParse(tree, debug=0):
 		# Ancestral labels are always to the right of the node label in the text of the tree, so we start our scan from the node label
 
 		if debug == 1:
-			print node;
-			print anc_tree;
-			print "---";
+			print(node);
+			print(anc_tree);
+			print("---");
 
 		cpar_count = 0;
 		cpar_need = 1;
@@ -395,26 +395,26 @@ def treeParse(tree, debug=0):
 
 	if debug == 1:
 	# Debugging options to print things out
-		print "\ntree:\n" + tree + "\n";
-		print "new_tree:\n" + new_tree + "\n";
-		print "topology:\n" + topo + "\n";
-		print "nodes:";
-		print nodes;
-		print
-		print "bl:";
-		print bl;
-		print
-		print "supports:";
-		print supports;
-		print
-		print "ancs:";
-		print ancs;
-		print
-		print "-----------------------------------";
-		print
-		print "nofo:";
-		print nofo;
-		print
+		print("\ntree:\n" + tree + "\n");
+		print("new_tree:\n" + new_tree + "\n");
+		print("topology:\n" + topo + "\n");
+		print("nodes:");
+		print(nodes);
+		print()
+		print("bl:");
+		print(bl);
+		print()
+		print("supports:");
+		print(supports);
+		print()
+		print("ancs:");
+		print(ancs);
+		print()
+		print("-----------------------------------");
+		print()
+		print("nofo:");
+		print(nofo);
+		print()
 
 	return nofo, topo;
 

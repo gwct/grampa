@@ -17,7 +17,7 @@ def reconLCA(lca_ginfo, sinfo, lca_maps):
 		dups[g] = 0;
 	#The node classification of the gene tree. [key]:[value] -> [gene tree node]:[1,0]
 
-	while [] in lca_maps.values():
+	while [] in list(lca_maps.values()):
 	# To get the maps, a single post-order traversal of the tree is done.
 		for g in lca_ginfo:
 			if lca_ginfo[g][2] == 'tip' or lca_maps[g] != []:
@@ -119,9 +119,9 @@ def collapseGroups(ginfo, hybrid_clade, v):
 	# Restructures the final groups and adds singles.
 
 	if v == -2:
-		print "singles:", singles;
-		print "groups:", groups;
-		print "final_groups:", final_groups;
+		print("singles:", singles);
+		print("groups:", groups);
+		print("final_groups:", final_groups);
 
 	return final_groups;
 
@@ -164,7 +164,7 @@ def mulLossCount(lc_ginfo, lc_minfo, lc_maps, lc_dups):
 		loss_count = loss_count + glosses;
 
 	for m in lc_minfo:
-		if lc_minfo[m][2] == 'root' and [m] not in lc_maps.values():
+		if lc_minfo[m][2] == 'root' and [m] not in list(lc_maps.values()):
 			loss_count = loss_count + 1;
 			break;
 	# Accounts for cases where h2 puts one clade at the root of the MUL-tree
@@ -212,7 +212,7 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cap, v, check_nums)
 	# clade's corresponding map. If there are no sisters, it stores an empty list.
 
 	if v == -2:
-		print "sisters", sisters;
+		print("sisters", sisters);
 
 	groups = [];
 	fixed_groups = [];
@@ -231,14 +231,14 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cap, v, check_nums)
 	# can fix the mapping of that node.
 
 	if v == -2:
-		print "groups:",groups;
-		print "fixed:",fixed_groups;
+		print("groups:",groups);
+		print("fixed:",fixed_groups);
 
 	###############
 
 	num_groups = len(groups);
 	if v == -2:
-		print "num groups:", num_groups;
+		print("num groups:", num_groups);
 
 	if check_nums:
 		return num_groups, len(fixed_groups);
@@ -267,7 +267,7 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cap, v, check_nums)
 		# This adds the fixed maps onto the current combination of group mappings.
 
 		if v == -2:
-			print map_num, "curmap:", group_map;
+			print(map_num, "curmap:", group_map);
 			map_num = map_num + 1;
 
 		# Now we do LCA mapping for the current combination of maps for the hybrid clade species.

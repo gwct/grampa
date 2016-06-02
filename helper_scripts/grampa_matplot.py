@@ -1,9 +1,9 @@
 import sys
 
 if len(sys.argv) != 3 or "-h" in sys.argv:
-	print "\n# Usage: grampa_plot.py [input file] [output file]";
-	print "# ---> [input file] must be a grampa output file."
-	print "# ---> [output file] will be an html file with your plot.\n"
+	print("\n# Usage: grampa_plot.py [input file] [output file]");
+	print("# ---> [input file] must be a grampa output file.")
+	print("# ---> [output file] will be an html file with your plot.\n")
 	sys.exit();
 
 infilename = sys.argv[1];
@@ -30,9 +30,9 @@ sorted_vals = [];
 for key in sorted_keys:
 	sorted_vals.append(score_dict[key]);
 
-print sorted_keys;
-x = range(len(sorted_vals));
-print sorted_vals;
+print(sorted_keys);
+x = list(range(len(sorted_vals)));
+print(sorted_vals);
 plt.xticks(x, sorted_keys);
 locs, labels = plt.xticks()
 plt.setp(labels, rotation=90)

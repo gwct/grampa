@@ -49,14 +49,14 @@ def optParse(errorflag):
 
 		elif args.label_opt:
 			if args.verbosity != -1:
-				print "\n*** Message: --labeltree is set to True! Just labeling your species (-s) tree. All other options will be ignored!";
+				print("\n*** Message: --labeltree is set to True! Just labeling your species (-s) tree. All other options will be ignored!");
 		elif args.mul_opt and args.spec_tree == None:
 			RC.errorOut(2, "When --multree is set, -s must also be set");
 			optParse(1);
 
 		elif args.mul_opt:
 			if args.verbosity != -1:
-				print "\n*** Mesage: --multree is set to True! Just printing out all the MUL-trees you requested. All options but -s, -h1, and -h2 will be ignored!";
+				print("\n*** Mesage: --multree is set to True! Just printing out all the MUL-trees you requested. All options but -s, -h1, and -h2 will be ignored!");
 
 		else:
 			if args.spec_tree == None or args.spec_tree_type == None or args.gene_input == None or args.h1_spec == None:
@@ -71,14 +71,14 @@ def optParse(errorflag):
 				optParse(1);
 
 			if args.spec_tree_type.lower() == "m" and (args.h1_spec != False or args.h2_spec != False):
-				print "*** Message: With a MUL-tree as the input species tree (-t m) input for -h1 and -h2 are not required.";
-				print "*** Your input for -h1 and -h2 will be ignored."
+				print("*** Message: With a MUL-tree as the input species tree (-t m) input for -h1 and -h2 are not required.");
+				print("*** Your input for -h1 and -h2 will be ignored.")
 
 			if args.group_cap > 15:
 				RC.errorOut(5, "For computational reasons, -p should not be set higher than 15.");
 				optParse(1);
 			elif args.group_cap >=10:
-				print "*** Warning! With -p set to 10 or higher, some gene trees may take a very long time to reconcile!";
+				print("*** Warning! With -p set to 10 or higher, some gene trees may take a very long time to reconcile!");
 
 			if args.verbosity not in [0,1,-1,-2]:
 				RC.errorOut(6, "-v must take values of either 0, or 1");
@@ -88,7 +88,7 @@ def optParse(errorflag):
 
 	elif errorflag == 1:
 		parser.print_help();
-		print
+		print()
 		sys.exit();
 
 ############################################
@@ -98,9 +98,9 @@ def hInParse(h_list):
 	if h_list:
 		if " " in h_list:
 			h_list = h_list.split(" ");
-			h_list = map(set, [tmp_h.split(",") for tmp_h in h_list]);
+			h_list = list(map(set, [tmp_h.split(",") for tmp_h in h_list]));
 		else:
-			h_list = map(set, [h_list.split(",")]);
+			h_list = list(map(set, [h_list.split(",")]));
 
 	return h_list;
 
@@ -127,7 +127,7 @@ hybrid_clades = hInParse(hybrid_clades);
 copy_clades = hInParse(copy_clades);
 
 if v != -1:
-	print "# Reading species tree...";
+	print("# Reading species tree...");
 try:
 	spec_tree = open(spec_file, "r").read().replace("\n", "").replace("\r","");
 	spec_tree = RT.remBranchLength(spec_tree);
@@ -150,8 +150,8 @@ except:
 
 if lab_opt:
 	if v != -1:
-		print "# The input species tree with internal nodes labeled:";
-		print st + "\n";
+		print("# The input species tree with internal nodes labeled:");
+		print(st + "\n");
 	sys.exit();
 # The output if --labeltree is set.
 
@@ -162,7 +162,7 @@ if RC.hErrorCheck(spec_check, sinfo, spec_type, hybrid_clades, copy_clades) == 1
 
 if not mul_opt:
 	if v != -1:
-		print "# Reading gene trees from file...";
+		print("# Reading gene trees from file...");
 	try:
 		gene_trees = open(gene_file, "r").readlines();
 	except:
@@ -212,7 +212,7 @@ if spec_type == 's':
 	RC.printWrite(outfilename, main_v, "# Input species tree is:", "Standard", pad);
 
 	if not hybrid_clades:
-		hybrid_nodes = sinfo.keys();
+		hybrid_nodes = list(sinfo.keys());
 		RC.printWrite(outfilename, main_v, "# No H1 node defined", "Searching all possible H1 nodes.", pad);
 	else:
 		for hybrid_clade in hybrid_clades:
@@ -227,7 +227,7 @@ if spec_type == 's':
 		RC.printWrite(outfilename, main_v, "# H1 node(s) identified as:", ",".join(hybrid_nodes), pad);
 
 	if not copy_clades:
-		copy_nodes = sinfo.keys();
+		copy_nodes = list(sinfo.keys());
 		RC.printWrite(outfilename, main_v, "# No H2 node defined", "Searching all possible H2 nodes.", pad);
 	else:
 		for copy_clade in copy_clades:
@@ -265,7 +265,7 @@ RC.printWrite(outfilename, main_v, "# ---------");
 
 if v == 0:
 	if not check_nums:
-		print "Beginning reconciliations...\n"
+		print("Beginning reconciliations...\n")
 
 	numiters = len(hybrid_nodes) * len(copy_nodes) * len(gene_trees);
 	numbars = 0;
@@ -285,7 +285,7 @@ for hybrid_node in hybrid_nodes:
 		continue;
 
 	if v == -2:
-		print "h1", hybrid_node;
+		print("h1", hybrid_node);
 
 	hybrid_num += 1;
 	#RC.printWrite(outfilename, 0, "H1-" + str(hybrid_num) + " Node:\t" + hybrid_node);
@@ -298,15 +298,15 @@ for hybrid_node in hybrid_nodes:
 
 	for copy_node in copy_nodes:
 		if v == -2:
-			print "h2", copy_node;
+			print("h2", copy_node);
 
 		if copy_node != "holder":
 		# Build the MUL-tree if the user has entered a non-MUL species tree.
 			if v == 1:
 				if len(copy_nodes) == 1:
-					print "# Building MUL-tree...";
+					print("# Building MUL-tree...");
 				else:
-					print "# Building MUL-tree for copy node:", copy_node;
+					print("# Building MUL-tree for copy node:", copy_node);
 
 			mt_unlabel = RT.buildMultree(hybrid_node, copy_node, st, sinfo);
 			# Building the MUL-tree by passing the species tree to the buildMultree function
@@ -316,8 +316,8 @@ for hybrid_node in hybrid_nodes:
 
 			if mt_unlabel == "NULL":
 				if v == 1:
-					print "# Copy node within hybrid subtree or at root. Skipping node.";
-					print "# ---------------------------";
+					print("# Copy node within hybrid subtree or at root. Skipping node.");
+					print("# ---------------------------");
 				continue;
 			# Nodes within the hybrid subtree cannot be copy nodes.
 
@@ -329,9 +329,9 @@ for hybrid_node in hybrid_nodes:
 				continue;
 
 			if v == -2:
-				print "# The MUL-tree w/o internal nodes labeled:", mt_unlabel;
-				print "# The MUL-tree with internal nodes labeled:", mt;
-				print "# ---------------------------";
+				print("# The MUL-tree w/o internal nodes labeled:", mt_unlabel);
+				print("# The MUL-tree with internal nodes labeled:", mt);
+				print("# ---------------------------");
 
 			mul_dict[mul_num] = [mt, hybrid_clade, copy_node, 0];
 			# mul_dict stores, for each mul_tree, the tree, the copy node, and the summed mutation score over all gene trees.
@@ -379,7 +379,7 @@ for hybrid_node in hybrid_nodes:
 				if not check_nums:
 					RC.printWrite(detoutfilename, v, "GT-" + str(gene_num) + "\tThis line may not contain a tree, or if so it may be unrooted -- skipping.");
 				else:
-					print "GT-" + str(gene_num) + "\tThis line may not contain a tree, or if so it may be unrooted -- skipping.";
+					print("GT-" + str(gene_num) + "\tThis line may not contain a tree, or if so it may be unrooted -- skipping.");
 				num_skipped += 1;
 				continue;
 			# Parsing the current gene tree.
@@ -392,9 +392,9 @@ for hybrid_node in hybrid_nodes:
 			outline = "GT-" + str(gene_num) + " to MT-" + str(mul_num) + "\t";
 			# Parsing the gene tree.
 			if v == -2:
-				print 'gene tree:', gene_tree;
-				print 'gt:', gt;
-				print "ginfo:", ginfo;
+				print('gene tree:', gene_tree);
+				print('gt:', gt);
+				print("ginfo:", ginfo);
 				sys.exit();
 			if not check_nums:
 				dup_score, loss_score, maps = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, gt_groups[gene_num], cap, v, check_nums);

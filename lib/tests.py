@@ -55,7 +55,7 @@ if numpass == 4:
 	RC.printWrite(outfilename, 1, "\nDone! All tests pass!");
 else:
 	RC.printWrite(outfilename, 1, "\n" + str(4 - numpass) + " tests failed!");
-	print "Check the tests_log.txt file in the test folder for more info!";
+	print("Check the tests_log.txt file in the test folder for more info!");
 	RC.printWrite(outfilename, 1, "\n");
 	outfile = open(outfilename, "a");
 	for test in tests:

@@ -81,9 +81,9 @@ def scatterPlot(xdata,ydata,xtitle,ytitle,maintitle,outname,barcol='rgb(0,102,51
 ############################################
 
 if len(sys.argv) != 3 or "-h" in sys.argv:
-	print "\n# Usage: grampa_plot.py [input file] [output file]";
-	print "# ---> [input file] must be a grampa output file."
-	print "# ---> [output file] will be an html file with your plot.\n"
+	print("\n# Usage: grampa_plot.py [input file] [output file]");
+	print("# ---> [input file] must be a grampa output file.")
+	print("# ---> [output file] will be an html file with your plot.\n")
 	sys.exit();
 
 infilename = sys.argv[1];
