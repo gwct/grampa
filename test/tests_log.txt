@@ -1,6 +1,6 @@
 
 RUNNING GRAMPA TESTS
-06.02.2016-04.40.13
+06.02.2016-06.24.33
 
 1: --labeltree test.........
 OK

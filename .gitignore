@@ -1,3 +1,5 @@
 .DS_Store
 *~
 *.pyc
+test/tests_log.txt
+test/tests_out.txt

@@ -6,7 +6,7 @@ def catchErr(test, err_dict, p, t_file):
 	err = open(t_file, "r").read();
 	if err != "":
 		errors[test] = err;
-		RC.printWrite(outfilename, 1, "! ERROR !");
+		RC.printWrite(outfilename, 1, "Failed!");
 	else:
 		RC.printWrite(outfilename, 1, "OK");
 		p += 1;
