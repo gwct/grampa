@@ -7,19 +7,7 @@
 # Fall 2015, Combo algorithm implemented Spring 2016
 #############################################################################
 
-import sys, re, time, argparse, lib.recontree as RT, lib.reconcore as RC, lib.mul_recon as ALG
-
-# Yeast hybrid and copy nodes:
-# 	Hybrid:	"51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO"
-# 	Copy:	"LACTH,KLUWA,SACKL,ASHGO,KLULA"
-#
-# Test commands:
-#	Manual checknum:		mul_interface.py -s test/in/manual_sims/s.tre -t s -y "x,y,z" -g test/in/manual_sims/tree_list.txt -o test/out/manual_checknum.txt --checknum
-#	Manual test:			mul_interface.py -s test/in/manual_sims/s.tre -t s -y "x,y,z" -g test/in/manual_sims/tree_list.txt -o test/out/manual_full_out.txt
-#	Yeast 1 tree checknum:	mul_interface.py -s test/in/yeast_spec_abb.tre -t s -y "51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO" -c "LACTH,KLUWA,SACKL,ASHGO,KLULA" -g test/in/yeast206_trees_rfbr.txt -o test/out/yeast206_checknum_1.txt --checknum
-#	Yeast 1 tree test:		mul_interface.py -s test/in/yeast_spec_abb.tre -t s -y "51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO" -c "LACTH,KLUWA,SACKL,ASHGO,KLULA" -g test/in/yeast206_trees_rfbr.txt -o test/out/yeast_out/yeast206.8.1.txt
-#	Yeast full checknum:	mul_interface.py -s test/in/yeast_spec_abb.tre -t s -y "51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO" -g test/in/yeast206_trees_rfbr.txt -o test/out/yeast206_checknum.txt --checknum
-#	Yeast full test:		mul_interface.py -s test/in/yeast_spec_abb.tre -t s -y "51914,CANGA,KAZAF,588726,51660,SACCA,NAUDC,SACBA,YEAST,1071379,TETPH,VANPO" -g test/in/yeast206_trees_rfbr.txt -o test/out/yeast_out/yeast206.8.full.txt
+import sys, os, re, time, argparse, lib.recontree as RT, lib.reconcore as RC, lib.mul_recon as ALG
 
 ############################################
 #Function Definitions
@@ -40,13 +28,18 @@ def optParse(errorflag):
 	parser.add_argument("--checknum", dest="check_num", help="Use this flag in conjunction with all other options to check the number of nodes, groups, and combinations for each gene tree and MUL-tree. In general, gene trees with more than 15 groups to map take a very long time.", action="store_true");
 	parser.add_argument("--labeltree", dest="label_opt", help="If this flag is set, the program will read your species tree and simply print it out with the internal nodes labeled.", action="store_true");
 	parser.add_argument("--multree", dest="mul_opt", help="Use this along with -s and possibly -h1 and -h2 to simply build MUL-trees from those options.", action="store_true");
+	parser.add_argument("--tests", dest="test_opt", help="Use 'grampa.py --tests' the first time you run grampa to run through all the options with pre-set input files.", action="store_true");
 	parser.add_argument("--simpson", dest="s_opt", help=argparse.SUPPRESS, action="store_true");
-
 
 	args = parser.parse_args();
 
 	if args.s_opt:
 		RC.simpson();
+		sys.exit();
+
+	if args.test_opt:
+		t_path = os.path.join(os.path.dirname(__file__), "lib", "tests.py");
+		os.system("python " + t_path);
 		sys.exit();
 
 	if errorflag == 0:
@@ -55,13 +48,15 @@ def optParse(errorflag):
 			optParse(1);
 
 		elif args.label_opt:
-			print "\n*** Message: --labeltree is set to True! Just labeling your species (-s) tree. All other options will be ignored!";
+			if args.verbosity != -1:
+				print "\n*** Message: --labeltree is set to True! Just labeling your species (-s) tree. All other options will be ignored!";
 		elif args.mul_opt and args.spec_tree == None:
 			RC.errorOut(2, "When --multree is set, -s must also be set");
 			optParse(1);
 
 		elif args.mul_opt:
-			print "\n*** Mesage: --multree is set to True! Just printing out all the MUL-trees you requested. All options but -s, -h1, and -h2 will be ignored!";
+			if args.verbosity != -1:
+				print "\n*** Mesage: --multree is set to True! Just printing out all the MUL-trees you requested. All options but -s, -h1, and -h2 will be ignored!";
 
 		else:
 			if args.spec_tree == None or args.spec_tree_type == None or args.gene_input == None or args.h1_spec == None:
@@ -85,7 +80,7 @@ def optParse(errorflag):
 			elif args.group_cap >=10:
 				print "*** Warning! With -p set to 10 or higher, some gene trees may take a very long time to reconcile!";
 
-			if args.verbosity not in [0,1,-2,-3]:
+			if args.verbosity not in [0,1,-1,-2]:
 				RC.errorOut(6, "-v must take values of either 0, or 1");
 				optParse(1);
 
@@ -131,7 +126,8 @@ spec_file, spec_type, gene_file, hybrid_clades, copy_clades, cap, outfilename, v
 hybrid_clades = hInParse(hybrid_clades);
 copy_clades = hInParse(copy_clades);
 
-print "# Reading species tree...";
+if v != -1:
+	print "# Reading species tree...";
 try:
 	spec_tree = open(spec_file, "r").read().replace("\n", "").replace("\r","");
 	spec_tree = RT.remBranchLength(spec_tree);
@@ -153,8 +149,9 @@ except:
 # Reading the species tree file.
 
 if lab_opt:
-	print "# The input species tree with internal nodes labeled:";
-	print st + "\n";
+	if v != -1:
+		print "# The input species tree with internal nodes labeled:";
+		print st + "\n";
 	sys.exit();
 # The output if --labeltree is set.
 
@@ -164,7 +161,8 @@ if RC.hErrorCheck(spec_check, sinfo, spec_type, hybrid_clades, copy_clades) == 1
 ## End species tree block.
 
 if not mul_opt:
-	print "# Reading gene trees from file...";
+	if v != -1:
+		print "# Reading gene trees from file...";
 	try:
 		gene_trees = open(gene_file, "r").readlines();
 	except:
@@ -193,13 +191,17 @@ outfile.close();
 ### Begin input info block!
 pad = 65
 
-RC.printWrite(outfilename, 1, "# =========================================================================");
-RC.printWrite(outfilename, 1, "#\t\t\tMUL-tree reconciliation");
-RC.printWrite(outfilename, 1, "#\t\t\t" + RC.getDateTime());
-RC.printWrite(outfilename, 1, "# The input species tree with internal nodes labeled:", st, pad);
-RC.printWrite(outfilename, 1, "# Main results will be written to file:", outfilename, pad);
+main_v = 1;
+if v == -1:
+	main_v = 0;
+
+RC.printWrite(outfilename, main_v, "# =========================================================================");
+RC.printWrite(outfilename, main_v, "#\t\t\tMUL-tree reconciliation");
+RC.printWrite(outfilename, main_v, "#\t\t\t" + RC.getDateTime());
+RC.printWrite(outfilename, main_v, "# The input species tree with internal nodes labeled:", st, pad);
+RC.printWrite(outfilename, main_v, "# Main results will be written to file:", outfilename, pad);
 if not check_nums and not mul_opt:
-	RC.printWrite(outfilename, 1, "# Detailed results will be written to file:", detoutfilename, pad);
+	RC.printWrite(outfilename, main_v, "# Detailed results will be written to file:", detoutfilename, pad);
 
 ## Identifying the hybrid and copy node in the species tree.
 hybrid_nodes = [];
@@ -207,11 +209,11 @@ copy_nodes = [];
 # print hybrid_clades;
 # print copy_clades;
 if spec_type == 's':
-	RC.printWrite(outfilename, 1, "# Input species tree is:", "Standard", pad);
+	RC.printWrite(outfilename, main_v, "# Input species tree is:", "Standard", pad);
 
 	if not hybrid_clades:
 		hybrid_nodes = sinfo.keys();
-		RC.printWrite(outfilename, 1, "# No H1 node defined", "Searching all possible H1 nodes.", pad);
+		RC.printWrite(outfilename, main_v, "# No H1 node defined", "Searching all possible H1 nodes.", pad);
 	else:
 		for hybrid_clade in hybrid_clades:
 			hybrid_clade = list(hybrid_clade);
@@ -222,11 +224,11 @@ if spec_type == 's':
 
 			if hybrid_node not in hybrid_nodes:
 				hybrid_nodes.append(hybrid_node);
-		RC.printWrite(outfilename, 1, "# H1 node(s) identified as:", ",".join(hybrid_nodes), pad);
+		RC.printWrite(outfilename, main_v, "# H1 node(s) identified as:", ",".join(hybrid_nodes), pad);
 
 	if not copy_clades:
 		copy_nodes = sinfo.keys();
-		RC.printWrite(outfilename, 1, "# No H2 node defined", "Searching all possible H2 nodes.", pad);
+		RC.printWrite(outfilename, main_v, "# No H2 node defined", "Searching all possible H2 nodes.", pad);
 	else:
 		for copy_clade in copy_clades:
 			copy_clade = list(copy_clade);
@@ -237,15 +239,15 @@ if spec_type == 's':
 
 			if copy_node not in copy_nodes:
 				copy_nodes.append(copy_node);
-		RC.printWrite(outfilename, 1, "# H2 node(s) identified as:", ",".join(copy_nodes), pad);
+		RC.printWrite(outfilename, main_v, "# H2 node(s) identified as:", ",".join(copy_nodes), pad);
 
 elif spec_type == 'm':
 	hybrid_node = getHNodes(list(hybrid_clades[0]), sinfo);
 	copy_node = getHNodes([spec + "*" for spec in list(hybrid_clades[0])], sinfo);
 
-	RC.printWrite(outfilename, 1, "# Input species tree is:", "MUL-tree", pad);
-	RC.printWrite(outfilename, 1, "# H1 node identified as:", hybrid_node, pad);
-	RC.printWrite(outfilename, 1, "# H2 node identified as:", copy_node, pad);
+	RC.printWrite(outfilename, main_v, "# Input species tree is:", "MUL-tree", pad);
+	RC.printWrite(outfilename, main_v, "# H1 node identified as:", hybrid_node, pad);
+	RC.printWrite(outfilename, main_v, "# H2 node identified as:", copy_node, pad);
 
 	hybrid_nodes.append(hybrid_node);
 	copy_nodes.append("holder");
@@ -255,10 +257,10 @@ elif spec_type == 'm':
 ## End hybrid and copy node identification block.
 
 if check_nums:
-	RC.printWrite(outfilename, 1, "# --checknums set. NOT doing reconciliations, just running some numbers for you...");
+	RC.printWrite(outfilename, main_v, "# --checknums set. NOT doing reconciliations, just running some numbers for you...");
 elif mul_opt:
-	RC.printWrite(outfilename, 1, "# --multree set. NOT doing reconciliations, just building your MUL-trees...");
-RC.printWrite(outfilename, 1, "# ---------");
+	RC.printWrite(outfilename, main_v, "# --multree set. NOT doing reconciliations, just building your MUL-trees...");
+RC.printWrite(outfilename, main_v, "# ---------");
 ### End input info block!
 
 if v == 0:
@@ -451,11 +453,11 @@ for hybrid_node in hybrid_nodes:
 if not check_nums and not mul_opt:
 	RC.printWrite(outfilename, 0, "# The MUL-tree with the minimum parsimony score is MT-" + str(min_num) + ":\t" + RT.mulPrint(min_tree, min_clade));
 	RC.printWrite(outfilename, 0, "# Score = " + str(min_score));
-	RC.printWrite(detoutfilename, 1, "\nDone!\n");
+	RC.printWrite(detoutfilename, main_v, "\nDone!\n");
 endtime = time.time();
 totaltime = endtime - starttime;
-RC.printWrite(outfilename, 1, "# Total execution time: " + str(round(totaltime,3)) + " seconds.");
-RC.printWrite(outfilename, 1, "# =========================================================================");
+RC.printWrite(outfilename, main_v, "# Total execution time: " + str(round(totaltime,3)) + " seconds.");
+RC.printWrite(outfilename, main_v, "# =========================================================================");
 
 
 

@@ -1,0 +1,14 @@
+
+RUNNING GRAMPA TESTS
+06.02.2016-03.37.52
+
+1: --labeltree test.........
+OK
+2: --multree test...........
+OK
+3: --checknum test..........
+OK
+4: MAIN test................
+OK
+
+Done! All tests pass!
