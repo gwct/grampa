@@ -18,10 +18,10 @@ start = RC.getLogTime();
 
 grampath = os.path.dirname(__file__)[:-3];
 grampath_script = os.path.join(grampath, "grampa.py");
-grampath_s = os.path.join(grampath, "test", "manual_species_tree.tre");
-grampath_g = os.path.join(grampath, "test", "manual_gene_trees.txt");
-grampa_out = os.path.join(grampath, "test", "tests_out.txt");
-outfilename = os.path.join(grampath, "test", "tests_log.txt");
+grampath_s = os.path.join(grampath, "data", "manual_species_tree.tre");
+grampath_g = os.path.join(grampath, "data", "manual_gene_trees.txt");
+grampa_out = os.path.join(grampath, "data", "tests_out.txt");
+outfilename = os.path.join(grampath, "data", "tests_log.txt");
 outfile = open(outfilename, "w");
 outfile.write("");
 outfile.close();
@@ -52,7 +52,7 @@ os.system("python " + grampath_script + " -s " + grampath_s + " -g " + grampath_
 errors, numpass = catchErr("main", errors, numpass, tmpfile);
 
 if numpass == 4:
-	RC.printWrite(outfilename, 1, "\nDone! All tests pass!");
+	RC.printWrite(outfilename, 1, "\nDone! All tests pass!\n");
 else:
 	RC.printWrite(outfilename, 1, "\n" + str(4 - numpass) + " tests failed!");
 	print("Check the tests_log.txt file in the test folder for more info!");
