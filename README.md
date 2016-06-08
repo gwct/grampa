@@ -64,15 +64,32 @@ GRAMPA creates two main output files, both specified with `-o`:
 
 ###### `-s` : A file containing a newick formatted species tree. This tree can be either standard or MUL. 
 
-  Entering a standard tree means you wish to search for the most parsimonious polyploidy scenario. GRAMPA will build MUL-trees based on this standard tree and calculate reconciliation scores. You can specify the range of MUL-trees to build with the `-h1` and `-h2` options.
+Entering a standard tree means you wish to search for the most parsimonious polyploidy scenario. GRAMPA will build MUL-trees based on this standard tree and calculate reconciliation scores. You can specify the range of MUL-trees to build with the `-h1` and `-h2` options.
 
-  Example standard tree: `(((a,(x,(y,z))),b),(c,d))`
+Example standard tree: `(((a,(x,(y,z))),b),(c,d))`
 
-  Entering a MUL-tree is the equivalent of entering a standard tree and specifying a single H1 and single H2 node. It represents a single scenario of polyploidy and should be used if you wish to count the number of duplications and losses on gene trees given that scenario. **NOTE: If a MUL-tree is entered, you MUST set `-t m`.**
+Entering a MUL-tree is the equivalent of entering a standard tree and specifying a single H1 and single H2 node. It represents a single scenario of polyploidy and should be used if you wish to count the number of duplications and losses on gene trees given that scenario. **NOTE: If a MUL-tree is entered, you MUST set `-t m`.**
 
-  Example MUL-tree: `((((a,(x,(y,z))),b),(x,(y,z))),(c,d))`
+Example MUL-tree: `((((a,(x,(y,z))),b),(x,(y,z))),(c,d))`
 
 ###### `-t` : Input species tree type.
+
+`-t s` : The tree specified with `-s` is standard. This is the Default setting.
+`-t m` : The tree specified with `-s` is a MUL-tree.
+
+###### `-g` : A file containing newick formatted gene trees.
+
+This file should contain one or more gene trees, with one tree per line in the file. 
+
+**The labels of the gene trees MUST end with `_[species label]`**
+
+Where `[species labe]` matches a tip label in the species tree. This is necessary so that we can initialize the mappings correctly.
+
+###### `-h1` and `-h2` : GRAMPA's search parameters
+
+H1 and H2 are nodes in the species tree that define how to build a MUL-tree:
+
+[[https://github.com/gwct/grampa/test2.png|alt=test]]
 
 
 
