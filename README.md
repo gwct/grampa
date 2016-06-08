@@ -8,7 +8,7 @@
 
 #### GRAMPA is a program to date polyploidy events and count duplications and losses in the presence of polyploidy.
 
-#### This is version Beta 1.0
+#### This is version 1.0
 #### The only dependency is Python 2.7 or higher
 
 ## Installation
@@ -17,7 +17,7 @@ Simply download the program and run it. You may want to add the GRAMPA folder to
 
 ## Usage
 
-The first thing you should do when you first try to run GRAMPA is make sure everything is working with some test files. You can do this easily by running the --tests command:
+The first thing you should do when you try to run GRAMPA is make sure everything is working with some test files. You can do this easily by running the --tests command:
 
 `python grampa.py --tests`
 
@@ -62,7 +62,7 @@ GRAMPA creates two main output files, both specified with `-o`:
 
 #### Detailed options
 
-###### `-s` : A file containing a newick formatted species tree. This tree can be either standard or MUL. 
+**###### `-s` : A file containing a newick formatted species tree. This tree can be either standard or MUL. **
 
 Entering a standard tree means you wish to search for the most parsimonious polyploidy scenario. GRAMPA will build MUL-trees based on this standard tree and calculate reconciliation scores. You can specify the range of MUL-trees to build with the `-h1` and `-h2` options.
 
