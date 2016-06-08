@@ -64,13 +64,13 @@ GRAMPA creates two main output files, both specified with `-o`:
 
 ###### `-s` : A file containing a newick formatted species tree. This tree can be either standard or MUL. 
 
-Entering a standard tree means you wish to search for the most parsimonious polyploidy scenario. GRAMPA will build MUL-trees based on this standard tree and calculate reconciliation scores. You can specify the range of MUL-trees to build with the `-h1` and `-h2` options.
+    Entering a standard tree means you wish to search for the most parsimonious polyploidy scenario. GRAMPA will build MUL-trees based on this standard tree and calculate reconciliation scores. You can specify the range of MUL-trees to build with the `-h1` and `-h2` options.
 
-Example standard tree: `(((a,(x,(y,z))),b),(c,d))`
+    Example standard tree: `(((a,(x,(y,z))),b),(c,d))`
 
-Entering a MUL-tree is the equivalent of entering a standard tree and specifying a single H1 and single H2 node. It represents a single scenario of polyploidy and should be used if you wish to count the number of duplications and losses on gene trees given that scenario. **NOTE: If a MUL-tree is entered, you MUST set `-t m`.**
+    Entering a MUL-tree is the equivalent of entering a standard tree and specifying a single H1 and single H2 node. It represents a single scenario of polyploidy and should be used if you wish to count the number of duplications and losses on gene trees given that scenario. **NOTE: If a MUL-tree is entered, you MUST set `-t m`.**
 
-Example MUL-tree: `((((a,(x,(y,z))),b),(x,(y,z))),(c,d))`
+    Example MUL-tree: `((((a,(x,(y,z))),b),(x,(y,z))),(c,d))`
 
 ###### `-t` : Input species tree type.
 
