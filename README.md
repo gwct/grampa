@@ -62,7 +62,7 @@ GRAMPA creates two main output files, both specified with `-o`:
 
 #### Detailed options
 
-**###### `-s` : A file containing a newick formatted species tree. This tree can be either standard or MUL. **
+##### `-s` : A file containing a newick formatted species tree. This tree can be either standard or MUL. 
 
 Entering a standard tree means you wish to search for the most parsimonious polyploidy scenario. GRAMPA will build MUL-trees based on this standard tree and calculate reconciliation scores. You can specify the range of MUL-trees to build with the `-h1` and `-h2` options.
 
@@ -72,12 +72,12 @@ Entering a MUL-tree is the equivalent of entering a standard tree and specifying
 
 Example MUL-tree: `((((a,(x,(y,z))),b),(x,(y,z))),(c,d))`
 
-###### `-t` : Input species tree type.
+##### `-t` : Input species tree type.
 
 `-t s` : The tree specified with `-s` is standard. This is the Default setting.
 `-t m` : The tree specified with `-s` is a MUL-tree.
 
-###### `-g` : A file containing newick formatted gene trees.
+##### `-g` : A file containing newick formatted gene trees.
 
 This file should contain one or more gene trees, with one tree per line in the file. 
 
@@ -85,7 +85,7 @@ This file should contain one or more gene trees, with one tree per line in the f
 
 Where `[species labe]` matches a tip label in the species tree. This is necessary so that we can initialize the mappings correctly.
 
-###### `-h1` and `-h2` : GRAMPA's search parameters
+##### `-h1` and `-h2` : GRAMPA's search parameters
 
 H1 and H2 are nodes in the species tree that define how to build a MUL-tree. H1 is the node that represents the polyploid clade. The subtree rooted at H1 and the branch that H1 subtends will be copied onto the branch that H2 subtends:
 
@@ -121,11 +121,11 @@ are equivalent. Entering this means that GRAMPA will first set H1 as node 2 and 
 
 **If `-h1` and `-h2` are not specified, GRAMPA will search try all possible node combinations of H1 and H2!**
 
-###### `-c` : The group cap
+##### `-c` : The group cap
 
 GRAMPA uses the standard LCA reconciliation algorithm on MUL-trees, meaning that some genes have more than one possible mapping. We get around this by trying ALL possible initial mappings and picking the one with the lowest score. This works, but also means our program has an exponential runtime based on the number of genes from polyploid species in any given gene tree. We get around this in several ways by collapsing and fixing groups (see paper), but there can still be lots of groups. This parameter sets the maximum number of groups to consider for any gene tree. If a gene tree has more than this number of groups, it will be skipped. Default is 8 groups, with a max setting of 15.
 
-###### `-o` : Output files
+##### `-o` : Output files
 
 There are two output files created by GRAMPA. 
 
@@ -139,11 +139,11 @@ is specified:
 
 2. `test_det.txt` : The detailed output file containing reconciliation scores for each gene tree to each MUL-tree.
 
-###### `--checknum` : Group counting flag
+##### `--checknum` : Group counting flag
 
 With this set, the program will run normally with the specified options, except no reconciliations will be done. Instead, the output file will contain the number of polyploid groups for each gene tree. Use this to decide the best setting for `-c`.
 
-###### `--labeltree` : Tree labeling
+##### `--labeltree` : Tree labeling
 
 This option can be used in conjunction with `-s` to simply add internal node labels to a species tree. 
 
@@ -152,7 +152,7 @@ This option can be used in conjunction with `-s` to simply add internal node lab
 If the input in `species.tree` is : `(((a,(x,(y,z))),b),(c,d))`
 Then the output tree will be: `(((a,(x,(y,z)<1>)<2>)<3>,b)<4>,(c,d)<5>)<6>`
 
-###### `--multree` : Build MUL-trees
+##### `--multree` : Build MUL-trees
 
 This option can be used with `-s`, `-h1`, and `-h2` to build MUL-trees from a standard species tree.
 
@@ -161,7 +161,7 @@ This option can be used with `-s`, `-h1`, and `-h2` to build MUL-trees from a st
 If the input in `species.tree` is : (((a,(x,(y,z))),b),(c,d))
 Then the output MUL-tree will be: ((((a,(x+,(y+,z+)<1>)<2>)<3>,b)<4>,(x*,(y*,z*)<5>)<6>)<7>,(c,d)<8>)<9>
 
-###### `--tests` : Tests script
+##### `--tests` : Tests script
 
 This option runs the tests.py script to ensure that all the other options in the program are working.
 
