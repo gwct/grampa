@@ -23,7 +23,7 @@ The first thing you should do when you first try to run GRAMPA is make sure ever
 
 If all tests pass, then you're good to go! Basic usage in a real case would be:
 
-`python grampa.py -s [species tree file] -g [gene trees file] -o [output file name]
+`python grampa.py -s [species tree file] -g [gene trees file] -o [output file name]`
 
 ### Input
 
