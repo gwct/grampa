@@ -28,6 +28,7 @@ If all tests pass, then you're good to go! Basic usage in a real case would be:
 ### Input
 
 There are two main inputs for the program. 
+
 1. A file containing a species tree 
 2. A file containing a list of gene trees (one tree per line).
 
