@@ -7,9 +7,19 @@
 ## About
 
 #### This is version Beta 1.0
-#### The only dependency is Python 2.7
+#### The only dependency is Python 2.7 or higher
+
+##### GRAMPA is a program to date polyploidy events and count duplications and losses in the presence of polyploidy.
+
+## Installation
+
+Simply download the program and run it. You may want to add the GRAMPA folder to your $PATH variable for ease of use.
 
 ## Usage
+
+The first thing you should do when you first try to run GRAMPA is make sure everything is working with some test files. You can do this easily by running the --tests command:
+
+`python grampa.py --tests`
 
 ### Input
 
