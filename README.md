@@ -89,7 +89,7 @@ Where `[species labe]` matches a tip label in the species tree. This is necessar
 
 H1 and H2 are nodes in the species tree that define how to build a MUL-tree. H1 is the node that represents the polyploid clade. The subtree rooted at H1 and the branch that H1 subtends will be copied onto the branch that H2 subtends:
 
-<p align="center"><img src="https://github.com/gwct/grampa/blob/master/test2.png"></p>
+<p align="center"><img src="http://cgi.soic.indiana.edu/~grthomas/grampa/images/h1h2ex.png"></p>
 
 In the above example, H1 is node 2 and H2 is node 4 in the species tree. This leads to the MUL-tree on the right.
 
