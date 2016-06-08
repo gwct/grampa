@@ -306,13 +306,12 @@ for hybrid_node in hybrid_nodes:
 				if len(copy_nodes) == 1:
 					print("# Building MUL-tree...");
 				else:
-					print("# Building MUL-tree for copy node:", copy_node);
+					print("# Building MUL-tree for copy node: " + copy_node);
 
 			mt_unlabel = RT.buildMultree(hybrid_node, copy_node, st, sinfo);
 			# Building the MUL-tree by passing the species tree to the buildMultree function
 			# Input is one node at which to copy the subtree (hybrid_node)
 			# and one node at which to place the copy (copy_node)
-
 
 			if mt_unlabel == "NULL":
 				if v == 1:
@@ -395,7 +394,7 @@ for hybrid_node in hybrid_nodes:
 				print('gene tree:', gene_tree);
 				print('gt:', gt);
 				print("ginfo:", ginfo);
-				sys.exit();
+				#sys.exit();
 			if not check_nums:
 				dup_score, loss_score, maps = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, gt_groups[gene_num], cap, v, check_nums);
 			else:
