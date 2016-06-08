@@ -20,8 +20,8 @@ def optParse(errorflag):
 	parser.add_argument("-s", dest="spec_tree", help="A file containing a bifurcating species tree in newick format on which to search for polyploid events.");
 	parser.add_argument("-t", dest="spec_tree_type", help="[m or s] -- m: input species tree is a MUL-tree. s: input species tree is a standard tree. Default: s", default="s");
 	parser.add_argument("-g", dest="gene_input", help="A file containing one or more newick formatted gene trees to reconcile. The labels in the gene tree must end with '_[species name]' and contain no other underscores.");
-	parser.add_argument("-h1", dest="h1_spec", help="A comma separated list of species labels that make up the polyploid clade. Example: 'x,y,z y,z'", default=False);
-	parser.add_argument("-h2", dest="h2_spec", help="A comma separated list of species labels that make up the copy clade. If spec tree type (-t) is m, this option can be ignored. Example: 'c'", default=False);
+	parser.add_argument("-h1", dest="h1_spec", help="A space separated list of species labels that make up the polyploid clade. Example: 'x,y,z y,z'", default=False);
+	parser.add_argument("-h2", dest="h2_spec", help="A space separated list of species labels that make up the copy clade. If spec tree type (-t) is m, this option can be ignored. Example: 'c'", default=False);
 	parser.add_argument("-c", dest="group_cap", help="The maxmimum number of groups to consider for any gene tree. Default: 8. Max value: 15.", type=int, default=8);
 	parser.add_argument("-o", dest="output_file", help="Output file name.")
 	parser.add_argument("-v", dest="verbosity", help="An option to control the amount of output printed to the screen. 0: print only a progress bar. 1: print some output. Default: 1", type=int, default=1);

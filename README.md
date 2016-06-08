@@ -25,6 +25,8 @@ If all tests pass, then you're good to go! Basic usage in a real case would be:
 
 `python grampa.py -s [species tree file] -g [gene trees file] -o [output file name]`
 
+This would perform a full search for the optimal MUL-tree on the species tree.
+
 ### Input
 
 There are two main inputs for the program. 
@@ -36,8 +38,11 @@ The labels of the gene tree MUST be formatted such that they end with _[species 
 
 ### Output
 
-GRAMPA creates two main output files: The main one you specify with -o gives the total reconciliation score for each MUL-tree considered, along with information about the trees. At the bottom of the file it will display the MUL-tree with the minimum reconciliation score.
-The secondary output file (_det) is a detailed output describing the reconciliation scores from each gene tree to each MUL-tree.
+GRAMPA creates two main output files, both specified with `-o`: 
+
+1. The main output gives the total reconciliation score for each MUL-tree considered, along with information about the trees. At the bottom of the file it will display the MUL-tree with the minimum reconciliation score.
+
+2. The secondary output file is a detailed output describing the reconciliation scores from each gene tree to each MUL-tree. It has the same name as the file specified with `-o`, but with the suffix '_det' added to the end.
 
 ### Options
 
@@ -45,12 +50,14 @@ The secondary output file (_det) is a detailed output describing the reconciliat
 | ------ | ----------- |
 | -s | A file containing a bifurcating species tree in newick format. This tree can either be standard or MUL |
 | -t | This specifies the type of tree entered in `-s`. m: MUL-tree, s: standard tree. Default: s |
-| -g | A file containing one ofr more newick formatted gene trees |
-| -h1 | A comma separated list of nodes to search as the polyploid clade. Only used with `-t s` |
-| -h2 | A comma separated list of nodes to search as possible parental lineages for all nodes specified with `-h1` |
+| -g | A file containing one or more newick formatted gene trees |
+| -h1 | A space separated list of nodes to search as the polyploid clade. Only used with `-t s`. If nothing is entered all nodes will be considered |
+| -h2 | A space separated list of nodes to search as possible parental lineages for all nodes specified with `-h1`. If nothing is entered all possible nodes for the current `h1` will be considered |
 | -c | The maximum number of initial groups to consider for any gene tree. Default: 8, Max value: 15 |
 | -o | Output file name |
 | --checknum | If this flag is entered, the program will just calculate the number of groups per gene tree. No reconciliations will be done |
-| --lebeltree | The program will simply label your input species tree |
+| --labeltree | The program will simply label your input species tree |
 | --multree | Build MUL-trees given `-s`, `-h1`, and `-h2` |
 | --tests | Run the tests script |
+
+
