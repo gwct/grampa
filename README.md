@@ -6,10 +6,10 @@
 
 ## About
 
+#### GRAMPA is a program to date polyploidy events and count duplications and losses in the presence of polyploidy.
+
 #### This is version Beta 1.0
 #### The only dependency is Python 2.7 or higher
-
-##### GRAMPA is a program to date polyploidy events and count duplications and losses in the presence of polyploidy.
 
 ## Installation
 
