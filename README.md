@@ -89,7 +89,9 @@ Where `[species labe]` matches a tip label in the species tree. This is necessar
 
 H1 and H2 are nodes in the species tree that define how to build a MUL-tree:
 
--> ![test](https://github.com/gwct/grampa/blob/master/test2.png) <-
+<p align="center"><img src="https://github.com/gwct/grampa/blob/master/test2.png"></p>
+
+
 
 
 
