@@ -29,8 +29,8 @@ If all tests pass, then you're good to go! Basic usage in a real case would be:
 
 There are two main inputs for the program. 
 
-1. A file containing a species tree 
-2. A file containing a list of gene trees (one tree per line).
+1. A file containing a species tree (`-s`)
+2. A file containing a list of gene trees (one tree per line). (`-g`)
 
 The labels of the gene tree MUST be formatted such that they end with _[species label], where [species_label] corresponds to a tip label in the species tree.
 
@@ -38,3 +38,19 @@ The labels of the gene tree MUST be formatted such that they end with _[species 
 
 GRAMPA creates two main output files: The main one you specify with -o gives the total reconciliation score for each MUL-tree considered, along with information about the trees. At the bottom of the file it will display the MUL-tree with the minimum reconciliation score.
 The secondary output file (_det) is a detailed output describing the reconciliation scores from each gene tree to each MUL-tree.
+
+### Options
+
+| Option | Description | 
+| ------ | ----------- |
+| -s | A file containing a bifurcating species tree in newick format. This tree can either be standard or MUL |
+| -t | This specifies the type of tree entered in `-s`. m: MUL-tree, s: standard tree. Default: s |
+| -g | A file containing one ofr more newick formatted gene trees |
+| -h1 | A comma separated list of nodes to search as the polyploid clade. Only used with `-t s` |
+| -h2 | A comma separated list of nodes to search as possible parental lineages for all nodes specified with `-h1` |
+| -c | The maximum number of initial groups to consider for any gene tree. Default: 8, Max value: 15 |
+| -o | Output file name |
+| --checknum | If this flag is entered, the program will just calculate the number of groups per gene tree. No reconciliations will be done |
+| --lebeltree | The program will simply label your input species tree |
+| --multree | Build MUL-trees given `-s`, `-h1`, and `-h2` |
+| --tests | Run the tests script |
