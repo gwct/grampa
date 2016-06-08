@@ -21,9 +21,16 @@ The first thing you should do when you first try to run GRAMPA is make sure ever
 
 `python grampa.py --tests`
 
+If all tests pass, then you're good to go! Basic usage in a real case would be:
+
+`python grampa.py -s [species tree file] -g [gene trees file] -o [output file name]
+
 ### Input
 
-The main inputs of the program are a file containing a species tree and a file containing a list of gene trees (one tree per line).
+There are two main inputs for the program. 
+1. A file containing a species tree 
+2. A file containing a list of gene trees (one tree per line).
+
 The labels of the gene tree MUST be formatted such that they end with _[species label], where [species_label] corresponds to a tip label in the species tree.
 
 ### Output
