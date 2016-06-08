@@ -87,9 +87,38 @@ Where `[species labe]` matches a tip label in the species tree. This is necessar
 
 ###### `-h1` and `-h2` : GRAMPA's search parameters
 
-H1 and H2 are nodes in the species tree that define how to build a MUL-tree:
+H1 and H2 are nodes in the species tree that define how to build a MUL-tree. H1 is the node that represents the polyploid clade. The subtree rooted at H1 and the branch that H1 subtends will be copied onto the branch that H2 subtends:
 
 <p align="center"><img src="https://github.com/gwct/grampa/blob/master/test2.png"></p>
+
+In the above example, H1 is node 2 and H2 is node 4 in the species tree. This leads to the MUL-tree on the left.
+
+H1 and H2 can be input in 2 different ways:
+
+`-h1 "2" -h2 "4"`
+
+and
+
+`-h1 "x,y,z" -h2 "a,b,x,y,z"`
+
+are equivalent ways of specifying H1 and H2 in the image above. 
+
+The first way relies on internal node labels. To label your species tree, use the `--labeltree` option (described below). 
+The second way uses the species that define that node. **Species must be comma delimited.**
+
+**H2 cannot be located below H1 in the species tree!** If this occurs, GRAMPA will just tell you that it's not possible and move on.
+ 
+Multiple H1 and H2 nodes can be entered as a space delimited list:
+
+`-h1 "2 4" -h2 "5 6"`
+
+and 
+
+`-h1 "x,y,z a,b,x,y,z" -h2 "c,d a,b,c,d,x,y,z"
+
+are equivalent. Entering this means that GRAMPA will first set H1 as node 2 and try both nodes 5 and 6 as H2. Then H1 will be set to node 4 and will try nodes 5 and 6 as H2. 
+
+**If `-h1` and `-h2` are not specified, GRAMPA will search try all possible node combinations of H1 and H2!**
 
 
 
