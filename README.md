@@ -19,7 +19,7 @@ Simply download the program and run it. You may want to add the GRAMPA folder to
 
 The first thing you should do when you first try to run GRAMPA is make sure everything is working with some test files. You can do this easily by running the --tests command:
 
-`<p align="center">python grampa.py --tests</p>`
+`python grampa.py --tests`
 
 ### Input
 
