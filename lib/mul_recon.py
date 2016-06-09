@@ -79,7 +79,6 @@ def collapseGroups(ginfo, hybrid_clade, v):
 		g = "<" + str(g) + ">";
 		# Next, for any non-tip node, we find out if the species that define it can be grouped
 
-		# print g;
 		d1, d2 = RT.getDesc(g, ginfo);
 		d1_clade = RT.getClade(d1, ginfo);
 		d1_spec_clade = [spec[spec.rfind("_")+1:] for spec in d1_clade];

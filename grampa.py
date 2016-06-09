@@ -331,6 +331,7 @@ for hybrid_node in hybrid_nodes:
 				print("# The MUL-tree w/o internal nodes labeled:", mt_unlabel);
 				print("# The MUL-tree with internal nodes labeled:", mt);
 				print("# ---------------------------");
+				sys.exit();
 
 			mul_dict[mul_num] = [mt, hybrid_clade, copy_node, 0];
 			# mul_dict stores, for each mul_tree, the tree, the copy node, and the summed mutation score over all gene trees.

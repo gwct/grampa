@@ -363,19 +363,26 @@ def treeParse(tree, debug=0):
 			ancs[node] = "NA";
 			continue;
 
+		match_node = node;
+		if "*" in node:
+			match_node = match_node.replace("*", "\*");
 
-		anc_tree = new_tree[new_tree.index(node):];
-		if node[-1] != "*" and anc_tree[len(node)] == "*":
-			anc_tree = new_tree[new_tree.rindex(node):];
+		anc_match = re.findall('[(),]' + match_node + '[(),]', new_tree);
+		anc_tree = new_tree[new_tree.index(anc_match[0]):];
+		if anc_match[0][-1] != "*" and anc_tree[len(anc_match[0])] == "*":
+			anc_tree = new_tree[new_tree.rindex(anc_match[0]):];
 		# Ancestral labels are always to the right of the node label in the text of the tree, so we start our scan from the node label
 
 		if debug == 1:
 			print(node);
+			print anc_match;
 			print(anc_tree);
 			print("---");
 
 		cpar_count = 0;
 		cpar_need = 1;
+
+		anc_tree = anc_tree[1:];
 
 		for i in range(len(anc_tree)):
 		# We find the ancestral label by finding the ) which matches the nesting of the number of ('s found
@@ -414,7 +421,7 @@ def treeParse(tree, debug=0):
 		print()
 		print("nofo:");
 		print(nofo);
-		print()
+		print("")
 
 	return nofo, topo;
 
