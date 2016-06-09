@@ -1,8 +1,8 @@
 .DS_Store
 *~
 *.pyc
-test/tests_log.txt
-test/tests_out.txt
-test/tests_out_det.txt
+data/tests_log.txt
+data/tests_out.txt
+data/tests_out_det.txt
 gitadd.sh
 img/*

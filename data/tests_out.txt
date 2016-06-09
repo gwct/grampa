@@ -1,9 +1,9 @@
 # =========================================================================
 #			MUL-tree reconciliation
-#			06.08.2016 | 01:04:57
+#			06.09.2016 | 02:48:33
 # The input species tree with internal nodes labeled:            (((a,(x,(y,z)<1>)<2>)<3>,b)<4>,(c,d)<5>)<6>
-# Main results will be written to file:                          data/tests_out.txt
-# Detailed results will be written to file:                      data/tests_out_det.txt
+# Main results will be written to file:                          /Users/Gregg/bin/grampa/data/tests_out.txt
+# Detailed results will be written to file:                      /Users/Gregg/bin/grampa/data/tests_out_det.txt
 # Input species tree is:                                         Standard
 # No H1 node defined                                             Searching all possible H1 nodes.
 # No H2 node defined                                             Searching all possible H2 nodes.
@@ -156,5 +156,5 @@ MT-134	<5>	<5>	(((a,(x,(y,z)<1>)<2>)<3>,b)<4>,((c+,d+)<5>,(c*,d*)<6>)<7>)<8>	148
 # ---------
 # The MUL-tree with the minimum parsimony score is MT-76:	(((a,(x+,(y+,z+)<1>)<2>)<3>,b)<4>,(c,(d,(x*,(y*,z*)<5>)<6>)<7>)<8>)<9>
 # Score = 76
-# Total execution time: 6.041 seconds.
+# Total execution time: 6.293 seconds.
 # =========================================================================
