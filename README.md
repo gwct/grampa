@@ -34,9 +34,9 @@ There are two main inputs for the program.
 1. A file containing a Newick formatted species tree (`-s`)
 2. A file containing a list of gene trees in Newick format (one tree per line). (`-g`)
 
-The other two important input options are `-h1` and `-h2`. See below for their description.
-
 The labels of the gene tree MUST be formatted such that they end with _[species label], where [species_label] corresponds to a tip label in the species tree.
+
+The other two important input options are `-h1` and `-h2`. See below for their description.
 
 ### Output
 
