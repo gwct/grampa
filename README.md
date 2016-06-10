@@ -31,8 +31,8 @@ This would perform a full search for the optimal MUL-tree on the species tree.
 
 There are two main inputs for the program. 
 
-1. A file containing a Newick formatted species tree (`-s`)
-2. A file containing a list of gene trees in Newick format (one tree per line). (`-g`)
+1. A file containing a Newick formatted **rooted** species tree (`-s`)
+2. A file containing a list of **rooted** gene trees in Newick format (one tree per line). (`-g`)
 
 The labels of the gene tree MUST be formatted such that they end with _[species label], where [species_label] corresponds to a tip label in the species tree.
 
@@ -50,9 +50,9 @@ GRAMPA creates two main output files, both specified with `-o`:
 
 | Option | Description | 
 | ------ | ----------- |
-| -s | A file containing a bifurcating species tree in Newick format. This tree can either be standard or MUL |
+| -s | A file containing a bifurcating, rooted species tree in Newick format. This tree can either be standard or MUL |
 | -t | This specifies the type of tree entered in `-s`. m: MUL-tree, s: standard tree. Default: s |
-| -g | A file containing one or more Newick formatted gene trees |
+| -g | A file containing one or more rooted, Newick formatted gene trees |
 | -h1 | A space separated list of nodes to search as the polyploid clade. Only used with `-t s`. If nothing is entered all nodes will be considered |
 | -h2 | A space separated list of nodes to search as possible parental lineages for all nodes specified with `-h1`. If nothing is entered all possible nodes for the current `h1` will be considered |
 | -c | The maximum number of initial groups to consider for any gene tree. Default: 8, Max value: 15 |
@@ -64,7 +64,7 @@ GRAMPA creates two main output files, both specified with `-o`:
 
 ### Detailed options
 
-#### `-s` : A file containing a newick formatted species tree. This tree can be either standard or MUL. 
+#### `-s` : A file containing a rooted, newick formatted species tree. This tree can be either standard or MUL. 
 
 Entering a standard tree means you wish to search for the most parsimonious polyploidy scenario. GRAMPA will build MUL-trees based on this standard tree and calculate reconciliation scores. You can specify the range of MUL-trees to build with the `-h1` and `-h2` options.
 
@@ -81,7 +81,7 @@ Example MUL-tree: `((((a,(x,(y,z))),b),(x,(y,z))),(c,d))`
 
 #### `-g` : A file containing newick formatted gene trees.
 
-This file should contain one or more Newick formatted gene trees, with one tree per line in the file. 
+This file should contain one or more rooted, Newick formatted gene trees, with one tree per line in the file. 
 
 **The labels of the gene trees MUST end with `_[species label]`**
 
