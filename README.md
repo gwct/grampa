@@ -31,8 +31,10 @@ This would perform a full search for the optimal MUL-tree on the species tree.
 
 There are two main inputs for the program. 
 
-1. A file containing a species tree (`-s`)
-2. A file containing a list of gene trees (one tree per line). (`-g`)
+1. A file containing a Newick formatted species tree (`-s`)
+2. A file containing a list of gene trees in Newick format (one tree per line). (`-g`)
+
+The other two important input options are `-h1` and `-h2`. See below for their description.
 
 The labels of the gene tree MUST be formatted such that they end with _[species label], where [species_label] corresponds to a tip label in the species tree.
 
@@ -48,9 +50,9 @@ GRAMPA creates two main output files, both specified with `-o`:
 
 | Option | Description | 
 | ------ | ----------- |
-| -s | A file containing a bifurcating species tree in newick format. This tree can either be standard or MUL |
+| -s | A file containing a bifurcating species tree in Newick format. This tree can either be standard or MUL |
 | -t | This specifies the type of tree entered in `-s`. m: MUL-tree, s: standard tree. Default: s |
-| -g | A file containing one or more newick formatted gene trees |
+| -g | A file containing one or more Newick formatted gene trees |
 | -h1 | A space separated list of nodes to search as the polyploid clade. Only used with `-t s`. If nothing is entered all nodes will be considered |
 | -h2 | A space separated list of nodes to search as possible parental lineages for all nodes specified with `-h1`. If nothing is entered all possible nodes for the current `h1` will be considered |
 | -c | The maximum number of initial groups to consider for any gene tree. Default: 8, Max value: 15 |
