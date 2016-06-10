@@ -152,6 +152,13 @@ Then the output MUL-tree will be: ((((a,(x+,(y+,z+)<1>)<2>)<3>,b)<4>,(x*,(y*,z*)
 
 This option runs the tests.py script to ensure that all the other options in the program are working.
 
+## License
+
+This file is part of GRAMPA.
+
+GRAMPA is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+GRAMPA is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. 
 
 
 
