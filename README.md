@@ -81,7 +81,7 @@ Example MUL-tree: `((((a,(x,(y,z))),b),(x,(y,z))),(c,d))`
 
 #### `-g` : A file containing newick formatted gene trees.
 
-This file should contain one or more gene trees, with one tree per line in the file. 
+This file should contain one or more Newick formatted gene trees, with one tree per line in the file. 
 
 **The labels of the gene trees MUST end with `_[species label]`**
 
