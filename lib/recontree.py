@@ -298,7 +298,10 @@ def treeParse(tree, debug=0):
 	# Initialization of all the tracker dicts
 
 	topology = remBranchLength(tree);
-	nodes = { n : 'tip' for n in topology.replace("(","").replace(")","").replace(";","").split(",") };
+	nodes = {};
+	for n in topology.replace("(","").replace(")","").replace(";","").split(","):
+		nodes[n] = 'tip';
+	# nodes = { n : 'tip' for n in topology.replace("(","").replace(")","").replace(";","").split(",") };
 	# Retrieval of the tip labels
 
 	new_tree = "";

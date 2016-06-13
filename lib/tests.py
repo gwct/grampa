@@ -32,7 +32,10 @@ RC.printWrite(outfilename, 1, "\nRUNNING GRAMPA TESTS");
 RC.printWrite(outfilename, 1, start + "\n");
 
 tests = ["labeltree", "multree", "checknum", "main"]
-errors = { t : "" for t in tests }
+errors = {};
+for t in tests:
+	errors[t] = "";
+# errors = { t : "" for t in tests }
 numpass = 0;
 
 RC.printWrite(outfilename, 1, "1: --labeltree test.........");
