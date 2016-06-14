@@ -18,8 +18,6 @@ start = RC.getLogTime();
 
 python_cmd = "python" + sys.argv[1];
 
-print python_cmd;
-
 grampath = os.path.dirname(__file__)[:-3];
 grampath_script = os.path.join(grampath, "grampa.py");
 grampath_s = os.path.join(grampath, "data", "manual_species_tree.tre");
