@@ -16,15 +16,7 @@ def catchErr(test, err_dict, p, t_file):
 
 start = RC.getLogTime();
 
-python_cmd = "python";
-called_ver = sys.argv[1];
-current_ver = sys.version[:3];
-
-print called_ver;
-print current_ver;
-
-if called_ver != current_ver:
-	python_cmd = "python" + called_ver;
+python_cmd = "python" + sys.argv[1];;
 
 print python_cmd;
 
