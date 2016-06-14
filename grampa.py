@@ -46,7 +46,8 @@ def optParse(errorflag):
 
 		if args.test_opt:
 			t_path = os.path.join(os.path.dirname(__file__), "lib", "tests.py");
-			os.system("python " + t_path + " " + sys.version[:3]);
+			pyver = sys.version[:3];
+			os.system("python" + pyver + " " + t_path + " " + pyver);
 			sys.exit();
 
 		if args.label_opt and args.spec_tree == None:
