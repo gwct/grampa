@@ -16,6 +16,18 @@ def catchErr(test, err_dict, p, t_file):
 
 start = RC.getLogTime();
 
+python_cmd = "python";
+called_ver = sys.argv[1];
+current_ver = sys.version[:3];
+
+print called_ver;
+print current_ver;
+
+if called_ver != current_ver:
+	python_cmd = "python" + current_ver;
+
+print python_cmd;
+
 grampath = os.path.dirname(__file__)[:-3];
 grampath_script = os.path.join(grampath, "grampa.py");
 grampath_s = os.path.join(grampath, "data", "manual_species_tree.tre");
@@ -39,19 +51,19 @@ for t in tests:
 numpass = 0;
 
 RC.printWrite(outfilename, 1, "1: --labeltree test.........");
-os.system("python " + grampath_script + " -s " + grampath_s + " -v -1 --labeltree 2> " + tmpfile);
+os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -v -1 --labeltree 2> " + tmpfile);
 errors, numpass = catchErr("labeltree", errors, numpass, tmpfile);
 
 RC.printWrite(outfilename, 1, "2: --multree test...........");
-os.system("python " + grampath_script + " -s " + grampath_s + " -g " + grampath_g + " -o " + grampa_out + " -v -1 --multree 2> " + tmpfile);
+os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -g " + grampath_g + " -o " + grampa_out + " -v -1 --multree 2> " + tmpfile);
 errors, numpass = catchErr("multree", errors, numpass, tmpfile);
 
 RC.printWrite(outfilename, 1, "3: --checknum test..........");
-os.system("python " + grampath_script + " -s " + grampath_s + " -g " + grampath_g + " -o " + grampa_out + " -v -1 --checknum 2> " + tmpfile);
+os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -g " + grampath_g + " -o " + grampa_out + " -v -1 --checknum 2> " + tmpfile);
 errors, numpass = catchErr("checknum", errors, numpass, tmpfile);
 
 RC.printWrite(outfilename, 1, "4: MAIN test................");
-os.system("python " + grampath_script + " -s " + grampath_s + " -g " + grampath_g + " -o " + grampa_out + " -v -1 2> " + tmpfile);
+os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -g " + grampath_g + " -o " + grampa_out + " -v -1 2> " + tmpfile);
 errors, numpass = catchErr("main", errors, numpass, tmpfile);
 
 if numpass == 4:

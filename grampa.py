@@ -39,7 +39,7 @@ def optParse(errorflag):
 
 	if args.test_opt:
 		t_path = os.path.join(os.path.dirname(__file__), "lib", "tests.py");
-		os.system("python " + t_path);
+		os.system("python " + t_path + " " + sys.version[:3]);
 		sys.exit();
 
 	if errorflag == 0:
