@@ -7,13 +7,19 @@
 # Fall 2015, Combo algorithm implemented Spring 2016
 #############################################################################
 
-import sys, os, re, time, argparse, lib.recontree as RT, lib.reconcore as RC, lib.mul_recon as ALG
+import sys, os, re, time, lib.recontree as RT, lib.reconcore as RC, lib.mul_recon as ALG
 
 ############################################
 #Function Definitions
 ############################################
 def optParse(errorflag):
 # This function handles the command line options.
+
+	try:
+		import argparse;
+	except:
+		RC.errorOut(0, "Your installation of Python is missing the argparse module. Please try a different version of Python (2.7 or later), or install the module.")
+		sys.exit();
 
 	parser = argparse.ArgumentParser(description="GRAMPA: Gene-tree Reconciliation Algorithm with MUL-trees for Polyploid Analysis.");
 
@@ -33,16 +39,16 @@ def optParse(errorflag):
 
 	args = parser.parse_args();
 
-	if args.s_opt:
-		RC.simpson();
-		sys.exit();
-
-	if args.test_opt:
-		t_path = os.path.join(os.path.dirname(__file__), "lib", "tests.py");
-		os.system("python " + t_path + " " + sys.version[:3]);
-		sys.exit();
-
 	if errorflag == 0:
+		if args.s_opt:
+			RC.simpson();
+			sys.exit();
+
+		if args.test_opt:
+			t_path = os.path.join(os.path.dirname(__file__), "lib", "tests.py");
+			os.system("python " + t_path + " " + sys.version[:3]);
+			sys.exit();
+
 		if args.label_opt and args.spec_tree == None:
 			RC.errorOut(1, "When --labeltree is set, -s must also be set");
 			optParse(1);
