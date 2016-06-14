@@ -24,7 +24,7 @@ print called_ver;
 print current_ver;
 
 if called_ver != current_ver:
-	python_cmd = "python" + current_ver;
+	python_cmd = "python" + called_ver;
 
 print python_cmd;
 
