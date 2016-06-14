@@ -16,7 +16,7 @@ def catchErr(test, err_dict, p, t_file):
 
 start = RC.getLogTime();
 
-python_cmd = "python" + sys.argv[1];;
+python_cmd = "python" + sys.argv[1];
 
 print python_cmd;
 
