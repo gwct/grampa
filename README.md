@@ -11,6 +11,12 @@
 #### This is version 1.0
 #### The only dependency is Python 2.7 or higher
 
+## Citation
+
+The paper is currently available as a pre-print on bioRxiv: http://biorxiv.org/content/early/2016/06/10/058149
+
+Thomas GWC, Ather SH, Hahn MW. (pre-print) Gene-tree reconciliation with MUL-trees to resolve polyploid events.
+
 ## Installation
 
 Simply download the program and run it. You may want to add the GRAMPA folder to your $PATH variable for ease of use.
