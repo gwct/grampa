@@ -376,8 +376,7 @@ for mul_num in mul_dict:
 			gene_tree = RT.remBranchLength(gene_tree);
 			ginfo, gt = RT.treeParse(gene_tree);
 		except:
-			gene_trees_filtered[gene_num]
-
+			gene_trees_filtered[gene_num] = "# Error reading this tree! -- Filtering.";
 			checkfile.write("GT-" + str(gene_num+1) + "\tError reading this tree! -- Filtering.\n");
 			num_skipped += 1;
 			continue;
@@ -401,7 +400,7 @@ for mul_num in mul_dict:
 		outline += str(num_groups) + "\t" + str(num_fixed) + "\t" + str(2**num_groups);
 		if num_groups > cap:
 			gene_trees_filtered[gene_num] = "# Number of groups over group cap (-p set to " + str(cap) + ") -- Filtering.";
-		 	outline += "\tNumber of groups over group cap (-p set to " + str(cap) + ") -- Filtering.";
+		 	outline += "\tNumber of groups over group cap (-p set to " + str(cap) + ") -- Filtering.\n";
 		 	num_skipped += 1;
 		checkfile.write(outline + "\n");
 		# The call of the reconciliation algorithm! On the current gene tree with the current MUL-tree.
