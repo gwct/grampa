@@ -56,14 +56,14 @@ def optParse(errorflag):
 
 		elif args.label_opt:
 			if args.verbosity != -1:
-				print("\n*** Message: --labeltree is set to True! Just labeling your species (-s) tree. All other options will be ignored!");
+				print("\n*** Message: --labeltree is set to True! Just labeling your species (-s) tree. All other options will be ignored!\n");
 		elif args.mul_opt and args.spec_tree == None:
 			RC.errorOut(2, "When --multree is set, -s must also be set");
 			optParse(1);
 
 		elif args.mul_opt:
 			if args.verbosity != -1:
-				print("\n*** Mesage: --multree is set to True! Just printing out all the MUL-trees you requested. All options but -s, -h1, and -h2 will be ignored!");
+				print("\n*** Message: --multree is set to True! Just printing out all the MUL-trees you requested. All options but -s, -h1, and -h2 will be ignored!\n");
 
 		else:
 			if args.spec_tree == None or args.spec_tree_type == None or args.gene_input == None or args.h1_spec == None:
@@ -79,13 +79,13 @@ def optParse(errorflag):
 
 			if args.spec_tree_type.lower() == "m" and (args.h1_spec != False or args.h2_spec != False):
 				print("*** Message: With a MUL-tree as the input species tree (-t m) input for -h1 and -h2 are not required.");
-				print("*** Your input for -h1 and -h2 will be ignored.")
+				print("*** Your input for -h1 and -h2 will be ignored.\n")
 
 			if args.group_cap > 15:
 				RC.errorOut(5, "For computational reasons, -p should not be set higher than 15.");
 				optParse(1);
 			elif args.group_cap >=10:
-				print("*** Warning! With -p set to 10 or higher, some gene trees may take a very long time to reconcile!");
+				print("*** Warning! With -p set to 10 or higher, some gene trees may take a very long time to reconcile!\n");
 
 			if args.verbosity not in [0,1,-1,-2]:
 				RC.errorOut(6, "-v must take values of either 0, or 1");
@@ -175,19 +175,27 @@ if not mul_opt:
 	except:
 		RC.errorOut(13, "Error reading gene trees file!");
 		optParse(1);
+
+	gene_file_prefix, gene_file_ext = os.path.splitext(gene_file);
+	gene_file_filtered = gene_file_prefix + "_filtered" + gene_file_ext;
 # Reading the gene trees file.
 ## End gene tree block.
 
 if not check_nums and not mul_opt:
-	if outfilename[-4:] == ".txt":
-		detoutfilename = outfilename.replace(".txt", "_det.txt");
-	else:
-		detoutfilename = outfilename + "_det.txt";
-
+	out_file_prefix, out_file_ext = os.path.splitext(outfilename);
+	detoutfilename = out_file_prefix + "_det" + out_file_ext;
 	detoutfile = open(detoutfilename, "w");
 	detoutfile.write("");
 	detoutfile.close();
 # If --checknum is not set, we have to prepare both the main and detailed output files.
+
+if not mul_opt:
+	out_file_prefix, out_file_ext = os.path.splitext(outfilename);
+	checkfilename = out_file_prefix + "_checknums" + out_file_ext;
+	checkfile = open(checkfilename, "w");
+	checkfile.write("Trees\t# Groups\t# Fixed\t# Combinations\n");
+	checkfile.close();
+
 
 outfile = open(outfilename, "w");
 outfile.write("");
@@ -207,6 +215,9 @@ RC.printWrite(outfilename, main_v, "#\t\t\tMUL-tree reconciliation");
 RC.printWrite(outfilename, main_v, "#\t\t\t" + RC.getDateTime());
 RC.printWrite(outfilename, main_v, "# The input species tree with internal nodes labeled:", st, pad);
 RC.printWrite(outfilename, main_v, "# Main results will be written to file:", outfilename, pad);
+if not mul_opt:
+	RC.printWrite(outfilename, main_v, "# The number of groups for each tree will be calculated:", checkfilename, pad);
+	RC.printWrite(outfilename, main_v, "# Filtered trees will be saved:", gene_file_filtered, pad);
 if not check_nums and not mul_opt:
 	RC.printWrite(outfilename, main_v, "# Detailed results will be written to file:", detoutfilename, pad);
 
@@ -270,60 +281,37 @@ elif mul_opt:
 RC.printWrite(outfilename, main_v, "# ---------");
 ### End input info block!
 
-if v == 0:
-	if not check_nums:
-		print("Beginning reconciliations...\n")
-
-	numiters = len(hybrid_nodes) * len(copy_nodes) * len(gene_trees);
-	numbars = 0;
-	donepercent = [];
-	itercount = 0;
-	# Stuff for the loading bar...
-
+print("# Building " + str(len(hybrid_nodes) * len(copy_nodes)) + " MUL-trees...");
+ 
 mul_dict = {};
 mul_num = 1;
 hybrid_num = 0;
 # Keeping track of scores for each MUL-tree
 
 gt_groups = {};
+mul_trees = {};
 
-for hybrid_node in hybrid_nodes:
-	if sinfo[hybrid_node][2] == 'root':
-		continue;
-
-	if v == -2:
-		print("h1", hybrid_node);
-
-	hybrid_num += 1;
-	#RC.printWrite(outfilename, 0, "H1-" + str(hybrid_num) + " Node:\t" + hybrid_node);
-	if not check_nums and not mul_opt:
-		RC.printWrite(detoutfilename, 0, "H1-" + str(hybrid_num) + " Node:\t" + hybrid_node);
-
-	hybrid_clade = set(RT.getClade(hybrid_node, sinfo));
-
-	group_flag = 1;
-
-	for copy_node in copy_nodes:
+if spec_type == 's':
+	for hybrid_node in hybrid_nodes:
+		if sinfo[hybrid_node][2] == 'root':
+			continue;	
 		if v == -2:
-			print("h2", copy_node);
+			print("h1", hybrid_node);
 
-		if copy_node != "holder":
-		# Build the MUL-tree if the user has entered a non-MUL species tree.
-			if v == 1:
-				if len(copy_nodes) == 1:
-					print("# Building MUL-tree...");
-				else:
-					print("# Building MUL-tree for copy node: " + copy_node);
+		hybrid_clade = set(RT.getClade(hybrid_node, sinfo));
 
-			mt_unlabel = RT.buildMultree(hybrid_node, copy_node, st, sinfo);
+		for copy_node in copy_nodes:
+			if v == -2:
+				print("h2", copy_node);
+
+			mt_unlabel = RT.buildMultree(hybrid_node, copy_node, st, sinfo);		
 			# Building the MUL-tree by passing the species tree to the buildMultree function
 			# Input is one node at which to copy the subtree (hybrid_node)
 			# and one node at which to place the copy (copy_node)
 
 			if mt_unlabel == "NULL":
-				if v == 1:
-					print("# Copy node within hybrid subtree or at root. Skipping node.");
-					print("# ---------------------------");
+				print("\n*** Warning: H2 node (" + copy_node + ") within hybrid subtree rooted at H1 node (" + hybrid_node + ") or at root of tree. Not building MUL-tree for this combination.\n");
+				print("# ---------------------------");
 				continue;
 			# Nodes within the hybrid subtree cannot be copy nodes.
 
@@ -340,131 +328,183 @@ for hybrid_node in hybrid_nodes:
 				print("# ---------------------------");
 				sys.exit();
 
-			mul_dict[mul_num] = [mt, hybrid_clade, copy_node, 0];
+			mul_dict[mul_num] = [mt, minfo, hybrid_clade, hybrid_node, copy_node, 0, []];
+			mul_num += 1;
 			# mul_dict stores, for each mul_tree, the tree, the copy node, and the summed mutation score over all gene trees.
-			if check_nums:
-				RC.printWrite(outfilename, v, "MT-" + str(mul_num) + "\tTree:" + RT.mulPrint(mt, hybrid_clade) + "\tCopyNode:" + copy_node);
-			#else:
-			#	RC.printWrite(detoutfilename, v, "MT-" + str(mul_num) + "\tTree:" + mt + "\tCopyNode:" + copy_node);
+				
 
-		else:
-		# If the user entered a MUL-tree as their species tree, just assign it here.
-			minfo = sinfo;
-			mt = st;
-			mul_dict[mul_num] = [mt, "", "", 0];
+else:
+# If the user entered a MUL-tree as their species tree, just assign it here.
+	minfo = sinfo;
+	mt = st;
+	mul_dict[mul_num] = [mt, minfo, "", "", "", 0, []];
+# THIS NEEDS TO BE FIXED.
 
-		gene_num = 0;
-		num_skipped = 0;
+if mul_opt:
+	endtime = time.time();
+	totaltime = endtime - starttime;
+	RC.printWrite(outfilename, main_v, "# Total execution time: " + str(round(totaltime,3)) + " seconds.");
+	RC.printWrite(outfilename, main_v, "# =========================================================================");
+	sys.exit();
 
-		if check_nums:
-			RC.printWrite(outfilename, v, "# Groups\t# Fixed\t# Combinations")
+print("# Checking gene trees...");
+checkfile = open(checkfilename, "a");
+gene_trees_filtered = [gt for gt in gene_trees];
 
-		for gene_tree in gene_trees:
-			if v == 0:
-				numbars, donepercent = RC.loadingBar(itercount, numiters, donepercent, numbars);
-				itercount = itercount + 1;
-			# Only the loading bar displays when the program is running if -v is set to 0.
+for mul_num in mul_dict:
+	checkfile.write("MT-" + str(mul_num) + "\tTree:" + RT.mulPrint(mt, hybrid_clade) + "\tCopyNode:" + copy_node + "\n");
+	gene_num = -1;
+	num_skipped = 0;
 
-			gene_num = gene_num + 1;
+	mt = mul_dict[mul_num][0];
+	minfo = mul_dict[mul_num][1];
+	hybrid_clade = mul_dict[mul_num][2];
 
-			if gene_tree.strip() == '':
-				if not check_nums:
-					RC.printWrite(detoutfilename, v, "GT-" + str(gene_num) + "\tEmpty line -- skipping.");
-				num_skipped += 1;
-				continue;
+	gt_groups = [];
 
-			try:
-				gene_tree = RT.remBranchLength(gene_tree);
-				ginfo, gt = RT.treeParse(gene_tree);
-			except:
-				if not check_nums:
-					RC.printWrite(detoutfilename, v, "GT-" + str(gene_num) + "\tError reading this tree! -- skipping.");
-				num_skipped += 1;
-				continue;
+	for gene_tree in gene_trees:
+		gene_num += 1;
 
-			if len([g for g in ginfo if ginfo[g][2] != 'tip']) != len([g for g in ginfo if ginfo[g][2] == 'tip']) - 1:
-				if not check_nums:
-					RC.printWrite(detoutfilename, v, "GT-" + str(gene_num) + "\tThis line may not contain a tree, or if so it may be unrooted -- skipping.");
-				else:
-					print("GT-" + str(gene_num) + "\tThis line may not contain a tree, or if so it may be unrooted -- skipping.");
-				num_skipped += 1;
-				continue;
-			# Parsing the current gene tree.
+		if gene_tree.strip() == '':
+			gene_trees_filtered[gene_num] = "# Empty line -- Filtering.\n";
 
-			if group_flag == 1:
-				cur_groups = ALG.collapseGroups(ginfo, hybrid_clade, v);
-				gt_groups[gene_num] = cur_groups;
-				#print cur_groups;
+			checkfile.write("GT-" + str(gene_num+1) + "\tEmpty line -- Filtering.\n");
+			num_skipped += 1;
+			continue;
 
-			outline = "GT-" + str(gene_num) + " to MT-" + str(mul_num) + "\t";
-			# Parsing the gene tree.
-			if v == -2:
-				print('gene tree:', gene_tree);
-				print('gt:', gt);
-				print("ginfo:", ginfo);
-				#sys.exit();
-			if not check_nums:
-				dup_score, loss_score, maps = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, gt_groups[gene_num], cap, v, check_nums);
-			else:
-				num_groups, num_fixed = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, gt_groups[gene_num], cap, v, check_nums);
-				outline += str(num_groups) + "\t" + str(num_fixed) + "\t" + str(2**num_groups);
-				if num_groups > cap:
-					outline += " -- Over Cap";
-				RC.printWrite(outfilename, v, outline);
-				continue;
-			# The call of the reconciliation algorithm! On the current gene tree with the current MUL-tree.
+		try:
+			gene_tree = RT.remBranchLength(gene_tree);
+			ginfo, gt = RT.treeParse(gene_tree);
+		except:
+			gene_trees_filtered[gene_num]
 
-			if dup_score == "OVER":
-				outline += "Number of groups (" + str(loss_score) + ") over group cap (-p set to " + str(cap) + ") -- Skipping."
-				num_skipped += 1;
-			else:
-				mut_score = dup_score + loss_score;
-				outline = outline + str(dup_score) + "\t" + str(loss_score) + "\t" + str(mut_score);
-				mul_dict[mul_num][3] += mut_score;
-			RC.printWrite(detoutfilename, v, outline);
-			# Output stats for the current reconciliation.
+			checkfile.write("GT-" + str(gene_num+1) + "\tError reading this tree! -- Filtering.\n");
+			num_skipped += 1;
+			continue;
 
-		if not check_nums and not mul_opt:
-			RC.printWrite(detoutfilename, v, "Number of trees skipped: " + str(num_skipped));
-			RC.printWrite(detoutfilename, v, "Total parsimony score for MT-" + str(mul_num) + ": " + str(mul_dict[mul_num][3]));
-			RC.printWrite(detoutfilename, v, "# ---------------------------");
+		if len([g for g in ginfo if ginfo[g][2] != 'tip']) != len([g for g in ginfo if ginfo[g][2] == 'tip']) - 1:
+			gene_trees_filtered[gene_num] = "# This line may not contain a tree, or if so it may be unrooted -- Filtering.\n"
+			
+			checkfile.write("GT-" + str(gene_num+1) + "\tThis line may not contain a tree, or if so it may be unrooted -- Filtering.\n");
+			num_skipped += 1;
+			continue;
+		# Parsing the current gene tree.
 
-			RC.printWrite(outfilename, 0, "MT-" + str(mul_num) + "\t" + hybrid_node + "\t" + copy_node + "\t" + RT.mulPrint(mt, hybrid_clade) + "\t" + str(mul_dict[mul_num][3]));
+		cur_groups = ALG.collapseGroups(ginfo, hybrid_clade, v);
+		gt_groups.append(cur_groups);
+		#print cur_groups;
 
-		# Output total score for the current MUL-tree
+		outline = "GT-" + str(gene_num+1) + " to MT-" + str(mul_num) + "\t";
+		# Parsing the gene tree.
 
-		mul_num = mul_num + 1;
-		group_flag = 0;
+		num_groups, num_fixed = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cap, v, True);
+		outline += str(num_groups) + "\t" + str(num_fixed) + "\t" + str(2**num_groups);
+		if num_groups > cap:
+			gene_trees_filtered[gene_num] = "# Number of groups over group cap (-p set to " + str(cap) + ") -- Filtering.";
+		 	outline += "\tNumber of groups over group cap (-p set to " + str(cap) + ") -- Filtering.";
+		 	num_skipped += 1;
+		checkfile.write(outline + "\n");
+		# The call of the reconciliation algorithm! On the current gene tree with the current MUL-tree.
+	mul_dict[mul_num][6] = gt_groups;
+	checkfile.write("----------------------------------\n");
+checkfile.close();
 
-	if not check_nums and not mul_opt:
-		min_score = 999999;
-		min_tree = "";
-		min_num = 0;
+if num_skipped != 0:
+	print("# Writing filtered gene trees to file...");
+	filtered_file = open(gene_file_filtered, "w");
+	for gt in gene_trees_filtered:
+		filtered_file.write(gt);
+	filtered_file.close();
+else:
+	print("# No trees filtered! Using your original set.")
+if check_nums:
+	endtime = time.time();
+	totaltime = endtime - starttime;
+	RC.printWrite(outfilename, main_v, "# Total execution time: " + str(round(totaltime,3)) + " seconds.");
+	RC.printWrite(outfilename, main_v, "# =========================================================================");
+	sys.exit();
 
-		for mtree in mul_dict:
-			if mul_dict[mtree][3] < min_score:
-				min_score = mul_dict[mtree][3];
-				min_tree = mul_dict[mtree][0];
-				min_clade = mul_dict[mtree][1];
-				min_num = mtree;
-		# Look through all the MUL-trees and find the one with the minimum score.
 
+print("# Beginning reconciliations on filtered gene trees...\n")
+if v == 0:
+	numiters = len(mul_dict) * len(gene_trees_filtered);
+	numbars = 0;
+	donepercent = [];
+	itercount = 0;
+	# Stuff for the loading bar...
+
+#mul_dict[mul_num] = [mt, minfo, hybrid_clade, hybrid_node, copy_node, 0, gt_groups];
+
+for mul_num in mul_dict:
+	mt = mul_dict[mul_num][0];
+	minfo = mul_dict[mul_num][1];
+	hybrid_clade = mul_dict[mul_num][2];
+	hybrid_node = mul_dict[mul_num][3];
+	copy_node = mul_dict[mul_num][4];
+	gt_groups = mul_dict[mul_num][6];
+
+	RC.printWrite(detoutfilename, 0, "H1-" + str(mul_num) + " Node:\t" + hybrid_node);
+	gene_num = -1;
+
+	for gene_tree in gene_trees_filtered:
 		if v == 0:
-			pstring = "100.0% complete.";
-			sys.stderr.write('\b' * len(pstring) + pstring);
+			numbars, donepercent = RC.loadingBar(itercount, numiters, donepercent, numbars);
+			itercount = itercount + 1;
+		# Only the loading bar displays when the program is running if -v is set to 0.
 
-		RC.printWrite(detoutfilename, 0, "The MUL-tree with the minimum parsimony score is MT-" + str(min_num) + ":\t" + RT.mulPrint(min_tree, min_clade));
-		RC.printWrite(outfilename, 0, "# ---------")		
-		RC.printWrite(detoutfilename, 0, "Score = " + str(min_score));
-		
-if not check_nums and not mul_opt:
-	RC.printWrite(outfilename, 0, "# The MUL-tree with the minimum parsimony score is MT-" + str(min_num) + ":\t" + RT.mulPrint(min_tree, min_clade));
-	RC.printWrite(outfilename, 0, "# Score = " + str(min_score));
-	RC.printWrite(detoutfilename, main_v, "\nDone!\n");
+		gene_num = gene_num + 1;
+		if gene_tree[0] == "#":
+			continue;
+
+		outline = "GT-" + str(gene_num+1) + " to MT-" + str(mul_num) + "\t";
+		gene_tree = RT.remBranchLength(gene_tree);
+		ginfo, gt = RT.treeParse(gene_tree);
+		# Parsing the gene tree.
+
+		dup_score, loss_score, maps = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, gt_groups[gene_num], cap, v, check_nums);
+		# The call of the reconciliation algorithm! On the current gene tree with the current MUL-tree.
+
+		mut_score = dup_score + loss_score;
+		outline = outline + str(dup_score) + "\t" + str(loss_score) + "\t" + str(mut_score);
+		mul_dict[mul_num][5] += mut_score;
+		RC.printWrite(detoutfilename, v, outline);
+		# Output stats for the current reconciliation.
+
+	RC.printWrite(detoutfilename, v, "Total parsimony score for MT-" + str(mul_num) + ": " + str(mul_dict[mul_num][5]));
+	RC.printWrite(detoutfilename, v, "# ---------------------------");
+	RC.printWrite(outfilename, 0, "MT-" + str(mul_num) + "\t" + hybrid_node + "\t" + copy_node + "\t" + RT.mulPrint(mt, hybrid_clade) + "\t" + str(mul_dict[mul_num][5]));
+	# Output total score for the current MUL-tree
+
+min_score = 999999;
+min_tree = "";
+min_num = 0;
+
+for mul_num in mul_dict:
+	if mul_dict[mul_num][5] < min_score:
+		min_score = mul_dict[mul_num][5];
+		min_tree = mul_dict[mul_num][0];
+		min_clade = mul_dict[mul_num][2];
+		min_num = mul_num;
+# Look through all the MUL-trees and find the one with the minimum score.
+
+RC.printWrite(outfilename, 0, "# The MUL-tree with the minimum parsimony score is MT-" + str(min_num) + ":\t" + RT.mulPrint(min_tree, min_clade));
+RC.printWrite(outfilename, 0, "# Score = " + str(min_score));
+if v == 0:
+	pstring = "100.0% complete.";
+	sys.stderr.write('\b' * len(pstring) + pstring);
+RC.printWrite(detoutfilename, main_v, "\n# Done!\n");
 endtime = time.time();
 totaltime = endtime - starttime;
 RC.printWrite(outfilename, main_v, "# Total execution time: " + str(round(totaltime,3)) + " seconds.");
 RC.printWrite(outfilename, main_v, "# =========================================================================");
+
+
+
+
+
+
+
+
 
 
 
