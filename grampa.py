@@ -367,25 +367,26 @@ for mul_num in mul_dict:
 
 		if gene_tree.strip() == '':
 			gene_trees_filtered[gene_num] = "# Empty line -- Filtering.\n";
-
 			checkfile.write("GT-" + str(gene_num+1) + "\tEmpty line -- Filtering.\n");
 			num_skipped += 1;
+			gt_groups.append([]);
 			continue;
 
 		try:
 			gene_tree = RT.remBranchLength(gene_tree);
 			ginfo, gt = RT.treeParse(gene_tree);
 		except:
-			gene_trees_filtered[gene_num] = "# Error reading this tree! -- Filtering.";
+			gene_trees_filtered[gene_num] = "# Error reading this tree! -- Filtering.\n";
 			checkfile.write("GT-" + str(gene_num+1) + "\tError reading this tree! -- Filtering.\n");
 			num_skipped += 1;
+			gt_groups.append([]);
 			continue;
 
 		if len([g for g in ginfo if ginfo[g][2] != 'tip']) != len([g for g in ginfo if ginfo[g][2] == 'tip']) - 1:
 			gene_trees_filtered[gene_num] = "# This line may not contain a tree, or if so it may be unrooted -- Filtering.\n"
-			
 			checkfile.write("GT-" + str(gene_num+1) + "\tThis line may not contain a tree, or if so it may be unrooted -- Filtering.\n");
 			num_skipped += 1;
+			gt_groups.append([]);
 			continue;
 		# Parsing the current gene tree.
 
@@ -399,8 +400,8 @@ for mul_num in mul_dict:
 		num_groups, num_fixed = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cap, v, True);
 		outline += str(num_groups) + "\t" + str(num_fixed) + "\t" + str(2**num_groups);
 		if num_groups > cap:
-			gene_trees_filtered[gene_num] = "# Number of groups over group cap (-p set to " + str(cap) + ") -- Filtering.";
-		 	outline += "\tNumber of groups over group cap (-p set to " + str(cap) + ") -- Filtering.\n";
+			gene_trees_filtered[gene_num] = "# Number of groups over group cap (-p set to " + str(cap) + ") -- Filtering.\n";
+		 	outline += "\tNumber of groups over group cap (-p set to " + str(cap) + ") -- Filtering.";
 		 	num_skipped += 1;
 		checkfile.write(outline + "\n");
 		# The call of the reconciliation algorithm! On the current gene tree with the current MUL-tree.
@@ -422,9 +423,7 @@ if check_nums:
 	RC.printWrite(outfilename, main_v, "# Total execution time: " + str(round(totaltime,3)) + " seconds.");
 	RC.printWrite(outfilename, main_v, "# =========================================================================");
 	sys.exit();
-
-
-print("# Beginning reconciliations on filtered gene trees...\n")
+	print("# Beginning reconciliations on filtered gene trees...\n")
 if v == 0:
 	numiters = len(mul_dict) * len(gene_trees_filtered);
 	numbars = 0;
