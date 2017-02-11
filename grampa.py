@@ -74,7 +74,7 @@ def optParse(errorflag):
 				args.output_file = "MTR_out_" + RC.getLogTime() + ".txt";
 
 			if args.spec_tree_type.lower() not in ['m', 's']:
-				RC.errorOut(4, "-m must take values of either m or s");
+				RC.errorOut(4, "-t must take values of either m or s");
 				optParse(1);
 
 			if args.spec_tree_type.lower() == "m" and (args.h1_spec != False or args.h2_spec != False):
@@ -129,6 +129,12 @@ starttime = time.time();
 
 spec_file, spec_type, gene_file, hybrid_clades, copy_clades, cap, outfilename, v, check_nums, lab_opt, mul_opt = optParse(0);
 # Getting the input parameters.
+
+if spec_type == 'm':
+	print("*** Special message, Feb. 11, 2017: Some changes to the interface to the algorithm mean that support for MUL-trees as input is temporarily disabled.");
+	print("*** Please input a corresponding singly labeled tree with h1 and h2 nodes to make your MUL-tree. Feel free to contact me for help.");
+	print("*** Apologies for the inconvenience, this issue should be resolved shortly.");
+	sys.exit();
 
 hybrid_clades = hInParse(hybrid_clades);
 copy_clades = hInParse(copy_clades);
