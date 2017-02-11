@@ -48,8 +48,26 @@ def reconLCA(lca_ginfo, sinfo, lca_maps):
 
 	return lca_maps, numdups, numloss;
 	# Return the total number of duplication nodes.
+
 #############################################################################
-def collapseGroups(ginfo, hybrid_clade, v):
+
+def getSis(gs_node, check_node, check_clade, gs_dict):
+# Gets the hybrid and copy sister species.
+
+	d1, d2 = RT.getDesc(gs_node, gs_dict);
+	if d1 == check_node:
+		sis_node = d2;
+	elif d2 == check_node:
+		sis_node = d1;
+
+	sis_clade = RT.getClade(sis_node, gs_dict);
+	if any(c in check_clade for c in sis_clade):
+		return [];
+	else:
+		return sis_clade;
+
+#############################################################################
+def collapseGroups(minfo, ginfo, hybrid_clade, copy_clade, v):
 
 	internal_nodes = [];
 	for g in ginfo:
@@ -63,10 +81,6 @@ def collapseGroups(ginfo, hybrid_clade, v):
 
 	for g in ginfo:
 		if ginfo[g][2] == 'tip':
-			# if v == -2:
-			# 	print g;
-			# 	print g[g.rfind("_")+1:]
-
 			if g[g.rfind("_")+1:] in hybrid_clade:
 				cur_anc = ginfo[g][1];
 				anc_clade = RT.getClade(cur_anc, ginfo);
@@ -117,29 +131,39 @@ def collapseGroups(ginfo, hybrid_clade, v):
 		final_groups.append([[single], singles[single]]);
 	# Restructures the final groups and adds singles.
 
-	if v == -2:
-		print("singles:", singles);
-		print("groups:", groups);
-		print("final_groups:", final_groups);
+	sisters = {};
 
-	return final_groups;
+	mul_hybrid_node = [n for n in minfo if set(RT.getClade(n, minfo)) == set(hybrid_clade)][0];
+	copy_clade = [c + "*" for c in hybrid_clade];
+	mul_copy_node = [n for n in minfo if set(RT.getClade(n, minfo)) == set(copy_clade)][0];
+	# The copy clade is defined.
 
-#############################################################################
+	hybrid_anc = minfo[mul_hybrid_node][1];
+	copy_anc = minfo[mul_copy_node][1];
 
-def getSis(gs_node, check_node, check_clade, gs_dict):
-# Gets the hybrid and copy sister species.
+	sisters[''] = getSis(hybrid_anc, mul_hybrid_node, copy_clade, minfo);
+	sisters['*'] = getSis(copy_anc, mul_copy_node, hybrid_clade, minfo);
+	# These lines get any sister species from the hybrid and copy clades in the MUL-tree and that
+	# clade's corresponding map. If there are no sisters, it stores an empty list.
 
-	d1, d2 = RT.getDesc(gs_node, gs_dict);
-	if d1 == check_node:
-		sis_node = d2;
-	elif d2 == check_node:
-		sis_node = d1;
+	groups = [];
+	fixed_groups = [];
 
-	sis_clade = RT.getClade(sis_node, gs_dict);
-	if any(c in check_clade for c in sis_clade):
-		return [];
-	else:
-		return sis_clade;
+	for group in final_groups:
+		group_sis = [spec[spec.rfind("_")+1:] for spec in group[1]];
+
+		if all(spec in sisters[''] for spec in group_sis):
+			fixed_groups.append([group[0],'']);
+		elif all(spec in sisters['*'] for spec in group_sis):
+			fixed_groups.append([group[0],'*']);
+		else:
+			groups.append(group[0]);
+	# This checks the sister species of all the groups for the gene tree. If all the sister species
+	# of a group are also in the sister species of the hybrid or copy clade in the MUL-tree, then we
+	# can fix the mapping of that node.
+	## FINDS FIXED SISTER GROUPS
+
+	return groups, fixed_groups;
 
 #############################################################################
 
@@ -172,7 +196,7 @@ def mulLossCount(lc_ginfo, lc_minfo, lc_maps, lc_dups):
 
 #############################################################################
 
-def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cap, v, check_nums):
+def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cur_fixed, cap, v, check_nums):
 # The basis of the MUL-reconciliation algorithm is that there are now nodes that
 # have more than one possible map. We try all combinations of mappings for these
 # nodes and find which combination results in the most parsimonious mutation score
@@ -195,56 +219,7 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cap, v, check_nums)
 	# This is the variable we are minimizing: score is defined as # duplications + # losses for any given
 	# reconciliation.
 
-	sisters = {};
-
-	mul_hybrid_node = [n for n in minfo if set(RT.getClade(n, minfo)) == set(hybrid_clade)][0];
-	copy_clade = [c + "*" for c in hybrid_clade];
-	mul_copy_node = [n for n in minfo if set(RT.getClade(n, minfo)) == set(copy_clade)][0];
-	# The copy clade is defined.
-
-	hybrid_anc = minfo[mul_hybrid_node][1];
-	copy_anc = minfo[mul_copy_node][1];
-
-	sisters[''] = getSis(hybrid_anc, mul_hybrid_node, copy_clade, minfo);
-	sisters['*'] = getSis(copy_anc, mul_copy_node, hybrid_clade, minfo);
-	# These lines get any sister species from the hybrid and copy clades in the MUL-tree and that
-	# clade's corresponding map. If there are no sisters, it stores an empty list.
-
-	if v == -2:
-		print("sisters", sisters);
-
-	groups = [];
-	fixed_groups = [];
-
-	for group in cur_groups:
-		group_sis = [spec[spec.rfind("_")+1:] for spec in group[1]];
-
-		if all(spec in sisters[''] for spec in group_sis):
-			fixed_groups.append([group[0],'']);
-		elif all(spec in sisters['*'] for spec in group_sis):
-			fixed_groups.append([group[0],'*']);
-		else:
-			groups.append(group[0]);
-	# This checks the sister species of all the groups for the gene tree. If all the sister species
-	# of a group are also in the sister species of the hybrid or copy clade in the MUL-tree, then we
-	# can fix the mapping of that node.
-
-	if v == -2:
-		print("groups:",groups);
-		print("fixed:",fixed_groups);
-
-	###############
-
-	num_groups = len(groups);
-	if v == -2:
-		print("num groups:", num_groups);
-
-	if check_nums:
-		return num_groups, len(fixed_groups);
-	# If --checknums is True, we don't do any of the hard calcs, we just return some numbers as info.
-
-	if num_groups > cap:
-		return "OVER", num_groups, 0;
+	num_groups = len(cur_groups);
 
 	#combo_ind = list(itertools.product(['','*'], repeat=len(node_ind)));
 	#if v == -2:
@@ -256,11 +231,11 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cap, v, check_nums)
 	for combo in itertools.product(['','*'], repeat=num_groups):
 		group_map = [];
 		for i in range(len(combo)):
-			for node in groups[i]:
+			for node in cur_groups[i]:
 				group_map.append(node + combo[i]);
 		# This builds the current map for each group.
 
-		for fixed in fixed_groups:
+		for fixed in cur_fixed:
 			for node in fixed[0]:
 				group_map.append(node + fixed[1]);
 		# This adds the fixed maps onto the current combination of group mappings.

@@ -359,6 +359,9 @@ for mul_num in mul_dict:
 	mt = mul_dict[mul_num][0];
 	minfo = mul_dict[mul_num][1];
 	hybrid_clade = mul_dict[mul_num][2];
+	copy_node = mul_dict[mul_num][4];
+
+	copy_clade = set(RT.getClade(copy_node, sinfo));
 
 	gt_groups = [];
 
@@ -390,14 +393,14 @@ for mul_num in mul_dict:
 			continue;
 		# Parsing the current gene tree.
 
-		cur_groups = ALG.collapseGroups(ginfo, hybrid_clade, v);
-		gt_groups.append(cur_groups);
-		#print cur_groups;
+		cur_groups, fixed_groups = ALG.collapseGroups(minfo, ginfo, hybrid_clade, copy_clade, v);
+		gt_groups.append([cur_groups, fixed_groups]);
 
 		outline = "GT-" + str(gene_num+1) + " to MT-" + str(mul_num) + "\t";
 		# Parsing the gene tree.
 
-		num_groups, num_fixed = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cap, v, True);
+		num_groups = len(cur_groups);
+		num_fixed = len(fixed_groups);
 		outline += str(num_groups) + "\t" + str(num_fixed) + "\t" + str(2**num_groups);
 		if num_groups > cap:
 			gene_trees_filtered[gene_num] = "# Number of groups over group cap (-p set to " + str(cap) + ") -- Filtering.\n";
@@ -439,7 +442,7 @@ for mul_num in mul_dict:
 	hybrid_clade = mul_dict[mul_num][2];
 	hybrid_node = mul_dict[mul_num][3];
 	copy_node = mul_dict[mul_num][4];
-	gt_groups = mul_dict[mul_num][6];
+	group_list = gt_groups = mul_dict[mul_num][6]
 
 	RC.printWrite(detoutfilename, 0, "H1-" + str(mul_num) + " Node:\t" + hybrid_node);
 	gene_num = -1;
@@ -454,12 +457,15 @@ for mul_num in mul_dict:
 		if gene_tree[0] == "#":
 			continue;
 
+		gt_groups = group_list[gene_num][0];
+		gt_fixed = group_list[gene_num][1];
+
 		outline = "GT-" + str(gene_num+1) + " to MT-" + str(mul_num) + "\t";
 		gene_tree = RT.remBranchLength(gene_tree);
 		ginfo, gt = RT.treeParse(gene_tree);
 		# Parsing the gene tree.
 
-		dup_score, loss_score, maps = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, gt_groups[gene_num], cap, v, check_nums);
+		dup_score, loss_score, maps = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, gt_groups, gt_fixed, cap, v, check_nums);
 		# The call of the reconciliation algorithm! On the current gene tree with the current MUL-tree.
 
 		mut_score = dup_score + loss_score;
