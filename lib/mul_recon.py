@@ -86,7 +86,7 @@ def collapseGroups(mul_dict, sinfo, gene_trees_filtered, checkfile, num_skipped,
 		copy_node = mul_dict[mul_num][4];
 		copy_clade = set(RT.getClade(copy_node, sinfo));
 
-		checkfile.write("MT-" + str(mul_num) + ":" + RT.mulPrint(mt, hybrid_clade) + "\tH1 Node:" + hybrid_node + "\tH2 Node:" + copy_node + "\n";);
+		checkfile.write("MT-" + str(mul_num) + ":" + RT.mulPrint(mt, hybrid_clade) + "\tH1 Node:" + hybrid_node + "\tH2 Node:" + copy_node + "\n");
 
 		gene_num = -1;
 		for gene_tree in gene_trees_filtered:
