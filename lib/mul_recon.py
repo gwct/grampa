@@ -199,7 +199,7 @@ def collapseGroups(mul_dict, sinfo, gene_trees_filtered, checkfile, num_skipped,
 			outline += str(num_groups) + "\t" + str(num_fixed) + "\t" + str(2**num_groups);
 			if num_groups > cap:
 				gene_trees_filtered[gene_num] = ["# Number of groups over group cap (-p set to " + str(cap) + ") -- Filtering.\n"];
-			 	outline += "\tNumber of groups over group cap (-p set to " + str(cap) + ") -- Filtering.\n";
+			 	outline += "\tNumber of groups over group cap (-p set to " + str(cap) + ") -- Filtering.";
 			 	num_skipped += 1;
 			checkfile.write(outline + "\n");
 			# The call of the reconciliation algorithm! On the current gene tree with the current MUL-tree.
