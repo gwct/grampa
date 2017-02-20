@@ -96,7 +96,7 @@ def optParse(errorflag):
 				print("*** Message: With a MUL-tree as the input species tree (-t m) input for -h1 and -h2 are not required.");
 				print("*** Your input for -h1 and -h2 will be ignored.\n")
 
-			if args.group_cap > 15:
+			if args.group_cap > 18:
 				RC.errorOut(5, "For computational reasons, -p should not be set higher than 15.");
 				optParse(1);
 			elif args.group_cap >=10:
