@@ -261,6 +261,17 @@ def getSubtree(node, tree):
 
 #############################################################################
 
+def getSis(s_node, s_dict):
+# Gets the sister node of a given node. Sister node is defined as the other
+# descendent node of their direct common ancestor node.
+
+	s_anc = s_dict[s_node][1];
+	anc_desc = getDesc(s_anc, s_dict);
+	sis_node = [node for node in anc_desc if node != s_node];
+	return "".join(sis_node);
+
+#############################################################################
+
 def nodeDepth(n_spec, n_treedict):
 # This function returns a list of the nodes between the current node and the
 # root of the tree. Therefore, the node depth is the length of this list.
