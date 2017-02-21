@@ -529,7 +529,7 @@ for mul_num in mul_dict:
 		# Write the branch gain/loss scores.
 
 	RC.printWrite(detoutfilename, v, "Total parsimony score for MT-" + str(mul_num) + ": " + str(mul_dict[mul_num][5]));
-	branch_outline = "Total branch scores for ST:\t" + "\t".join([node + ":" + str(tot_node_counts[node][0]) + "," + str(tot_node_counts[node][1]) for node in sorted(tot_node_counts.keys())]);
+	branch_outline = "Total branch scores for MT" + str(mul_num) + ":\t" + "\t".join([node + ":" + str(tot_node_counts[node][0]) + "," + str(tot_node_counts[node][1]) for node in sorted(tot_node_counts.keys())]);
 	RC.printWrite(detoutfilename, v, branch_outline);
 	RC.printWrite(detoutfilename, v, "# ---------------------------");
 	RC.printWrite(outfilename, 0, "MT-" + str(mul_num) + "\t" + hybrid_node + "\t" + copy_node + "\t" + RT.mulPrint(mt, hybrid_clade) + "\t" + str(mul_dict[mul_num][5]));
