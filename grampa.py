@@ -421,7 +421,11 @@ if spec_type == 's':
 	print("# Doing standard reconciliation on your singly-labeled tree...\n");
 	st_score = 0;
 	gene_num = -1;
-	tot_node_counts = { node : [0,0] for node in sinfo };
+	
+	tot_node_counts = {};
+	for node in sinfo:
+		tot_node_counts[node] = [0,0];
+
 	RC.printWrite(detoutfilename, v, "# ---------------------------");
 	RC.printWrite(detoutfilename, v, "ST\t" + st);
 	for gene_tree in gene_trees_filtered:
@@ -488,7 +492,9 @@ for mul_num in mul_dict:
 	copy_node = mul_dict[mul_num][4];
 	group_list = gt_groups = mul_dict[mul_num][6]
 
-	tot_node_counts = { node : [0,0] for node in minfo };
+	tot_node_counts = {};
+	for node in minfo:
+		tot_node_counts[node] = [0,0];
 
 	RC.printWrite(detoutfilename, 0, "MT-" + str(mul_num) + ":" + RT.mulPrint(mt, hybrid_clade) + "\tH1 Node:" + hybrid_node + "\tH2 Node:" + copy_node);
 	gene_num = -1;
