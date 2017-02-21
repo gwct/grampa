@@ -42,7 +42,10 @@ def reconLCA(lca_ginfo, sinfo, lca_maps):
 				dups[g] = dups[g] + 1;
 			#Now, if the map of g is identical to one of its descendants, it is a duplication node.
 
-	node_counts = { node : [0,0] for node in sinfo };
+	node_counts = {};
+	for node in sinfo:
+		node_counts[node] = [0,0];
+
 	for node in lca_maps:
 		if dups[node] != 0:
 			node_counts[lca_maps[node][0]][0] += 1;
