@@ -421,7 +421,7 @@ if spec_type == 's':
 	print("# Doing standard reconciliation on your singly-labeled tree...\n");
 	st_score = 0;
 	gene_num = -1;
-	
+
 	tot_node_counts = {};
 	for node in sinfo:
 		tot_node_counts[node] = [0,0];
@@ -454,18 +454,18 @@ if spec_type == 's':
 		RC.printWrite(detoutfilename, v, outline);
 		# Call the recon algorithm and aggregate scores.
 
-		branch_outline = "\t";
-		for node in sorted(st_node_counts.keys()):
-			tot_node_counts[node][0] += st_node_counts[node][0];
-			tot_node_counts[node][1] += st_node_counts[node][1];
+		# branch_outline = "\t";
+		# for node in sorted(st_node_counts.keys()):
+		# 	tot_node_counts[node][0] += st_node_counts[node][0];
+		# 	tot_node_counts[node][1] += st_node_counts[node][1];
 
-			branch_outline += "\t" + node + ":" + str(st_node_counts[node][0]) + "," + str(st_node_counts[node][1])
-		RC.printWrite(detoutfilename, v, branch_outline);
+		# 	branch_outline += "\t" + node + ":" + str(st_node_counts[node][0]) + "," + str(st_node_counts[node][1])
+		# RC.printWrite(detoutfilename, v, branch_outline);
 		# Write the branch gain/loss scores.
 
 	RC.printWrite(detoutfilename, v, "Total parsimony score for ST: " + str(st_score));
-	branch_outline = "Total branch scores for ST:\t" + "\t".join([node + ":" + str(tot_node_counts[node][0]) + "," + str(tot_node_counts[node][1]) for node in sorted(tot_node_counts.keys())]);
-	RC.printWrite(detoutfilename, v, branch_outline);
+	# branch_outline = "Total branch scores for ST:\t" + "\t".join([node + ":" + str(tot_node_counts[node][0]) + "," + str(tot_node_counts[node][1]) for node in sorted(tot_node_counts.keys())]);
+	# RC.printWrite(detoutfilename, v, branch_outline);
 	RC.printWrite(detoutfilename, v, "# ---------------------------");
 	RC.printWrite(outfilename, 0, "ST\t\t\t" + st + "\t" + str(st_score));
 	# Print the total score and total branch scores for the singly-labeled tree.
@@ -525,18 +525,18 @@ for mul_num in mul_dict:
 		RC.printWrite(detoutfilename, v, outline);
 		# Aggregate scores.
 
-		branch_outline = "\t";
-		for node in sorted(mt_node_counts.keys()):
-			tot_node_counts[node][0] += mt_node_counts[node][0];
-			tot_node_counts[node][1] += mt_node_counts[node][1];
+		# branch_outline = "\t";
+		# for node in sorted(mt_node_counts.keys()):
+		# 	tot_node_counts[node][0] += mt_node_counts[node][0];
+		# 	tot_node_counts[node][1] += mt_node_counts[node][1];
 
-			branch_outline += "\t" + node + ":" + str(mt_node_counts[node][0]) + "," + str(mt_node_counts[node][1])
-		RC.printWrite(detoutfilename, v, branch_outline);
+		# 	branch_outline += "\t" + node + ":" + str(mt_node_counts[node][0]) + "," + str(mt_node_counts[node][1])
+		# RC.printWrite(detoutfilename, v, branch_outline);
 		# Write the branch gain/loss scores.
 
 	RC.printWrite(detoutfilename, v, "Total parsimony score for MT-" + str(mul_num) + ": " + str(mul_dict[mul_num][5]));
-	branch_outline = "Total branch scores for MT" + str(mul_num) + ":\t" + "\t".join([node + ":" + str(tot_node_counts[node][0]) + "," + str(tot_node_counts[node][1]) for node in sorted(tot_node_counts.keys())]);
-	RC.printWrite(detoutfilename, v, branch_outline);
+	# branch_outline = "Total branch scores for MT" + str(mul_num) + ":\t" + "\t".join([node + ":" + str(tot_node_counts[node][0]) + "," + str(tot_node_counts[node][1]) for node in sorted(tot_node_counts.keys())]);
+	# RC.printWrite(detoutfilename, v, branch_outline);
 	RC.printWrite(detoutfilename, v, "# ---------------------------");
 	RC.printWrite(outfilename, 0, "MT-" + str(mul_num) + "\t" + hybrid_node + "\t" + copy_node + "\t" + RT.mulPrint(mt, hybrid_clade) + "\t" + str(mul_dict[mul_num][5]));
 	# Print the total score and total branch scores for the current MUL-tree.
