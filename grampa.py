@@ -145,7 +145,6 @@ hybrid_clades = hInParse(hybrid_clades);
 copy_clades = hInParse(copy_clades);
 # Parses the input h1 and h2 clades.
 
-
 ### Begin input reading block
 if v != -1:
 	print("# Reading species tree...");
@@ -186,6 +185,10 @@ if RC.hErrorCheck(spec_check, sinfo, spec_type, hybrid_clades, copy_clades) == 1
 	optParse(1);
 # Error handling to make sure the species the user entered are all in their species tree.
 ## End species tree block.
+outfile = open(outfilename, "w");
+outfile.write("");
+outfile.close();
+outdir = os.path.dirname(os.path.abspath(outfilename));
 
 if not mul_opt:
 	if v != -1:
@@ -197,7 +200,8 @@ if not mul_opt:
 		optParse(1);
 
 	gene_file_prefix, gene_file_ext = os.path.splitext(gene_file);
-	gene_file_filtered = gene_file_prefix + "_filtered" + gene_file_ext;
+	gene_file_filtered = os.path.join(outdir, gene_file_prefix + "_filtered" + gene_file_ext);
+	
 # Reading the gene trees file.
 ## End gene tree block.
 ### End input reading block.
@@ -216,11 +220,6 @@ if not mul_opt:
 	checkfile = open(checkfilename, "w");
 	checkfile.write("Trees\t# Groups\t# Fixed\t# Combinations\n");
 	checkfile.close();
-
-
-outfile = open(outfilename, "w");
-outfile.write("");
-outfile.close();
 # Output file prep.
 ### End output file block.
 
@@ -365,7 +364,7 @@ for gene_tree in gene_trees:
 	gene_num += 1;
 
 	if gene_tree.strip() == '':
-		gene_trees_filtered.append(["# Empty line -- Filtering.\n"]);
+		gene_trees_filtered.append(["# Empty line -- Filtering."]);
 		checkfile.write("GT-" + str(gene_num+1) + "\tEmpty line -- Filtering.\n");
 		num_skipped += 1;
 		continue;
@@ -376,14 +375,14 @@ for gene_tree in gene_trees:
 		ginfo, gt = RT.treeParse(gene_tree);
 		gene_trees_filtered.append([gt,ginfo]);
 	except:
-		gene_trees_filtered.append(["# Error reading this tree! -- Filtering.\n"]);
+		gene_trees_filtered.append(["# Error reading this tree! -- Filtering."]);
 		checkfile.write("GT-" + str(gene_num+1) + "\tError reading this tree! -- Filtering.\n");
 		num_skipped += 1;
 		continue;
 	# Tries the gene tree parsing code and if anything goes wrong, catches exception and filters the tree.
 
 	if len([g for g in ginfo if ginfo[g][2] != 'tip']) != len([g for g in ginfo if ginfo[g][2] == 'tip']) - 1:
-		gene_trees_filtered[gene_num] = ["# This line may not contain a tree, or if so it may be unrooted -- Filtering.\n"]
+		gene_trees_filtered[gene_num] = ["# This line may not contain a tree, or if so it may be unrooted -- Filtering."]
 		checkfile.write("GT-" + str(gene_num+1) + "\tThis line may not contain a tree, or if so it may be unrooted -- Filtering.\n");
 		num_skipped += 1;
 		continue;
@@ -401,7 +400,7 @@ if not lca_opt:
 		print("# Writing filtered gene trees to file...");
 		filtered_file = open(gene_file_filtered, "w");
 		for gt in gene_trees_filtered:
-			filtered_file.write(gt[0]);
+			filtered_file.write(gt[0] + "\n");
 		filtered_file.close();
 	else:
 		print("# No trees filtered! Using your original set.")
@@ -432,7 +431,6 @@ if spec_type == 's':
 		if len(gene_tree) == 1:
 			continue;
 		# If the gene tree was previously filtered, the list will only contain the filter message and it should be skipped here.
-
 		gene_num += 1;
 		outline = "GT-" + str(gene_num+1) + " to ST\t";
 		gt, ginfo = gene_tree;
