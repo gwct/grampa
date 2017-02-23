@@ -17,7 +17,7 @@ for each in filelist:
 
 	intree = re.sub('[)][\w]+;',');', intree);
 
-	outfile.write(intree);
+	outfile.write(intree + "\n");
 
 
 
