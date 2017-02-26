@@ -428,10 +428,11 @@ if spec_type == 's':
 	RC.printWrite(detoutfilename, v, "# ---------------------------");
 	RC.printWrite(detoutfilename, v, "ST\t" + st);
 	for gene_tree in gene_trees_filtered:
+		gene_num += 1;
 		if len(gene_tree) == 1:
 			continue;
 		# If the gene tree was previously filtered, the list will only contain the filter message and it should be skipped here.
-		gene_num += 1;
+
 		outline = "GT-" + str(gene_num+1) + " to ST\t";
 		gt, ginfo = gene_tree;
 		# Retrieves the gene tree info.
