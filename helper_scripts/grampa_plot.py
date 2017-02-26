@@ -103,7 +103,11 @@ for line in open(infilename):
 		continue;
 
 	line = line.strip().split("\t");
-	score_dict[line[1] + "-" + line[2]] = int(line[4]);
+	if line[0] == "ST":
+		score_dict[line[0]] = int(line[4]);
+
+	else:
+		score_dict[line[1] + "-" + line[2]] = int(line[4]);
 
 sorted_keys = sorted(score_dict, key=score_dict.get)
 sorted_vals = [];
