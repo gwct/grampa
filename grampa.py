@@ -489,7 +489,7 @@ for mul_num in mul_dict:
 	hybrid_clade = mul_dict[mul_num][2];
 	hybrid_node = mul_dict[mul_num][3];
 	copy_node = mul_dict[mul_num][4];
-	group_list = gt_groups = mul_dict[mul_num][6]
+	group_list = gt_groups = mul_dict[mul_num][6];
 
 	tot_node_counts = {};
 	for node in minfo:

@@ -183,6 +183,9 @@ def collapseGroups(mul_dict, sinfo, gene_trees_filtered, checkfile, num_skipped,
 
 			for group in final_groups:
 				group_sis = [spec[spec.rfind("_")+1:] for spec in group[1]];
+				if group_sis == []:
+					groups.append(group[0]);
+					continue;
 
 				if all(spec in sisters[''] for spec in group_sis):
 					fixed_groups.append([group[0],'']);
@@ -194,7 +197,7 @@ def collapseGroups(mul_dict, sinfo, gene_trees_filtered, checkfile, num_skipped,
 			# of a group are also in the sister species of the hybrid or copy clade in the MUL-tree, then we
 			# can fix the mapping of that node.
 			## FINDS FIXED SISTER GROUPS
-			
+
 			gt_groups[gene_num] = [groups, fixed_groups];
 			# Adding the groups and fixed groups to the current gt_groups.
 
@@ -295,10 +298,6 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cur_fixed, cap, v, 
 			for node in fixed[0]:
 				group_map.append(node + fixed[1]);
 		# This adds the fixed maps onto the current combination of group mappings.
-
-		if v == -2:
-			print(map_num, "curmap:", group_map);
-			map_num = map_num + 1;
 
 		# Now we do LCA mapping for the current combination of maps for the hybrid clade species.
 		maps = {};
