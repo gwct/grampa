@@ -216,31 +216,35 @@ def collapseGroups(mul_dict, sinfo, gene_trees_filtered, checkfile, num_skipped,
 #############################################################################
 
 def mulLossCount(lc_ginfo, lc_minfo, lc_maps, lc_dups, lc_node_counts):
-# Given two trees (dictionaries), a mapping between them, and the duplication nodes
-# , this function counts the number of losses
+# Given two trees (dictionaries), a mapping between them, and the duplication nodes,
+# this function counts the number of losses. Depths are 0 based.
 
 	loss_count = 0;
 	for g in lc_ginfo:
 		if lc_ginfo[g][2] == 'root':
-			continue;
-		curanc = lc_ginfo[g][1];
-		ancdepth = len(RT.nodeDepth(lc_maps[curanc][0],lc_minfo));
-		gdepth = len(RT.nodeDepth(lc_maps[g][0],lc_minfo));
+			glosses = len(RT.nodeDepth(lc_maps[g][0],lc_minfo));
+		# The number of losses at the root of the gene tree is equal to the depth of its map.
 
-		glosses = 0;
-		glosses = gdepth - ancdepth - 1;
+		else:
+			curanc = lc_ginfo[g][1];
+			ancdepth = len(RT.nodeDepth(lc_maps[curanc][0],lc_minfo));
+			gdepth = len(RT.nodeDepth(lc_maps[g][0],lc_minfo));
 
-		if lc_dups[curanc] != 0:
-			glosses = glosses + 1;
+			glosses = 0;
+			glosses = gdepth - ancdepth - 1;
+
+			if lc_dups[curanc] != 0:
+				glosses = glosses + 1;
 
 		if glosses != 0:
 			loss_count += glosses;
 			lc_node_counts[lc_maps[g][0]][1] += glosses; 	
 
-	for m in lc_minfo:
-		if lc_minfo[m][2] == 'root' and [m] not in list(lc_maps.values()):
-			loss_count = loss_count + 1;
-			break;
+	# for m in lc_minfo:
+	# 	print m;
+	# 	if lc_minfo[m][2] == 'root' and [m] not in list(lc_maps.values()):
+	# 		loss_count = loss_count + 1;
+	# 		break;
 	# Accounts for cases where h2 puts one clade at the root of the MUL-tree
 	#print loss_count;
 	#sys.exit();
