@@ -415,59 +415,59 @@ if not lca_opt:
 	# If --checknums is set, exit the program here.
 ### End gene tree block.
 ### Begin standard recon block
-if spec_type == 's':
-# Only do standard recon if the input tree is a singly-labeled tree.
-	print("# Doing standard reconciliation on your singly-labeled tree...\n");
-	st_score = 0;
-	gene_num = -1;
+# if spec_type == 's':
+# # Only do standard recon if the input tree is a singly-labeled tree.
+# 	print("# Doing standard reconciliation on your singly-labeled tree...\n");
+# 	st_score = 0;
+# 	gene_num = -1;
 
-	tot_node_counts = {};
-	for node in sinfo:
-		tot_node_counts[node] = [0,0];
+# 	tot_node_counts = {};
+# 	for node in sinfo:
+# 		tot_node_counts[node] = [0,0];
 
-	RC.printWrite(detoutfilename, v, "# ---------------------------");
-	RC.printWrite(detoutfilename, v, "ST\t" + st);
-	for gene_tree in gene_trees_filtered:
-		gene_num += 1;
-		if len(gene_tree) == 1:
-			continue;
-		# If the gene tree was previously filtered, the list will only contain the filter message and it should be skipped here.
+# 	RC.printWrite(detoutfilename, v, "# ---------------------------");
+# 	RC.printWrite(detoutfilename, v, "ST\t" + st);
+# 	for gene_tree in gene_trees_filtered:
+# 		gene_num += 1;
+# 		if len(gene_tree) == 1:
+# 			continue;
+# 		# If the gene tree was previously filtered, the list will only contain the filter message and it should be skipped here.
 
-		outline = "GT-" + str(gene_num+1) + " to ST\t";
-		gt, ginfo = gene_tree;
-		# Retrieves the gene tree info.
+# 		outline = "GT-" + str(gene_num+1) + " to ST\t";
+# 		gt, ginfo = gene_tree;
+# 		# Retrieves the gene tree info.
 
-		maps = {};
-		for g in ginfo:
-			if ginfo[g][2] == 'tip':
-				speclabel = g[g.rfind("_")+1:];
-				maps[g] = [speclabel];
-			else:
-				maps[g] = [];
-		# Initialize the maps.
+# 		maps = {};
+# 		for g in ginfo:
+# 			if ginfo[g][2] == 'tip':
+# 				speclabel = g[g.rfind("_")+1:];
+# 				maps[g] = [speclabel];
+# 			else:
+# 				maps[g] = [];
+# 		# Initialize the maps.
 
-		st_maps, st_num_dups, st_num_loss, st_node_counts = ALG.reconLCA(ginfo, sinfo, maps);
-		st_mut_score = st_num_dups + st_num_loss;
-		st_score += st_mut_score;
-		outline = outline + str(st_num_dups) + "\t" + str(st_num_loss) + "\t" + str(st_mut_score);
-		RC.printWrite(detoutfilename, v, outline);
-		# Call the recon algorithm and aggregate scores.
+# 		st_maps, st_num_dups, st_num_loss, st_node_counts = ALG.reconLCA(ginfo, sinfo, maps);
+# 		st_mut_score = st_num_dups + st_num_loss;
+# 		st_score += st_mut_score;
+# 		outline = outline + str(st_num_dups) + "\t" + str(st_num_loss) + "\t" + str(st_mut_score);
+# 		RC.printWrite(detoutfilename, v, outline);
+# 		# Call the recon algorithm and aggregate scores.
 
-		# branch_outline = "\t";
-		# for node in sorted(st_node_counts.keys()):
-		# 	tot_node_counts[node][0] += st_node_counts[node][0];
-		# 	tot_node_counts[node][1] += st_node_counts[node][1];
+# 		# branch_outline = "\t";
+# 		# for node in sorted(st_node_counts.keys()):
+# 		# 	tot_node_counts[node][0] += st_node_counts[node][0];
+# 		# 	tot_node_counts[node][1] += st_node_counts[node][1];
 
-		# 	branch_outline += "\t" + node + ":" + str(st_node_counts[node][0]) + "," + str(st_node_counts[node][1])
-		# RC.printWrite(detoutfilename, v, branch_outline);
-		# Write the branch gain/loss scores.
+# 		# 	branch_outline += "\t" + node + ":" + str(st_node_counts[node][0]) + "," + str(st_node_counts[node][1])
+# 		# RC.printWrite(detoutfilename, v, branch_outline);
+# 		# Write the branch gain/loss scores.
 
-	RC.printWrite(detoutfilename, v, "Total parsimony score for ST: " + str(st_score));
-	# branch_outline = "Total branch scores for ST:\t" + "\t".join([node + ":" + str(tot_node_counts[node][0]) + "," + str(tot_node_counts[node][1]) for node in sorted(tot_node_counts.keys())]);
-	# RC.printWrite(detoutfilename, v, branch_outline);
-	RC.printWrite(detoutfilename, v, "# ---------------------------");
-	RC.printWrite(outfilename, 0, "ST\t\t\t" + st + "\t" + str(st_score));
- 	# Print the total score and total branch scores for the singly-labeled tree.
+# 	RC.printWrite(detoutfilename, v, "Total parsimony score for ST: " + str(st_score));
+# 	# branch_outline = "Total branch scores for ST:\t" + "\t".join([node + ":" + str(tot_node_counts[node][0]) + "," + str(tot_node_counts[node][1]) for node in sorted(tot_node_counts.keys())]);
+# 	# RC.printWrite(detoutfilename, v, branch_outline);
+# 	RC.printWrite(detoutfilename, v, "# ---------------------------");
+# 	RC.printWrite(outfilename, 0, "ST\t\t\t" + st + "\t" + str(st_score));
+# 	# Print the total score and total branch scores for the singly-labeled tree.
 
 if lca_opt:
 	print("# Done!");
@@ -517,6 +517,11 @@ for mul_num in mul_dict:
 
 		dup_score, loss_score, maps, mt_node_counts = ALG.mulRecon(hybrid_clade, mt, minfo, gt, ginfo, gt_groups, gt_fixed, cap, v, check_nums);
 		# The call of the reconciliation algorithm! On the current gene tree with the current MUL-tree.
+
+		star_count, norm_count, both_count, miss_count = LCHECK.lcaCheck(mt, minfo, gt, ginfo, maps, "<34>", hybrid_clade);
+		lca_outfile = open("lca_check_out.txt","a");
+		lca_outfile.write(gt + "\t" + str(star_count) + "\t" + str(norm_count) + "\t" + str(both_count) + "\t" + str(miss_count) + "\n");
+		lca_outfile.close();
 
 		mut_score = dup_score + loss_score;
 		outline = outline + str(dup_score) + "\t" + str(loss_score) + "\t" + str(mut_score);
