@@ -48,10 +48,10 @@ def optParse(errorflag):
 			pyver = sys.version[:3];
 			try:
 				python_cmd = "python" + pyver
-				subprocess.call(python_cmd + " " + t_path + " " + python_cmd);
+				subprocess.call([python_cmd, t_path, python_cmd]);
 			except OSError:
 				python_cmd = "python"
-				subprocess.call(python_cmd + " " + t_path + " " + python_cmd);
+				subprocess.call(python_cmd, t_path, python_cmd);
 			sys.exit();
 		# Call of the tests script if --tests is set.
 
