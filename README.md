@@ -84,7 +84,7 @@ For most runs, GRAMPA creates three main output files:
 | -v | Control the amount of output printed to the screen. Print all output (1) or just a progress bar and some log info (0). Default: 1 |
 | --multree | Set this flag if your input species tree is a MUL-tree. |
 | --labeltree | The program will simply label your input species tree. |
-| --buildmultree | Build MUL-trees given `-s`, `-h1`, and `-h2`. |
+| --buildmultrees | Build MUL-trees given `-s`, `-h1`, and `-h2`. |
 | --checknums | If this flag is entered, the program will just calculate the number of groups per gene tree and exit. No reconciliations will be done. |
 | --maps | Output the node maps for each reconciliation in addition to the scores. The maps will be placed in the detailed output file. |
 | --tests | Run the tests script |
