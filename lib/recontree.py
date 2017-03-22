@@ -22,72 +22,6 @@ import re, sys
 # re is used to replace internal labels in trees when necessary.
 # I label internal nodes as '<#>'
 
-#############################################################################
-
-def buildMultree(h,p,tree,tree_info):
-# This function builds a MUL-tree from a normally labeled species tree.
-# Input:
-#		h - a node that will have its subtree copied into the MUL-tree
-#		p - a node at which the copied subtree will be placed
-#		tree - the original species tree WITH internal nodes labeled
-#		tree_info - the tree info dictionary (returned by treeparse) from the original tree
-
-	if tree_info[h][2] == 'tip':
-		hybrid = h;
-	else:
-		hybrid = getSubtree(h,tree);
-		hybrid = re.sub('<[\d]+>','',hybrid);
-	# Gets the subtree of the hybrid node
-
-	if tree_info[p][2] == 'tip':
-		copy = p;
-	else:
-		copy = getSubtree(p,tree);
-		copy = re.sub('<[\d]+>','',copy);
-	# Gets the subtree of the copy node.
-
-	if (copy in hybrid and copy != hybrid):# or tree_info[p][3] == 'root':
-		return "NULL";
-	# Copy nodes shouldn't be within the hybrid subtree and shouldn't be at the root.
-
-	if tree_info[h][2] != 'tip':
-		for node in tree_info:
-			if node in hybrid and tree_info[node][2] == 'tip':
-				tree = tree.replace(node, node+"_1");
-				copy = copy.replace(node, node+"_1")
-	# Some re-labeling if necessary.
-	tree = re.sub('<[\d]+>','',tree);
-
-	if tree_info[h][2] == 'tip':
-			mul_clade = "(" + copy + "," + hybrid + "*)";
-	else:
-			mul_clade = "(" + copy + "," + hybrid + ")";
-
-	mul_tree = tree.replace(copy,mul_clade);
-	# Combines the clades and replaces the copy clade in the original tree to create the MUL-tree.
-
-	mul_tree = re.sub('<[\d]+>','',mul_tree);
-	if tree_info[h][2] != 'tip':
-		for node in tree_info:
-			if node in hybrid and tree_info[node][2] == 'tip':
-				mul_tree = mul_tree.replace(node, node+"*");
-		mul_tree = mul_tree.replace("*_1", "");
-	# Some relabling of the hybrid species.
-
-	return mul_tree;
-
-#############################################################################
-
-def mulPrint(mul_tree, hybrid_clade):
-# For a given MUL-tree, relabels the hybrid clade species to distinguish within tree viewers.
-
-	for spec in hybrid_clade:
-		mul_tree = re.sub(spec + '(?!=\*)', spec + '+', mul_tree);
-		mul_tree = mul_tree.replace("+*", "*");
-	return mul_tree;
-
-#############################################################################
-
 def getBranchLength(bltree, spec_label):
 # Returns the branch length of a species given a newick formatted tree. Used by treeParse.
 	d = 0;
@@ -291,6 +225,17 @@ def nodeDepth(n_spec, n_treedict):
 
 #############################################################################
 
+def sortNodes(tree_dict):
+	sorted_nodes = [];
+	for n in tree_dict:
+		if tree_dict[n][2] != 'tip':
+			sorted_nodes.append(int(n.replace("<","").replace(">","")));
+	sorted_nodes = sorted(sorted_nodes);
+
+	return sorted_nodes;
+
+#############################################################################
+
 def treeParse(tree, debug=0):
 # The treeParse function takes as input a rooted phylogenetic tree with branch lengths and returns the tree with node labels and a
 # dictionary with usable info about the tree in the following format:
@@ -380,6 +325,10 @@ def treeParse(tree, debug=0):
 		match_node = node;
 		if "*" in node:
 			match_node = match_node.replace("*", "\*");
+		if "^" in node:
+			match_node = match_node.replace("^", "\^");
+		if "+" in node:
+			match_node = match_node.replace("+", "\+");
 
 		anc_match = re.findall('[(),]' + match_node + '[(),]', new_tree);
 		anc_tree = new_tree[new_tree.index(anc_match[0]):][1:];

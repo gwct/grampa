@@ -22,13 +22,11 @@ grampath = os.path.dirname(__file__)[:-3];
 grampath_script = os.path.join(grampath, "grampa.py");
 grampath_s = os.path.join(grampath, "data", "manual_species_tree.tre");
 grampath_g = os.path.join(grampath, "data", "manual_gene_trees.txt");
-grampa_out = os.path.join(grampath, "data", "tests_out.txt");
-outfilename = os.path.join(grampath, "data", "tests_log.txt");
-outfile = open(outfilename, "w");
-outfile.write("");
-outfile.close();
+grampa_out = os.path.join(grampath, "tests_out");
+outfilename = os.path.join(grampath, "tests_log_" + start + ".txt");
+RC.filePrep(outfilename);
 
-tmpfile = start + "_tests.tmp";
+tmpfile = "tests_" + start + ".tmp";
 
 RC.printWrite(outfilename, 1, "\nRUNNING GRAMPA TESTS");
 RC.printWrite(outfilename, 1, start + "\n");
@@ -43,18 +41,22 @@ numpass = 0;
 RC.printWrite(outfilename, 1, "1: --labeltree test.........");
 os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -v -1 --labeltree 2> " + tmpfile);
 errors, numpass = catchErr("labeltree", errors, numpass, tmpfile);
+os.system("rm -rf " + grampa_out);
 
 RC.printWrite(outfilename, 1, "2: --multree test...........");
-os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -g " + grampath_g + " -o " + grampa_out + " -v -1 --multree 2> " + tmpfile);
+os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -g " + grampath_g + " -o " + grampa_out + " -v -1 --buildmultrees 2> " + tmpfile);
 errors, numpass = catchErr("multree", errors, numpass, tmpfile);
+os.system("rm -rf " + grampa_out);
 
 RC.printWrite(outfilename, 1, "3: --checknum test..........");
 os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -g " + grampath_g + " -o " + grampa_out + " -v -1 --checknum 2> " + tmpfile);
 errors, numpass = catchErr("checknum", errors, numpass, tmpfile);
+os.system("rm -rf " + grampa_out);
 
 RC.printWrite(outfilename, 1, "4: MAIN test................");
-os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -g " + grampath_g + " -o " + grampa_out + " -v -1 2> " + tmpfile);
+os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -g " + grampath_g + " -o " + grampa_out + " -v -1 --maps 2> " + tmpfile);
 errors, numpass = catchErr("main", errors, numpass, tmpfile);
+os.system("rm -rf " + grampa_out);
 
 if numpass == 4:
 	RC.printWrite(outfilename, 1, "\nDone! All tests pass!\n");

@@ -5,15 +5,26 @@
 # Forked from core on 12.13.2015
 #############################################################################
 
-import sys, datetime
+import sys, datetime, time, opt_parse as OP
 
 #############################################################################
 
 def errorOut(errnum, errmsg):
 # Formatting for error messages.
+	OP.optParse(1);
 	fullmsg = "|**Error " + str(errnum) + ": " + errmsg + " |";
 	border = " " + "-" * (len(fullmsg)-2);
 	print("\n" + border + "\n" + fullmsg + "\n" + border + "\n");
+	sys.exit();
+
+#############################################################################
+
+def endProg(starttime, outfilename, main_v):
+		endtime = time.time();
+		totaltime = endtime - starttime;
+		printWrite(outfilename, main_v, "# LOG: Total execution time: " + str(round(totaltime,3)) + " seconds.");
+		printWrite(outfilename, main_v, "# =========================================================================");
+		sys.exit();
 
 #############################################################################
 
@@ -26,6 +37,16 @@ def getLogTime():
 def getDateTime():
 # Function to get the date and time in a certain format.
 	return datetime.datetime.now().strftime("%m.%d.%Y | %I:%M:%S");
+
+#############################################################################
+
+def filePrep(filename, header=""):
+# Function to initialize output files with headers or as blank files.
+	if header != "" and header[-1] != "\n":
+		header += "\n";
+	outfile = open(filename, "w");
+	outfile.write(header);
+	outfile.close();
 
 #############################################################################
 
@@ -80,7 +101,7 @@ def printWrite(o_name, v, o_line1, o_line2="", pad=0):
 		outline = o_line1;
 	else:
 		outline = o_line1 + " "*(pad-len(o_line1)) + o_line2;
-	if v == 1 or v == -2:
+	if v in [1,2]:
 		print(outline);
 	f = open(o_name, "a");
 	f.write(outline + "\n");
@@ -88,37 +109,10 @@ def printWrite(o_name, v, o_line1, o_line2="", pad=0):
 
 #############################################################################
 
-def hErrorCheck(spec_check, sinfo, spec_type, hybrid_clades, copy_clades):
-
-	if any(sinfo[n][3] == 'tip' and n.isdigit() for n in sinfo):
-		errorOut(8, "Tip labels cannot be purely numbers. Please add another character.");
-		return 1;
-
-	if hybrid_clades and not all(h in sinfo for hybrid_list in hybrid_clades for h in hybrid_list if not h.isdigit()):
-		errorOut(9, "Not all hybrid species (-h1) are present in your species tree!");
-		return 1;
-
-	if hybrid_clades and not all("<" + h + ">" in sinfo for hybrid_list in hybrid_clades for h in hybrid_list if h.isdigit()):
-		errorOut(10, "Not all hybrid nodes (-h1) are present in your species tree!");
-		return 1
-
-	if copy_clades and not all(c in sinfo for copy_list in copy_clades for c in copy_list if not c.isdigit()):
-		errorOut(11, "Not all copy species (-h2) are present in your species tree!");
-		return 1;
-
-	if copy_clades and not all("<" + c + ">" in sinfo for copy_list in copy_clades for c in copy_list if c.isdigit()):
-		errorOut(12, "Not all copy nodes (-h2) are present in your species tree!");
-		return 1;
-
-	if spec_type == 's' and any(spec_check.count(n) > 1 for n in spec_check):
-		errorOut(13, "You have entered a tree type (-t) of 's' but there are labels in your tree that appear more than once!");
-		return 1;
-
-	if spec_type == 'm' and any(spec_check.count(h) not in [1,2] for h in spec_check):
-		errorOut(14, "You have entered a tree type (-t) of 'm', species in your tree should appear exactly once or twice.");
-		return 1;
-
-	return 0;
+def printStep(step, msg, v):
+	if v != -1:
+		print msg;
+	return step+1;
 
 #############################################################################
 
@@ -173,6 +167,83 @@ def simpson():
 
 	print(s);
 
+#############################################################################
+## Old code for the ST branch output.
 
+# From reconLCA:
+	# node_counts = {};
+	# for node in sinfo:
+	# 	node_counts[node] = [0,0];
 
+	# node_counts[lca_maps[d1][0]][1] += d1_loss;
+	# node_counts[lca_maps[d2][0]][1] += d2_loss;
 
+	# for node in lca_maps:
+	# 	if dups[node] != 0:
+	# 		node_counts[lca_maps[node][0]][0] += 1;
+	# Place the duplications on their maps in the species tree.
+
+# From stdLCA:
+	# branch_outline = "\t";
+	# for node in sorted(st_node_counts.keys()):
+	# 	tot_node_counts[node][0] += st_node_counts[node][0];
+	# 	tot_node_counts[node][1] += st_node_counts[node][1];
+
+	# 	branch_outline += "\t" + node + ":" + str(st_node_counts[node][0]) + "," + str(st_node_counts[node][1])
+	# RC.printWrite(detoutfilename, v, branch_outline);
+	# Write the branch gain/loss scores.
+# branch_outline = "Total branch scores for ST:\t" + "\t".join([node + ":" + str(tot_node_counts[node][0]) + "," + str(tot_node_counts[node][1]) for node in sorted(tot_node_counts.keys())]);
+# RC.printWrite(detoutfilename, v, branch_outline);
+
+# From grampa.py:
+	# branch_outline = "\t";
+	# for node in sorted(mt_node_counts.keys()):
+	# 	tot_node_counts[node][0] += mt_node_counts[node][0];
+	# 	tot_node_counts[node][1] += mt_node_counts[node][1];
+
+	# 	branch_outline += "\t" + node + ":" + str(mt_node_counts[node][0]) + "," + str(mt_node_counts[node][1])
+	# RC.printWrite(detoutfilename, v, branch_outline);
+	# Write the branch gain/loss scores.
+
+# branch_outline = "Total branch scores for MT" + str(mul_num) + ":\t" + "\t".join([node + ":" + str(tot_node_counts[node][0]) + "," + str(tot_node_counts[node][1]) for node in sorted(tot_node_counts.keys())]);
+# RC.printWrite(detoutfilename, v, branch_outline);
+
+#############################################################################
+## The old loss counting function.
+
+# def mulLossCount(lc_ginfo, lc_minfo, lc_maps, lc_dups, lc_node_counts):
+# # Given two trees (dictionaries), a mapping between them, and the duplication nodes,
+# # this function counts the number of losses. Depths are 0 based.
+
+# 	loss_count = 0;
+# 	for g in lc_ginfo:
+# 		if lc_ginfo[g][2] == 'root':
+# 			glosses = len(RT.nodeDepth(lc_maps[g][0],lc_minfo));
+# 		# The number of losses at the root of the gene tree is equal to the depth of its map.
+
+# 		else:
+# 			curanc = lc_ginfo[g][1];
+# 			ancdepth = len(RT.nodeDepth(lc_maps[curanc][0],lc_minfo));
+# 			gdepth = len(RT.nodeDepth(lc_maps[g][0],lc_minfo));
+
+# 			glosses = 0;
+# 			glosses = gdepth - ancdepth - 1;
+
+# 			if lc_dups[curanc] != 0:
+# 				glosses = glosses + 1;
+
+# 		if glosses != 0:
+# 			loss_count += glosses;
+# 			lc_node_counts[lc_maps[g][0]][1] += glosses; 	
+
+# 	# for m in lc_minfo:
+# 	# 	print m;
+# 	# 	if lc_minfo[m][2] == 'root' and [m] not in list(lc_maps.values()):
+# 	# 		loss_count = loss_count + 1;
+# 	# 		break;
+# 	# Accounts for cases where h2 puts one clade at the root of the MUL-tree
+# 	#print loss_count;
+# 	#sys.exit();
+# 	return loss_count, lc_node_counts;
+
+#############################################################################

@@ -5,7 +5,7 @@
 # Fall 2015, Combo algorithm implemented Spring 2016
 #############################################################################
 
-import sys, re, recontree as RT, itertools
+import sys, re, recontree as RT, mul_tree as MT, itertools
 
 #############################################################################
 
@@ -13,53 +13,52 @@ def reconLCA(lca_ginfo, sinfo, lca_maps):
 # The LCA reconciliation mapping algorithm.
 
 	dups = {};
+	losses = {};
+	internal_nodes = [];
+
+	internal_nodes = RT.sortNodes(lca_ginfo);
+	# Sort the internal nodes for a post order traversal.
+
 	for g in lca_ginfo:
 		dups[g] = 0;
-	#The node classification of the gene tree. [key]:[value] -> [gene tree node]:[1,0]
+		losses[g] = 0;
 
-	while [] in list(lca_maps.values()):
-	# To get the maps, a single post-order traversal of the tree is done.
-		for g in lca_ginfo:
-			if lca_ginfo[g][2] == 'tip' or lca_maps[g] != []:
-				continue;
-			# If the node is a tip, a map is already defined.
+	for g in internal_nodes:
+		g = "<" + str(g) + ">";
+		d1, d2 = RT.getDesc(g, lca_ginfo);
+		is_dup = 0;
+		g_clade = RT.getClade(g, lca_ginfo);
+		clade_maps = [];
+		for g_tip in g_clade:
+			clade_maps.append(lca_maps[g_tip][0]);
+		# Get the species in the clade of the current node. Then get all
+		# the possible maps from those species.
 
-			desc = RT.getDesc(g, lca_ginfo)
-			if lca_maps[desc[0]] == [] or lca_maps[desc[1]] == []:
-				continue;
-			# Otherwise, if both descendants haven't yet been mapped, continue.
+		lca_maps[g].append(RT.LCA(clade_maps,sinfo)[0]);
 
-			g_clade = RT.getClade(g, lca_ginfo);
-			clade_maps = [];
-			for g_tip in g_clade:
-				clade_maps.append(lca_maps[g_tip][0]);
-			# Get the species in the clade of the current node. Then get all
-			# the possible maps from those species.
+		if lca_maps[g][0] == lca_maps[d1][0] or lca_maps[g][0] == lca_maps[d2][0]:
+			dups[g] += 1;
+			is_dup = 1;
+		#Now, if the map of g is identical to one of its descendants, it is a duplication node.
 
-			lca_maps[g].append(RT.LCA(clade_maps,sinfo)[0]);
+		cur_depth = len(RT.nodeDepth(lca_maps[g][0],sinfo))
 
-			if lca_maps[g][0] == lca_maps[desc[0]][0] or lca_maps[g][0] == lca_maps[desc[1]][0]:
-				dups[g] = dups[g] + 1;
-			#Now, if the map of g is identical to one of its descendants, it is a duplication node.
+		if lca_ginfo[g][2] == 'root':
+			losses[g] += cur_depth;
+		# The number of losses at the root of the gene tree is equal to the depth of its map.
 
-	node_counts = {};
-	for node in sinfo:
-		node_counts[node] = [0,0];
+		d1_depth = len(RT.nodeDepth(lca_maps[d1][0],sinfo))
+		d1_loss = (d1_depth - cur_depth - 1) + is_dup;
+		losses[d1] += d1_loss;
+		d2_depth = len(RT.nodeDepth(lca_maps[d2][0],sinfo))
+		d2_loss = (d2_depth - cur_depth - 1) + is_dup;
+		losses[d2] += d2_loss;
+		# Counting losses for each of the descendents of the current node.
 
-	for node in lca_maps:
-		if dups[node] != 0:
-			node_counts[lca_maps[node][0]][0] += 1;
-	# Place the duplications on their maps in the species tree.
-
-	num_dups = len([node for node in dups if dups[node] != 0]);
-	numloss, node_counts = mulLossCount(lca_ginfo, sinfo, lca_maps, dups, node_counts);
-	# Call the functions to count the number of losses.
-
-	return lca_maps, num_dups, numloss, node_counts;
+	return lca_maps, dups, losses;
 	# Return the total number of duplication nodes.
 
 #############################################################################
-
 def getSis(gs_node, check_node, check_clade, gs_dict):
 # Gets the hybrid and copy sister species.
 
@@ -76,20 +75,19 @@ def getSis(gs_node, check_node, check_clade, gs_dict):
 		return sis_clade;
 
 #############################################################################
-def collapseGroups(mul_dict, sinfo, gene_trees_filtered, checkfile, num_skipped, cap, v):
+def collapseGroups(mul_dict, gene_trees_filtered, checkfilename, spec_type, num_skipped, cap, v):
 # The collapseGroups function goes through all gene tree-MUL-tree combos to collapse the groups. It also filters out
 # gene trees that have more groups than the cap in any combination.
+	checkfile = open(checkfilename, "a");
 	for mul_num in mul_dict:
 		gt_groups = [[] for gt in gene_trees_filtered];
 
-		mt = mul_dict[mul_num][0];
-		minfo = mul_dict[mul_num][1];
-		hybrid_clade = mul_dict[mul_num][2];
-		hybrid_node = mul_dict[mul_num][3];
-		copy_node = mul_dict[mul_num][4];
-		copy_clade = set(RT.getClade(copy_node, sinfo));
+		mt, minfo, hybrid_clade, hybrid_node, copy_node = mul_dict[mul_num][0], mul_dict[mul_num][1], mul_dict[mul_num][2], mul_dict[mul_num][3], mul_dict[mul_num][4]
 
-		checkfile.write("MT-" + str(mul_num) + ":" + RT.mulPrint(mt, hybrid_clade) + "\tH1 Node:" + hybrid_node + "\tH2 Node:" + copy_node + "\n");
+		if spec_type == 's':
+			checkfile.write("MT-" + str(mul_num) + ":" + MT.mulPrint(mt, hybrid_clade) + "\tH1 Node:" + hybrid_node + "\tH2 Node:" + copy_node + "\n");
+		elif spec_type == 'm':
+			checkfile.write("MT-" + str(mul_num) + ":" + MT.mulPrint(mt, hybrid_clade) + "\n");
 
 		gene_num = -1;
 		for gene_tree in gene_trees_filtered:
@@ -101,15 +99,10 @@ def collapseGroups(mul_dict, sinfo, gene_trees_filtered, checkfile, num_skipped,
 			gt,ginfo = gene_tree;
 			outline = "GT-" + str(gene_num+1) + " to MT-" + str(mul_num) + "\t";
 			
-			internal_nodes = [];
-			for g in ginfo:
-				if ginfo[g][2] != 'tip':
-					internal_nodes.append(int(g.replace("<","").replace(">","")));
-			internal_nodes = sorted(internal_nodes);
+			internal_nodes = RT.sortNodes(ginfo);
 			# Sort the internal nodes for a post order traversal.
 
-			singles = {};
-			groups = {};
+			singles, groups = {}, {};
 
 			for g in ginfo:
 				if ginfo[g][2] == 'tip':
@@ -165,10 +158,15 @@ def collapseGroups(mul_dict, sinfo, gene_trees_filtered, checkfile, num_skipped,
 
 			sisters = {};
 
-			mul_hybrid_node = [n for n in minfo if set(RT.getClade(n, minfo)) == set(hybrid_clade)][0];
-			copy_clade = [c + "*" for c in hybrid_clade];
-			mul_copy_node = [n for n in minfo if set(RT.getClade(n, minfo)) == set(copy_clade)][0];
-			# The copy clade is defined.
+			if spec_type == 's':
+				mul_hybrid_node = [n for n in minfo if set(RT.getClade(n, minfo)) == set(hybrid_clade)][0];
+				copy_clade = [c + "*" for c in hybrid_clade];
+				mul_copy_node = [n for n in minfo if set(RT.getClade(n, minfo)) == set(copy_clade)][0];
+				# The copy clade is defined.
+			elif spec_type == 'm':
+				copy_clade = RT.getClade(copy_node, minfo);
+				mul_hybrid_node = hybrid_node;
+				mul_copy_node = copy_node;
 
 			hybrid_anc = minfo[mul_hybrid_node][1];
 			copy_anc = minfo[mul_copy_node][1];
@@ -178,8 +176,7 @@ def collapseGroups(mul_dict, sinfo, gene_trees_filtered, checkfile, num_skipped,
 			# These lines get any sister species from the hybrid and copy clades in the MUL-tree and that
 			# clade's corresponding map. If there are no sisters, it stores an empty list.
 
-			groups = [];
-			fixed_groups = [];
+			groups, fixed_groups = [], [];
 
 			for group in final_groups:
 				group_sis = [spec[spec.rfind("_")+1:] for spec in group[1]];
@@ -201,6 +198,7 @@ def collapseGroups(mul_dict, sinfo, gene_trees_filtered, checkfile, num_skipped,
 			gt_groups[gene_num] = [groups, fixed_groups];
 			# Adding the groups and fixed groups to the current gt_groups.
 
+			#num_singles = 
 			num_groups = len(groups);
 			num_fixed = len(fixed_groups);
 			outline += str(num_groups) + "\t" + str(num_fixed) + "\t" + str(2**num_groups);
@@ -213,49 +211,13 @@ def collapseGroups(mul_dict, sinfo, gene_trees_filtered, checkfile, num_skipped,
 
 		mul_dict[mul_num][6] = gt_groups;
 		checkfile.write("# ----------------------------------\n");
+	checkfile.close();
 
 	return mul_dict, gene_trees_filtered, num_skipped;
 
 #############################################################################
 
-def mulLossCount(lc_ginfo, lc_minfo, lc_maps, lc_dups, lc_node_counts):
-# Given two trees (dictionaries), a mapping between them, and the duplication nodes,
-# this function counts the number of losses. Depths are 0 based.
-
-	loss_count = 0;
-	for g in lc_ginfo:
-		if lc_ginfo[g][2] == 'root':
-			glosses = len(RT.nodeDepth(lc_maps[g][0],lc_minfo));
-		# The number of losses at the root of the gene tree is equal to the depth of its map.
-
-		else:
-			curanc = lc_ginfo[g][1];
-			ancdepth = len(RT.nodeDepth(lc_maps[curanc][0],lc_minfo));
-			gdepth = len(RT.nodeDepth(lc_maps[g][0],lc_minfo));
-
-			glosses = 0;
-			glosses = gdepth - ancdepth - 1;
-
-			if lc_dups[curanc] != 0:
-				glosses = glosses + 1;
-
-		if glosses != 0:
-			loss_count += glosses;
-			lc_node_counts[lc_maps[g][0]][1] += glosses; 	
-
-	# for m in lc_minfo:
-	# 	print m;
-	# 	if lc_minfo[m][2] == 'root' and [m] not in list(lc_maps.values()):
-	# 		loss_count = loss_count + 1;
-	# 		break;
-	# Accounts for cases where h2 puts one clade at the root of the MUL-tree
-	#print loss_count;
-	#sys.exit();
-	return loss_count, lc_node_counts;
-
-#############################################################################
-
-def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cur_fixed, cap, v, check_nums):
+def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cur_fixed, v):
 # The basis of the MUL-reconciliation algorithm is that there are now nodes that
 # have more than one possible map. We try all combinations of mappings for these
 # nodes and find which combination results in the most parsimonious mutation score
@@ -277,6 +239,9 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cur_fixed, cap, v, 
 	min_score = 99999;
 	# This is the variable we are minimizing: score is defined as # duplications + # losses for any given
 	# reconciliation.
+
+	all_maps = [];
+	lowest_maps = [];
 
 	num_groups = len(cur_groups);
 
@@ -319,21 +284,28 @@ def mulRecon(hybrid_clade, mt, minfo, gt, ginfo, cur_groups, cur_fixed, cap, v, 
 		# Initialization of the mapping dictionary, using the current combination of hybrid clade maps. 
 		# [key]:[value] -> [gene tree node]:[map]
 
-		maps, num_dups, num_loss, mul_node_counts = reconLCA(ginfo, minfo, maps);
+		maps, node_dups, node_loss = reconLCA(ginfo, minfo, maps);
 		# Once the current maps have been initialized, we can simply call the normal LCA mapping algorithm
 
-		cur_score = num_dups + num_loss;
+		num_dups = sum(node_dups.values());
+		num_loss = sum(node_loss.values());
 
-		if cur_score < min_score:
+		cur_score = num_dups + num_loss;
+ 
+		if cur_score <= min_score:
 			min_score = cur_score;
-			min_dups = num_dups;
-			min_loss = num_loss;
-			min_maps = maps;
-			min_node_counts = mul_node_counts;
+		all_maps.append([cur_score, num_dups, num_loss, maps, node_dups, node_loss]);
+			#min_node_counts = mul_node_counts;
 		# If the current total score is smaller than the previous min, save it as the current min.
 
-	return min_dups, min_loss, min_maps, mul_node_counts;
+	for cur_map in all_maps:
+		if cur_map[0] == min_score:
+			lowest_maps.append(cur_map);
+
+	return lowest_maps;
 	# Return the maps with the minimal mutation score (dup + loss score).
+
+	
 
 
 
