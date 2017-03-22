@@ -172,11 +172,12 @@ A MUL-tree represents a single possible polyploid scenario and it is equivalent 
 
 #### `--labeltree` : Tree labeling
 
-This option can be used in conjunction with `-s` to simply add internal node labels to a species tree. 
+This option can be used in conjunction with `-s` to simply add internal node labels to a species tree and print it to the screen. 
 
 `python grampa.py -s species.tree --labeltree`
 
 If the input in `species.tree` is : `(((a,(x,(y,z))),b),(c,d))`
+
 Then the output tree will be: `(((a,(x,(y,z)<1>)<2>)<3>,b)<4>,(c,d)<5>)<6>`
 
 #### `--buildmultrees` : Build MUL-trees
