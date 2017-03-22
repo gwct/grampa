@@ -10,16 +10,19 @@
 
 ## Version History
 #### This is version 1.1, released March 22, 2017
+
+Change log:
 * Added reconciliation to the input singly-labeled tree. This allows for comparisions of scenarios of no polyploidy (singly-labeled tree) vs. polyploidy (MUL-trees).
-* The -d option has been added to control whether to do reconciliation to the singly-labeled tree. See below for usage.
-* Now runs the --checknums option for all reconciliation runs in order to filter trees that are over the group cap for any MUL-tree considered. This ensures that the same trees are run for every MUL-tree.
-* Added the --maps option to print the maps for each reconciliation.
-* The --multree option to simply build MUL-trees with given singly-labeled tree and h1 and h2 nodes has been renamed --buildmultree.
-* The -t option has been renamed with --multree.
-* The max group cap has been raised to 18.
-* -o now specifies an output DIRECTORY instead of a file. GRAMPA will make this directory for you.
-* By default, all output files will be placed in the directory specified with -o with "grampa_" as their prefix (i.e. grampa_out.txt, grampa_det.txt). -p has been added so users can change this prefix.
+* The `-d` option has been added to control whether to do reconciliation to the singly-labeled tree. See below for usage.
+* Now runs the `--checknums` option for all reconciliation runs in order to filter trees that are over the group cap for any MUL-tree considered. This ensures that the same trees are run for every MUL-tree.
+* Added the `--maps` option to print the maps for each reconciliation.
+* The `--multree` option to simply build MUL-trees with given singly-labeled tree and h1 and h2 nodes has been renamed `--buildmultree`.
+* The `-t` option has been renamed with `--multree`.
+* The max group cap (`-c`) has been raised to 18.
+* `-o` now specifies an output DIRECTORY instead of a file. GRAMPA will make this directory for you.
+* By default, all output files will be placed in the directory specified with `-o` with "grampa_" as their prefix (i.e. grampa_out.txt, grampa_det.txt). `-p` has been added so users can change this prefix.
 * Major restructure of functions and libraries.
+* `-s` and `-g` can now be entered as either file names containing trees or as tree strings directly in the command line.
 
 ###### Version 1.0 (Summer, 2016): First release and implementation of MUL-tree reconciliation algorithm.
 
@@ -91,7 +94,9 @@ For most runs, GRAMPA creates three main output files:
 
 ### Detailed options
 
-#### `-s` : A file containing a rooted, newick formatted species tree. This tree can be either single-labeled or MUL. 
+#### `-s` : A rooted, newick formatted species tree. This tree can be either single-labeled or MUL. 
+
+The tree can be in a file, in which case you can enter the file name here, or you can simply paste the tree string into the command line.
 
 Entering a singly-labeled tree means you wish to search for the most parsimonious polyploidy scenario. GRAMPA will build MUL-trees based on this singly-labeled tree and calculate reconciliation scores. You can specify the range of MUL-trees to build with the `-h1` and `-h2` options.
 
@@ -108,6 +113,8 @@ This file should contain one or more rooted, Newick formatted gene trees, with o
 **The labels of the gene trees MUST end with `_[species label]`**
 
 Where `[species label]` matches a tip label in the species tree. This is necessary so that we can initialize the mappings correctly.
+
+Alternatively, if you wish to reconcile to only a single gene tree, you can simply paste the tree string into the command line.
 
 #### `-h1` and `-h2` : GRAMPA's search parameters
 
