@@ -1,4 +1,4 @@
-import sys, os, reconcore as RC
+import sys, os, subprocess, reconcore as RC
 
 ###############################
 
@@ -16,7 +16,9 @@ def catchErr(test, err_dict, p, t_file):
 
 start = RC.getLogTime();
 
-python_cmd = "python" + sys.argv[1];
+
+python_cmd = sys.argv[1];
+
 
 grampath = os.path.dirname(__file__)[:-3];
 grampath_script = os.path.join(grampath, "grampa.py");
@@ -35,7 +37,6 @@ tests = ["labeltree", "multree", "checknum", "main"]
 errors = {};
 for t in tests:
 	errors[t] = "";
-# errors = { t : "" for t in tests }
 numpass = 0;
 
 RC.printWrite(outfilename, 1, "1: --labeltree test.........");
@@ -62,7 +63,7 @@ if numpass == 4:
 	RC.printWrite(outfilename, 1, "\nDone! All tests pass!\n");
 else:
 	RC.printWrite(outfilename, 1, "\n" + str(4 - numpass) + " tests failed!");
-	print("Check the tests_log.txt file in the test folder for more info!");
+	print("Check the " + outfilename + " file for more info!");
 	RC.printWrite(outfilename, 1, "\n");
 	outfile = open(outfilename, "a");
 	for test in tests:

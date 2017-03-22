@@ -1,4 +1,4 @@
-import sys, os, recontree as RT, reconcore as RC
+import sys, os, subprocess, recontree as RT, reconcore as RC
 
 #############################################################################
 
@@ -46,7 +46,12 @@ def optParse(errorflag):
 		if args.test_opt:
 			t_path = os.path.join(os.path.dirname(__file__), "tests.py");
 			pyver = sys.version[:3];
-			os.system("python" + pyver + " " + t_path + " " + pyver);
+			try:
+				python_cmd = "python" + pyver
+				subprocess.call(python_cmd + " " + t_path + " " + python_cmd);
+			except OSError:
+				python_cmd = "python"
+				subprocess.call(python_cmd + " " + t_path + " " + python_cmd);
 			sys.exit();
 		# Call of the tests script if --tests is set.
 
