@@ -139,7 +139,9 @@ Entering this means that GRAMPA will first set H1 as node 2 and try both nodes 5
 GRAMPA can do reconciliations to singly-labeled and MUL-trees. If you know a polyploidy event has taken place, you may wish to only reconcile to MUL-trees. However, if you are trying to identify a new polyploidy event, the scores of all MUL-trees considered must be compared to the score of the singly-labeled tree, which represents a scenario of no polyploidy.
 
 To reconcile to MUL-trees only, set `-d 0`
+
 To reconcile to the singly-labeled tree only, set `-d 1`
+
 To reconcile to both the singly-labeled and MUL-trees set `-d 2` (Default)
 
 #### `-c` : The group cap
