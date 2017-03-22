@@ -28,7 +28,7 @@ Change log:
 
 ## Citation
 
-The paper is currently available as a pre-print on bioRxiv: http://biorxiv.org/content/early/2016/06/10/058149
+The paper is currently available as a pre-print on bioRxiv: http://biorxiv.org/content/early/2017/03/21/058149
 
 Thomas GWC, Ather SH, Hahn MW. (pre-print) Gene-tree reconciliation with MUL-trees to resolve polyploid events.
 
