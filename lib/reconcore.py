@@ -5,7 +5,7 @@
 # Forked from core on 12.13.2015
 #############################################################################
 
-import sys, datetime, time, opt_parse as OP
+import sys, os, subprocess, datetime, time, opt_parse as OP
 
 #############################################################################
 
@@ -115,59 +115,29 @@ def printStep(step, msg, v):
 	return step+1;
 
 #############################################################################
-
-def simpson():
-	s = """
-		              @                                                           
-	             CC   CQ                                                      
-	            /CCB @CC                                                      
-	        GCCS CCCCCCC7                                                     
-	         @CCCCCCCC@@@                                                     
-	        @@@CCCCCCCCCCCCC                                                  
-	        @CCCCCCCCCCCCCCCCC/                                               
-	          OCCCCCCCCCCCCCCCCC                                              
-	          @CCCCCCCCCCCCCCCCCCC@                                           
-	          CCCCCCCCCCC@QCCCCCC@CCC(                                        
-	          6CCCCCCCCCCCOCCCCCCCCC@es@                                      
-	          @CCCCCCCCCCCCCCCCCCCCCCCCCC                                     
-	          ^CCCCCCCCCCCCC@      @K      R                                  
-	           CCCC@CCCCCCC                                                   
-	          ~CCCC@CCCCCC@          G     //                   SCC@  @CC~    
-	          @CCCCsCCCCCC#    S@    #       RS@                CCCB 6CCC     
-	          @CCCCCCCCCOOG        S/@OC@CCSR  @/K             GCCCC@CCCC @CC 
-	           @CC@GCCCCCCCCS      K67@CCCCCCCCG @             CCCCKCCCC@CCCC 
-	          sCCCCCCCCCCCCCCCCCC77777SCCCCCCCCCCC        @@   CCCCKCCCCCCCCK 
-	          CCCGRCCCCCCCCCCCCCCC777@CC@CCCCCCCCC       @CCCC@CCCCCCCCCCCCR  
-	          @CCCK@CCCCCCCCCCCCCCCSQ(((((((((((@         6CCCCCCCCCCCCCCCC(  
-	           ^QCCCCCCCCCCCCCCCC%(((((((((((((((((%@s     @CCCCCCCCCCCCCCC   
-	            3CBCCCCCCCCCCR(((((((((((((((((((((((((%    CCCCCCC@CCCCCCC   
-	           /CCCCCCCCCCC(((((((((((((((((((@((((@((@     SCCCCCCCCCCCCCC   
-	           6CCCC@@CCCC(((((@   #@@@@       @@K          @KCCCCCC@CCCCCC   
-	           CCCCCBCCCCC(((((@@@@@@@@(((3                @((#CCCCCKCCCCC    
-	           CCCCSCCCCCC@((((@KK@KR@(((               %~(%(((%sCCCCCCCC     
-	           ~@CCCCCCC@CCC((((((O@@@%((C             @~(((@(((((~(6((%      
-	          (((((@CCCCRCCC@(((((((((((@@            @(((((((@t(((((((       
-	          ((((((((@@@@CCC#(((((((((@%@(@         s(((((((((((((Ct(        
-	         %(@(((((((((((((((((((@   /((((       @(((((((((((((((((@        
-	        sR(((@((((((((((((((((@      (#%@G((((((((((((((((((((((@         
-	      7~((((((((t@((((((((((G(s      ((((((((((((((((((((((((((R          
-	     B((((((((((((((s#((((((((((/  s(e((((((((((((((((((((((((R           
-	    @((((((((((((((((((((((((((((@((((@((((((((((((((((((((((/            
-	   /(((((((((((((((((((((((((((((((((((((((((((((((((((((((C              
-	   ~(((((((((((((((((((((((((((((e((((((((((((((((((((((((@               
-	  @((((((((((((((((((((((((((((((@(((@(#((((((((((((((((K                 
-	  G((((((((((((((((((((((((((((((s((((%@(((((((((((((((6                  
-	  (((((((((((((((((((((((((((((((((((((e(((((((((((Q/                     
-	 G((((((((((((((@((((((((((((((((((((((%(((((((@                          
-	 @(((((((((((((C(((((((((((((((((((t(((G(                                 
-	 ~(((((((((((((((((((((((((((((((((t(((e(s                                
-	@(((((((((((((((((((((((((((((((((((((((((                                
-	7(((((((((((((6((((((((((((((((((((Q((((((%   
-	"""
-
-	print(s);
+def osCheck(test_cmd):
+	import platform
+	if platform.system == 'Windows':
+		test_cmd = " ".join(test_cmd);
+	print test_cmd;
+	return test_cmd;
 
 #############################################################################
+
+def testPrep():
+	t_path = os.path.join(os.path.dirname(__file__), "tests.py");
+	pyver = sys.version[:3];
+	try:
+		python_cmd = "python" + pyver
+		test_cmd = [python_cmd, t_path, python_cmd];
+		subprocess.call(osCheck(test_cmd));
+	except OSError:
+		python_cmd = "python"
+		test_cmd = [python_cmd, t_path, python_cmd];
+		subprocess.call(osCheck(test_cmd));
+
+#############################################################################
+
 ## Old code for the ST branch output.
 
 # From reconLCA:
@@ -245,5 +215,840 @@ def simpson():
 # 	#print loss_count;
 # 	#sys.exit();
 # 	return loss_count, lc_node_counts;
+
+#############################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#############################################################################
+
+def simpson():
+	s = """
+		              @                                                           
+	             CC   CQ                                                      
+	            /CCB @CC                                                      
+	        GCCS CCCCCCC7                                                     
+	         @CCCCCCCC@@@                                                     
+	        @@@CCCCCCCCCCCCC                                                  
+	        @CCCCCCCCCCCCCCCCC/                                               
+	          OCCCCCCCCCCCCCCCCC                                              
+	          @CCCCCCCCCCCCCCCCCCC@                                           
+	          CCCCCCCCCCC@QCCCCCC@CCC(                                        
+	          6CCCCCCCCCCCOCCCCCCCCC@es@                                      
+	          @CCCCCCCCCCCCCCCCCCCCCCCCCC                                     
+	          ^CCCCCCCCCCCCC@      @K      R                                  
+	           CCCC@CCCCCCC                                                   
+	          ~CCCC@CCCCCC@          G     //                   SCC@  @CC~    
+	          @CCCCsCCCCCC#    S@    #       RS@                CCCB 6CCC     
+	          @CCCCCCCCCOOG        S/@OC@CCSR  @/K             GCCCC@CCCC @CC 
+	           @CC@GCCCCCCCCS      K67@CCCCCCCCG @             CCCCKCCCC@CCCC 
+	          sCCCCCCCCCCCCCCCCCC77777SCCCCCCCCCCC        @@   CCCCKCCCCCCCCK 
+	          CCCGRCCCCCCCCCCCCCCC777@CC@CCCCCCCCC       @CCCC@CCCCCCCCCCCCR  
+	          @CCCK@CCCCCCCCCCCCCCCSQ(((((((((((@         6CCCCCCCCCCCCCCCC(  
+	           ^QCCCCCCCCCCCCCCCC%(((((((((((((((((%@s     @CCCCCCCCCCCCCCC   
+	            3CBCCCCCCCCCCR(((((((((((((((((((((((((%    CCCCCCC@CCCCCCC   
+	           /CCCCCCCCCCC(((((((((((((((((((@((((@((@     SCCCCCCCCCCCCCC   
+	           6CCCC@@CCCC(((((@   #@@@@       @@K          @KCCCCCC@CCCCCC   
+	           CCCCCBCCCCC(((((@@@@@@@@(((3                @((#CCCCCKCCCCC    
+	           CCCCSCCCCCC@((((@KK@KR@(((               %~(%(((%sCCCCCCCC     
+	           ~@CCCCCCC@CCC((((((O@@@%((C             @~(((@(((((~(6((%      
+	          (((((@CCCCRCCC@(((((((((((@@            @(((((((@t(((((((       
+	          ((((((((@@@@CCC#(((((((((@%@(@         s(((((((((((((Ct(        
+	         %(@(((((((((((((((((((@   /((((       @(((((((((((((((((@        
+	        sR(((@((((((((((((((((@      (#%@G((((((((((((((((((((((@         
+	      7~((((((((t@((((((((((G(s      ((((((((((((((((((((((((((R          
+	     B((((((((((((((s#((((((((((/  s(e((((((((((((((((((((((((R           
+	    @((((((((((((((((((((((((((((@((((@((((((((((((((((((((((/            
+	   /(((((((((((((((((((((((((((((((((((((((((((((((((((((((C              
+	   ~(((((((((((((((((((((((((((((e((((((((((((((((((((((((@               
+	  @((((((((((((((((((((((((((((((@(((@(#((((((((((((((((K                 
+	  G((((((((((((((((((((((((((((((s((((%@(((((((((((((((6                  
+	  (((((((((((((((((((((((((((((((((((((e(((((((((((Q/                     
+	 G((((((((((((((@((((((((((((((((((((((%(((((((@                          
+	 @(((((((((((((C(((((((((((((((((((t(((G(                                 
+	 ~(((((((((((((((((((((((((((((((((t(((e(s                                
+	@(((((((((((((((((((((((((((((((((((((((((                                
+	7(((((((((((((6((((((((((((((((((((Q((((((%   
+	"""
+
+	print(s);
 
 #############################################################################

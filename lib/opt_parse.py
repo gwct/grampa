@@ -44,14 +44,7 @@ def optParse(errorflag):
 		# ???
 
 		if args.test_opt:
-			t_path = os.path.join(os.path.dirname(__file__), "tests.py");
-			pyver = sys.version[:3];
-			try:
-				python_cmd = "python" + pyver
-				subprocess.call([python_cmd, t_path, python_cmd]);
-			except OSError:
-				python_cmd = "python"
-				subprocess.call(python_cmd, t_path, python_cmd);
+			RC.testPrep();
 			sys.exit();
 		# Call of the tests script if --tests is set.
 

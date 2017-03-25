@@ -1,0 +1,18 @@
+# These are the major changes and updates. For build specific changes (which are too numerous to docuent manually), check the commits on github.
+
+# Version 1.1: March 22, 2017
+01)	Added reconciliation to the input singly-labeled tree. This allows for comparisions of scenarios of no polyploidy (singly-labeled tree) vs. polyploidy (MUL-trees).
+02)	The -d option has been added to control whether to do reconciliation to the singly-labeled tree. See below for usage.
+03)	Now runs the --checknums option for all reconciliation runs in order to filter trees that are over the group cap for any MUL-tree considered. This ensures that the same trees are run for every MUL-tree. The --checknums option now simply terminates the program after the groups have been calculated.
+04)	Added the --maps option to print the maps for each reconciliation.
+05)	The --multree option to simply build MUL-trees with given singly-labeled tree and h1 and h2 nodes has been renamed --buildmultree.
+06)	The -t option has been renamed with --multree.
+07)	The max group cap (-c) has been raised to 18.
+08)	-o now specifies an output DIRECTORY instead of a file. GRAMPA will make this directory for you.
+09)	By default, all output files will be placed in the directory specified with -o with "grampa_" as their prefix (i.e. grampa_out.txt, grampa_det.txt). -p has been added so users can change this prefix.
+10)	Major restructure of functions and libraries.
+11)	-s and -g can now be entered as either file names containing trees or as tree strings directly in the command line.
+
+
+# Version 1.0: Spring 2016
+01)	First commit and implementation of the MUL-tree reconciliation algorithm.
