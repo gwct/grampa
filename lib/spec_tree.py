@@ -1,8 +1,8 @@
-import sys, os, reconcore as RC, opt_parse as OP, recontree as RT
+import sys, os, reconcore as RC, recontree as RT, global_vars as globs
 
 #############################################################################
 
-def readSpecTree(spec_tree_input, spec_type, label_opt, v):
+def readSpecTree(spec_tree_input):
 	if os.path.isfile(spec_tree_input):
 		spec_tree = open(spec_tree_input, "r").read().replace("\n", "").replace("\r","");
 	else:
@@ -16,13 +16,13 @@ def readSpecTree(spec_tree_input, spec_type, label_opt, v):
 
 	if any(tip.isdigit() for tip in tips):
 		RC.errorOut(6, "Tip labels cannot be purely numbers. Please add another character.");
-	if spec_type == 's' and any(tips.count(tip) > 1 for tip in tips):
+	if globs.spec_type == 's' and any(tips.count(tip) > 1 for tip in tips):
 		RC.errorOut(7, "You have entered a tree type (-t) of 's' but there are labels in your tree that appear more than once!");
-	if spec_type == 'm' and any(tips.count(tip) not in [1,2] for tip in tips):
+	if globs.spec_type == 'm' and any(tips.count(tip) not in [1,2] for tip in tips):
 		RC.errorOut(8, "You have entered a tree type (-t) of 'm', species in your tree should appear exactly once or twice.");
 	# Some error checking based on the tip labels in the tree.
 
-	if spec_type == 'm':
+	if globs.spec_type == 'm':
 		hybrid_spec = list(set([tip for tip in tips if tips.count(tip) != 1]));
 		for h in hybrid_spec:
 			spec_tree = spec_tree.replace(h, h+"*", 1);
@@ -35,8 +35,8 @@ def readSpecTree(spec_tree_input, spec_type, label_opt, v):
 		RC.errorOut(9, "Error reading species tree!");
 	# Reading the species tree file.
 
-	if label_opt:
-		if v != -1:
+	if globs.label_opt:
+		if globs.v != -1:
 			print("# The input species tree with internal nodes labeled:");
 			print(st + "\n");
 		sys.exit();
@@ -46,13 +46,13 @@ def readSpecTree(spec_tree_input, spec_type, label_opt, v):
 
 #############################################################################
 
-def hInParse(sinfo, st, h1_input, h2_input, spec_type):
-	if spec_type == 's':
+def hInParse(sinfo, st, h1_input, h2_input):
+	if globs.spec_type == 's':
 		hybrid_clades, hybrid_nodes = getHClades(h1_input, sinfo, "h1");
 		copy_clades, copy_nodes = getHClades(h2_input, sinfo, "h2");
 	# If the input tree is singly-labeled, use the input info from -h1 and -h2 to get the hybrid clades and nodes.
 
-	elif spec_type == 'm':
+	elif globs.spec_type == 'm':
 		mul_copy_clade = [n for n in sinfo if sinfo[n][2] == 'tip' and '*' in n];
 		mul_hybrid_clade = [n.replace("*","") for n in mul_copy_clade];
 

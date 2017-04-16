@@ -19,7 +19,4 @@ for each in filelist:
 
 	outfile.write(intree + "\n");
 
-
-
-
 outfile.close();

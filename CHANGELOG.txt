@@ -1,4 +1,7 @@
-# These are the major changes and updates. For build specific changes (which are too numerous to docuent manually), check the commits on github.
+# These are the major changes and updates. For build specific changes (which are too numerous to document manually), check the commits on github.
+
+# Version 1.2: 
+01) Added the -p option to specify the number of procsesses GRAMPA can use. Multi-processing has vastly sped up GRAMPA's run time.
 
 # Version 1.1: March 22, 2017
 01)	Added reconciliation to the input singly-labeled tree. This allows for comparisions of scenarios of no polyploidy (singly-labeled tree) vs. polyploidy (MUL-trees).

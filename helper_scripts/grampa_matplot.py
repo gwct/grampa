@@ -18,11 +18,15 @@ except:
 score_dict = {};
 
 for line in open(infilename):
-	if line[0] == "#":
+	if line[0] == "#" or "The" in line or "Score" in line:
 		continue;
 
 	line = line.strip().split("\t");
-	score_dict[line[1] + "-" + line[2]] = int(line[4]);
+	print line;
+	if len(line) == 4:
+		score_dict[line[0]] = int(line[3]);
+	else:
+		score_dict[line[1] + "-" + line[2]] = int(line[4]);
 
 sorted_keys = sorted(score_dict, key=score_dict.get)
 sorted_vals = [];

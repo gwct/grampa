@@ -1,3 +1,4 @@
+from __future__ import print_function
 #############################################################################
 # Reconciliation CORE functions
 # Gregg Thomas
@@ -5,7 +6,7 @@
 # Forked from core on 12.13.2015
 #############################################################################
 
-import sys, os, subprocess, datetime, time, opt_parse as OP
+import sys, os, subprocess, datetime, time, opt_parse as OP, global_vars as globs
 
 #############################################################################
 
@@ -14,23 +15,27 @@ def errorOut(errnum, errmsg):
 	OP.optParse(1);
 	fullmsg = "|**Error " + str(errnum) + ": " + errmsg + " |";
 	border = " " + "-" * (len(fullmsg)-2);
-	print("\n" + border + "\n" + fullmsg + "\n" + border + "\n");
+	fullstr = "\n" + border + "\n" + fullmsg + "\n" + border + "\n"
+	printWrite(globs.outfilename, 1, "\n" + border + "\n" + fullmsg + "\n" + border + "\n")
 	sys.exit();
 
 #############################################################################
 
-def endProg(starttime, outfilename, main_v):
-		endtime = time.time();
-		totaltime = endtime - starttime;
-		printWrite(outfilename, main_v, "# LOG: Total execution time: " + str(round(totaltime,3)) + " seconds.");
-		printWrite(outfilename, main_v, "# =========================================================================");
-		sys.exit();
+def endProg(starttime):
+# A nice way to end the program.
+	import timeit
+	endtime = timeit.default_timer();
+	totaltime = endtime - starttime;
+	printWrite(globs.outfilename, globs.main_v, "# LOG: Total execution time: " + str(round(totaltime,3)) + " seconds.");
+	printWrite(globs.outfilename, globs.main_v, "# =========================================================================");
+	sys.exit();
 
 #############################################################################
 
 def getLogTime():
 # Function to get the date and time in a certain format.
-	return datetime.datetime.now().strftime("%m.%d.%Y-%I.%M.%S");
+	return datetime.datetime.now().strftime("%I.%M.%S");
+	# return datetime.datetime.now().strftime("%m.%d.%Y-%I.%M.%S");
 
 #############################################################################
 
@@ -106,25 +111,55 @@ def printWrite(o_name, v, o_line1, o_line2="", pad=0):
 	f = open(o_name, "a");
 	f.write(outline + "\n");
 	f.close();
-
+	
 #############################################################################
 
-def printStep(step, msg, v):
-	if v != -1:
-		print msg;
+def printStep(step, msg):
+# Prints a message and increments a counter.
+	if globs.v not in [-2,-1]:
+		print(msg);
 	return step+1;
 
 #############################################################################
+
+def report_stats(msg="", procs="", step_start=0, prog_start=0, outdir="", stat_start=False):
+	import timeit, psutil
+	func_v = -2 if globs.v == -2 else 1;
+	# func_v = 1;
+	cur_time = timeit.default_timer();
+	logfilename = os.path.join(outdir, "grampa_stats.log");
+	if stat_start:
+		printWrite(logfilename, func_v, "# --stats : Reporting GRAMPA time and memory usage.");
+		printWrite(logfilename, func_v, "# " + "-" * 120);
+		printWrite(logfilename, func_v, "# Step" + " " * 13 + "Step time (sec)" + " " * 6 + "Elapsed time (sec)" + " " * 4 + "Current mem usage (MB)" + " " * 4 + "Virtual mem usage (MB)");
+		printWrite(logfilename, func_v, "# " + "-" * 120);
+	else:
+		prog_elapsed = cur_time - prog_start;
+		step_elapsed = cur_time - step_start;
+		mem = sum([p.memory_info()[0] for p in procs]) / float(2 ** 20);
+		vmem = sum([p.memory_info()[1] for p in procs]) / float(2 ** 20);
+		printWrite(logfilename, func_v, msg + " " * (19-len(msg)) + str(step_elapsed) + " " * (21-len(str(step_elapsed))) + str(prog_elapsed) + " " * (22-len(str(prog_elapsed))) + str(mem) + " " * (26-len(str(mem))) + str(vmem));
+	return cur_time
+
+#############################################################################
+
+def getSubPID(n):
+	import psutil
+	return psutil.Process(os.getpid());
+
+#############################################################################
+
 def osCheck(test_cmd):
+# For the tests script. Need to know if we are on Windows in order to pass the command correctly.
 	import platform
 	if platform.system == 'Windows':
 		test_cmd = " ".join(test_cmd);
-	print test_cmd;
 	return test_cmd;
 
 #############################################################################
 
 def testPrep():
+# Prepares the test command and calls the tests script.
 	t_path = os.path.join(os.path.dirname(__file__), "tests.py");
 	pyver = sys.version[:3];
 	try:
@@ -136,8 +171,8 @@ def testPrep():
 		test_cmd = [python_cmd, t_path, python_cmd];
 		subprocess.call(osCheck(test_cmd));
 
-#############################################################################
 
+#############################################################################
 ## Old code for the ST branch output.
 
 # From reconLCA:
@@ -998,8 +1033,6 @@ def testPrep():
 
 
 
-#############################################################################
-
 def simpson():
 	s = """
 		              @                                                           
@@ -1050,5 +1083,3 @@ def simpson():
 	"""
 
 	print(s);
-
-#############################################################################

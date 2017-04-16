@@ -16,9 +16,7 @@ def catchErr(test, err_dict, p, t_file):
 
 start = RC.getLogTime();
 
-
 python_cmd = sys.argv[1];
-
 
 grampath = os.path.dirname(__file__)[:-3];
 grampath_script = os.path.join(grampath, "grampa.py");
@@ -44,7 +42,7 @@ os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -v -1 --l
 errors, numpass = catchErr("labeltree", errors, numpass, tmpfile);
 os.system("rm -rf " + grampa_out);
 
-RC.printWrite(outfilename, 1, "2: --multree test...........");
+RC.printWrite(outfilename, 1, "2: --buildmultrees test...........");
 os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -g " + grampath_g + " -o " + grampa_out + " -v -1 --buildmultrees 2> " + tmpfile);
 errors, numpass = catchErr("multree", errors, numpass, tmpfile);
 os.system("rm -rf " + grampa_out);
