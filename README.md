@@ -10,7 +10,11 @@
 
 ##### What follows is a brief explanation of the options. Please see the project website for much more in depth info about the algorithm and examples of the program's usage.
 
-#### https://gwct.github.io/grampa/grampa.html
+#### https://gwct.github.io/grampa.html
+
+## Citation
+
+##### Thomas GWC, Ather SH, Hahn MW. 2017. Gene-tree reconciliation with MUL-trees to resolve polyploid events. Systematic Biology. (in press). https://doi.org/10.1093/sysbio/syx044
 
 ## Version History
 #### This is version 1.2, released April 16, 2017
@@ -21,11 +25,6 @@ Change log:
 ###### Version 1.1 (March 22, 2017): Gene tree filtering step added and several other functions.
 ###### Version 1.0 (Summer, 2016): First release and implementation of MUL-tree reconciliation algorithm.
 
-## Citation
-
-The paper is currently available as a pre-print on bioRxiv: http://biorxiv.org/content/early/2017/03/21/058149
-
-Thomas GWC, Ather SH, Hahn MW. (pre-print) Gene-tree reconciliation with MUL-trees to resolve polyploid events.
 
 ## Installation
 
