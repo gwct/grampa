@@ -52,9 +52,11 @@ def getBranchLength(bltree, spec_label):
 def remBranchLength(treestring):
 # Removes branch lengths from a tree.
 
-	treestring = re.sub('[)][\d.eE-]+:[\d.eE-]+', ')', treestring);
+	treestring = re.sub('[)][\d\w<>.eE_:-]+', ')', treestring);
 	treestring = re.sub(':[\d.eE-]+', '', treestring);
-	treestring = re.sub('<[\d]+>', '', treestring);
+	# treestring = re.sub('[)][\d.eE-]+:[\d.eE-]+', ')', treestring);
+	# treestring = re.sub(':[\d.eE-]+', '', treestring);
+	# treestring = re.sub('<[\d]+>', '', treestring);
 
 	return treestring;
 
