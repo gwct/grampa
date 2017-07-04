@@ -38,7 +38,7 @@ for key in sorted_keys:
 
 x = list(range(len(sorted_vals)));
 fig = plt.figure();
-fig.set_size_inches(18.5, 10.5)
+fig.set_size_inches(12, 6)
 plt.xticks(x, sorted_keys);
 locs, labels = plt.xticks()
 plt.setp(labels, rotation=90)
