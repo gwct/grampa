@@ -81,8 +81,9 @@ def scatterPlot(xdata,ydata,xtitle,ytitle,maintitle,outname,barcol='rgb(0,102,51
 ############################################
 
 if len(sys.argv) != 3 or "-h" in sys.argv:
-	print("\n# Usage: grampa_plot.py [input file] [output file]");
-	print("# ---> [input file] must be a grampa output file.")
+	print("\n# This is a beta version of this script and may be buggy.")
+	print("# Usage: grampa_plot.py [input file] [output file]");
+	print("# ---> [input file] must be a grampa output (_out.txt) file.")
 	print("# ---> [output file] will be an html file with your plot.\n")
 	sys.exit();
 
@@ -91,21 +92,23 @@ outfilename = sys.argv[2];
 if outfilename[len(outfilename)-5:] != ".html":
 	outfilename += ".html";
 
-from plotly.offline import plot
-import plotly.graph_objs as go
-import plotly.plotly as py
+try:
+	from plotly.offline import plot
+	import plotly.graph_objs as go
+	import plotly.plotly as py
+except:
+	sys.exit("Missing some of the required modules (plotly)")
 # Option parsing and import of plot libraries if no errors.
 
 score_dict = {};
 
 for line in open(infilename):
-	if line[0] == "#":
+	if line[0] == "#" or "The" in line or "Score" in line:
 		continue;
 
 	line = line.strip().split("\t");
 	if line[0] == "ST":
-		score_dict[line[0]] = int(line[4]);
-
+		score_dict[line[0]] = int(line[3]);
 	else:
 		score_dict[line[1] + "-" + line[2]] = int(line[4]);
 
@@ -115,10 +118,9 @@ sorted_vals = [];
 max_len = -999;
 for key in sorted_keys:
 	sorted_vals.append(score_dict[key]);
-
 	if len(key) > max_len:
 		max_len = len(key);
 
 bot_margin = max_len * 15;
 
-scatterPlot(sorted_keys,sorted_vals,"H1-H2 Node", "Score", "GRAMPA Results: " + os.path.basename(infilename), outfilename, bmar=bot_margin);
+scatterPlot(sorted_keys,sorted_vals,"H1-H2 Node", "Score", "GRAMPA Results: " + infilename, outfilename, bmar=bot_margin);
