@@ -139,8 +139,8 @@ def optParse(errorflag):
 			globs.outfilename = os.path.join(outdir, args.output_prefix + "_out.txt");
 			RC.filePrep(globs.outfilename);
 			# Preparing the main output file
+			globs.gene_file_filtered = os.path.join(outdir, args.output_prefix + "_trees_filtered.txt");
 			if globs.lca_opt != 1:
-				globs.gene_file_filtered = os.path.join(outdir, args.output_prefix + "_trees_filtered.txt");
 				if args.groups_dir == None:
 					globs.pickle_dir = os.path.join(outdir, "groups_dir");
 					os.system("mkdir " + globs.pickle_dir);

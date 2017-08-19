@@ -74,8 +74,8 @@ def checkOut(mul_trees, num_skipped, gene_trees_filtered):
 			num_fixed = len(gt_fixed);
 			outline += str(num_groups) + "\t" + str(num_fixed) + "\t" + str(2**num_groups);
 			if num_groups > globs.cap:
-				gene_trees_filtered[gene_num] = ["# Number of groups over group globs.cap (-c set to " + str(globs.cap) + ") -- Filtering."];
-			 	outline += "\tNumber of groups over group globs.cap (-c set to " + str(globs.cap) + ") -- Filtering.";
+				gene_trees_filtered[gene_num] = ["# Number of groups over group cap (-c set to " + str(globs.cap) + ") -- Filtering."];
+			 	outline += "\tNumber of groups over group cap (-c set to " + str(globs.cap) + ") -- Filtering.";
 			 	num_skipped += 1;
 			checkfile.write(outline + "\n");
 		checkfile.write("# ----------------------------------\n");
@@ -107,7 +107,7 @@ def filterOut(num_skipped, step, gene_trees_filtered):
 
 #############################################################################
 
-def mainOut(mul_trees, all_scores, min_num, min_score):
+def mainOut(mul_trees, all_scores, min_num, min_score, min_maps):
 	RC.printWrite(globs.outfilename, globs.v, "# Tree #\tH1 node\tH2 node\tTree string\tTotal score");
 	for mul_num, mul_tree in mul_trees.iteritems():
 		if mul_num == min_num:
@@ -131,6 +131,18 @@ def mainOut(mul_trees, all_scores, min_num, min_score):
 		else:
 			RC.printWrite(globs.outfilename, globs.v, "The tree with the minimum parsimony score is the singly-labled tree (ST):\t" + min_tree[0]);
 		RC.printWrite(globs.outfilename, globs.v, "Score = " + str(min_score));
+		RC.printWrite(globs.outfilename, globs.v, "Species tree node\t# dups mapped");
+
+		mt, min_dict = min_tree[0], mul_tree[1];
+		from collections import defaultdict
+		main_dups = defaultdict(int);
+		for m in min_maps:
+			maps, dups = min_maps[m][0][3], min_maps[m][0][4];
+			for gt_node in dups:
+				if dups[gt_node] != 0:
+					main_dups[maps[gt_node][0]] += 1;
+		for node in main_dups:
+			RC.printWrite(globs.outfilename, globs.v, node + "\t" + str(main_dups[node]));
 	# Output to the main file.
 
 #############################################################################

@@ -160,17 +160,17 @@ def grampa(starttime):
 		### SERIAL AND MUL-TREE VERSION
 		# If the input tree is singly-labeled, do some multi-processing, else if it is a MUL-tree, just run the function.
 
-		num_skipped = OUT.checkOut(mul_trees, num_skipped, gene_trees_filtered);
-		gene_trees, step = OUT.filterOut(num_skipped, step, gene_trees_filtered)
-		
-		# Write the filtered trees to a file, or not if no filtering was done.
-		if globs.check_nums:
-			RC.endProg(starttime);
-		# If --checknums is set, exit the program here.
-		RC.printWrite(globs.outfilename, globs.main_v, "# ---------");
+	num_skipped = OUT.checkOut(mul_trees, num_skipped, gene_trees_filtered);
+	gene_trees, step = OUT.filterOut(num_skipped, step, gene_trees_filtered)
+	
+	# Write the filtered trees to a file, or not if no filtering was done.
+	if globs.check_nums:
+		RC.endProg(starttime);
+	# If --checknums is set, exit the program here.
+	RC.printWrite(globs.outfilename, globs.main_v, "# ---------");
 
-		if globs.stats:
-			step_start_time = RC.report_stats("Collapsed groups", pids, step_start_time, prog_start_time, globs.output_directory);
+	if globs.stats:
+		step_start_time = RC.report_stats("Collapsed groups", pids, step_start_time, prog_start_time, globs.output_directory);
 
 	###########################
 	### Reconciliations
@@ -218,11 +218,11 @@ def grampa(starttime):
 	## This gets the mul_tree with the min score along with its maps.
 
 	OUT.detOut(gene_trees, min_tree, min_num, min_maps);
-	OUT.mainOut(mul_trees, all_scores, min_num, min_score);
+	OUT.mainOut(mul_trees, all_scores, min_num, min_score, min_maps);
 
 	if globs.stats:
 		step_start_time = RC.report_stats("Output done", pids, step_start_time, prog_start_time, globs.output_directory);
-		print "# " + "-" * 100;
+		print("# " + "-" * 100);
 
 	###########################
 	### Begin orthology prediction block. *BETA*

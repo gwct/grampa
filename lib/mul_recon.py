@@ -242,6 +242,7 @@ def mulRecon(mul_input, gene_trees, v, pickle_dir, retmap=False):
 
 	for gene_num, gene_tree in gene_trees.iteritems():
 		gt, ginfo = gene_tree;
+
 		gene_score = 99999;
 		min_maps[gene_num] = [];
 
