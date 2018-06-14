@@ -107,7 +107,7 @@ def filterOut(num_skipped, step, gene_trees_filtered):
 
 #############################################################################
 
-def mainOut(mul_trees, all_scores, min_num, min_score, min_maps):
+def mainOut(mul_trees, all_scores, min_num, min_score, min_maps, multiple_maps):
 	RC.printWrite(globs.outfilename, globs.v, "# Tree #\tH1 node\tH2 node\tTree string\tTotal score");
 	for mul_num, mul_tree in mul_trees.iteritems():
 		if mul_num == min_num:
@@ -123,7 +123,7 @@ def mainOut(mul_trees, all_scores, min_num, min_score, min_maps):
 			outline = "MT-" + str(mul_num) + "\t" + MT.mulPrint(mt, hybrid_clade) + "\t" + str(cur_score);
 	# Save the main output for ALL MUL-trees.
 		RC.printWrite(globs.outfilename, globs.v, outline);
-	RC.printWrite(globs.outfilename, globs.main_v, "# ---------");
+	RC.printWrite(globs.outfilename, globs.main_v, "# ----------------------------------------");
 	if globs.spec_type == 's':
 		if min_num != 0:
 			RC.printWrite(globs.outfilename, globs.v, "The MUL-tree with the minimum parsimony score is MT-" + str(min_num) + ":\t" \
@@ -131,6 +131,7 @@ def mainOut(mul_trees, all_scores, min_num, min_score, min_maps):
 		else:
 			RC.printWrite(globs.outfilename, globs.v, "The tree with the minimum parsimony score is the singly-labled tree (ST):\t" + min_tree[0]);
 		RC.printWrite(globs.outfilename, globs.v, "Score = " + str(min_score));
+		RC.printWrite(globs.outfilename, globs.main_v, "# ----------------------------------------");
 		RC.printWrite(globs.outfilename, globs.v, "Species tree node\t# dups mapped");
 
 		mt, min_dict = min_tree[0], mul_tree[1];
@@ -143,6 +144,13 @@ def mainOut(mul_trees, all_scores, min_num, min_score, min_maps):
 					main_dups[maps[gt_node][0]] += 1;
 		for node in main_dups:
 			RC.printWrite(globs.outfilename, globs.v, node + "\t" + str(main_dups[node]));
+	if multiple_maps != 0:
+		num_str = " trees have ";
+		if multiple_maps == 1:
+			num_str = " tree has ";
+		multiple_outline = "# MSG: " + str(multiple_maps) + " gene" + num_str + "multiple maps to the species tree with equal scores. Only one of these maps is (randomly) chosen in the final duplication counts. See detailed output file for more info."
+		RC.printWrite(globs.outfilename, globs.main_v, "# ----------------------------------------");
+		RC.printWrite(globs.outfilename, globs.main_v, multiple_outline)
 	# Output to the main file.
 
 #############################################################################
@@ -170,6 +178,8 @@ def detOut(gene_trees, min_tree, min_num, min_maps):
 			if globs.maps_opt:
 				outline += "\t" + GT.detailedOut(gene_trees[gene_num][0], gene_trees[gene_num][1], cur_map[3], cur_map[4], cur_map[5]);
 			RC.printWrite(globs.detoutfilename, globs.v, outline);
+
+	return multiple_maps;
 	# Output to the detailed file.
 
 #############################################################################

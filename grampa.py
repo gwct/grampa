@@ -167,7 +167,7 @@ def grampa(starttime):
 	if globs.check_nums:
 		RC.endProg(starttime);
 	# If --checknums is set, exit the program here.
-	RC.printWrite(globs.outfilename, globs.main_v, "# ---------");
+	RC.printWrite(globs.outfilename, globs.main_v, "# ----------------------------------------");
 
 	if globs.stats:
 		step_start_time = RC.report_stats("Collapsed groups", pids, step_start_time, prog_start_time, globs.output_directory);
@@ -217,8 +217,8 @@ def grampa(starttime):
 	min_maps = ALG.mulRecon((min_num, min_tree), gene_trees, globs.v, globs.pickle_dir, retmap=True);
 	## This gets the mul_tree with the min score along with its maps.
 
-	OUT.detOut(gene_trees, min_tree, min_num, min_maps);
-	OUT.mainOut(mul_trees, all_scores, min_num, min_score, min_maps);
+	multiple_maps = OUT.detOut(gene_trees, min_tree, min_num, min_maps);
+	OUT.mainOut(mul_trees, all_scores, min_num, min_score, min_maps, multiple_maps);
 
 	if globs.stats:
 		step_start_time = RC.report_stats("Output done", pids, step_start_time, prog_start_time, globs.output_directory);
