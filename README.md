@@ -1,8 +1,8 @@
 # GRAMPA
 ### Gene-tree Reconciliation Algorithm with MUL-trees for Polyploid Analysis
 
-## Author
-#### Gregg Thomas
+## Authors
+#### Gregg Thomas, S. Hussain Ather, Matthew Hahn
 
 ## About
 
