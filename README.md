@@ -10,7 +10,7 @@
 
 ##### What follows is a brief explanation of the options. Please see the project website for much more in depth info about the algorithm and examples of the program's usage.
 
-#### https://gwct.github.io/grampa.html
+#### https://gwct.github.io/grampa/
 
 ## Citation
 
