@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="28 -34 1015 629" style="enable-background:new 28 -34 1015 629;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#31859C;stroke-width:4;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:#000000;stroke-width:4;stroke-miterlimit:10;}
+	.st2{font-family:'CourierNewPSMT';}
+	.st3{font-size:50px;}
+	.st4{font-family:'SourceCodePro-Regular';}
+	.st5{font-size:40px;}
+	.st6{fill:none;stroke:#E46C0A;stroke-width:5;stroke-miterlimit:10;}
+	.st7{fill:none;}
+	.st8{font-family:'MyriadPro-Regular';}
+	.st9{font-size:30px;}
+	.st10{enable-background:new    ;}
+</style>
+<path class="st0" d="M-0.3,101.6h41.7"/>
+<path class="st1" d="M285.9,395H163.6V231.2"/>
+<path class="st1" d="M775,353.3H652.7V401"/>
+<path class="st1" d="M775,544H285.9V395"/>
+<path class="st1" d="M775,448.7H652.7V401"/>
+<path class="st0" d="M775-28H41.3v129.6"/>
+<path class="st1" d="M652.7,401H530.4v-71.5"/>
+<path class="st1" d="M775,258H530.4v71.5"/>
+<path class="st1" d="M408.2,246.1H285.9v149"/>
+<path class="st0" d="M163.6,231.2H41.3V101.6"/>
+<path class="st1" d="M530.4,329.5H408.2v-83.4"/>
+<path class="st1" d="M775,162.7H408.2v83.4"/>
+<path class="st0" d="M775,67.3H163.6v163.9"/>
+<text transform="matrix(1 0 0 1 780 -15)" class="st2 st3">D</text>
+<text transform="matrix(1 0 0 1 780 271)" class="st2 st3">z</text>
+<text transform="matrix(1 0 0 1 780 366.3333)" class="st2 st3">x</text>
+<text transform="matrix(1 0 0 1 780 175.6667)" class="st2 st3">B</text>
+<text transform="matrix(1 0 0 1 780 461.6667)" class="st2 st3">y</text>
+<text transform="matrix(1 0 0 1 780 557)" class="st2 st3">A</text>
+<text transform="matrix(1 0 0 1 780 80.3333)" class="st2 st3">C</text>
+<text transform="matrix(1 0 0 1 657.7228 412)" class="st4 st5">1</text>
+<text transform="matrix(1 0 0 1 46.3366 112.5937)" class="st4 st5">6</text>
+<text transform="matrix(1 0 0 1 290.8911 406.0417)" class="st4 st5">4</text>
+<text transform="matrix(1 0 0 1 413.1683 257.0833)" class="st4 st5">3</text>
+<text transform="matrix(1 0 0 1 168.6139 242.1875)" class="st4 st5">5</text>
+<text transform="matrix(1 0 0 1 535.4455 340.5)" class="st4 st5">2</text>
+<rect x="518" y="302.5" class="st6" width="54" height="54"/>
+<rect x="638" y="374" class="st6" width="54" height="54"/>
+<rect x="874" y="-28" class="st6" width="54" height="54"/>
+<rect x="946" y="-28" class="st7" width="235" height="64.8"/>
+<text transform="matrix(1 0 0 1 946 -6.7002)" class="st8 st9">Possible polyploid </text>
+<text transform="matrix(1 0 0 1 946 29.2998)" class="st8 st9">clades (-h1 nodes)</text>
+<path class="st0" d="M880.2,145.5h41.7"/>
+<rect x="946" y="80.2" class="st7" width="235" height="104.8"/>
+<text transform="matrix(1 0 0 1 946 101.495)" class="st8 st9">Possible locations </text>
+<text transform="matrix(1 0 0 1 946 137.495)" class="st8 st9">of second parental </text>
+<text transform="matrix(1 0 0 1 946 173.495)" class="st10"><tspan x="0" y="0" class="st8 st9">lineage (branches </tspan><tspan x="0" y="36" class="st8 st9">leading to -h2 nodes)</tspan></text>
+<rect x="767" y="326.3" class="st6" width="54" height="54"/>
+</svg>

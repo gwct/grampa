@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 960 560" style="enable-background:new 0 0 960 560;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#000000;stroke-width:4;stroke-miterlimit:10;}
+	.st1{font-family:'CourierNewPSMT';}
+	.st2{font-size:50px;}
+</style>
+<path class="st0" d="M733,390H493.1v48"/>
+<path class="st0" d="M733,134H493.1v48"/>
+<path class="st0" d="M733,70H373.1v56"/>
+<path class="st0" d="M133.2,304h-120V155"/>
+<path class="st0" d="M733,518H613v-32"/>
+<path class="st0" d="M733,262H613v-32"/>
+<path class="st0" d="M253.1,482h-120V304"/>
+<path class="st0" d="M6,155h7.2"/>
+<path class="st0" d="M613,486h-120v-48"/>
+<path class="st0" d="M613,230h-120v-48"/>
+<path class="st0" d="M733,326H373.1v56"/>
+<path class="st0" d="M493.1,182h-120v-56"/>
+<path class="st0" d="M733,454H613v32"/>
+<path class="st0" d="M493.1,438h-120v-56"/>
+<path class="st0" d="M373.1,126H133.2v178"/>
+<path class="st0" d="M373.1,382h-120v100"/>
+<path class="st0" d="M733,582H253.1V482"/>
+<path class="st0" d="M733,6H13.2v149"/>
+<path class="st0" d="M733,198H613v32"/>
+<text transform="matrix(1 0 0 1 738 146)" class="st1 st2">z*</text>
+<text transform="matrix(1 0 0 1 738 338)" class="st1 st2">B</text>
+<text transform="matrix(1 0 0 1 738 402)" class="st1 st2">z</text>
+<text transform="matrix(1 0 0 1 738 82)" class="st1 st2">C</text>
+<text transform="matrix(1 0 0 1 738 466)" class="st1 st2">x</text>
+<text transform="matrix(1 0 0 1 738 530)" class="st1 st2">y</text>
+<text transform="matrix(1 0 0 1 738 274)" class="st1 st2">y*</text>
+<text transform="matrix(1 0 0 1 738 594)" class="st1 st2">A</text>
+<text transform="matrix(1 0 0 1 738 18)" class="st1 st2">D</text>
+<text transform="matrix(1 0 0 1 738 210)" class="st1 st2">x*</text>
+</svg>

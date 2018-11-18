@@ -1,0 +1,22 @@
+# =========================================================================
+#		  GRAMPA: MUL-tree reconciliation
+#			04.02.2017 | 06:30:17
+# LOG 06.30.17: Number of threads:                                         1
+# LOG 06.30.19: The input species tree with internal nodes labeled:        ((((((x*,y*)<1>,z*)<2>,B)<3>,A)<4>,(C,((x,y)<5>,z)<6>)<7>)<8>,D)<9>
+# LOG 06.30.19: Input species tree is:                                     MUL-tree
+# LOG 06.30.19: Using gene trees in file:                                  .\gene_trees_3a.txt
+# LOG 06.30.19: Total gene trees:                                          1000
+# LOG 06.30.19: Main results and logs will be written to file:             ex3_output\count_test_out.txt
+# LOG 06.30.19: The number of groups for each tree will be calculated:     ex3_output\count_test_checknums.txt
+# LOG 06.30.19: Filtered trees will be saved (if necessary):               ex3_output\count_test_trees_filtered.txt
+# LOG 06.30.19: Filtering gene trees with # of polyploid groups over:      8
+# LOG 06.30.19: Detailed results will be written to file:                  ex3_output\count_test_det.txt
+# LOG 06.30.19: Detailed output will contain:                              Reconciliation scores only
+# LOG 06.30.19: Reconciling to:                                            Singly-labeled and MUL-trees
+# LOG 06.30.20: No trees filtered! Using your original set.
+# ---------
+# Tree #	H1 node	H2 node	Tree string	Total score
+MT-1	((((((x*,y*)<1>,z*)<2>,B)<3>,A)<4>,(C,((x+,y+)<5>,z+)<6>)<7>)<8>,D)<9>	5242
+# ---------
+# LOG: Total execution time: 8.782 seconds.
+# =========================================================================

@@ -1,0 +1,38 @@
+# =========================================================================
+#		  GRAMPA: MUL-tree reconciliation
+#			04.02.2017 | 12:03:56
+# LOG 12.03.56: Number of threads:                                         3
+# LOG 12.03.57: The input species tree with internal nodes labeled:        ((((((x,y)<1>,z)<2>,B)<3>,A)<4>,C)<5>,D)<6>
+# LOG 12.03.57: Input species tree is:                                     Singly-labeled
+# LOG 12.03.57: H1 node(s) identified as:                                  x,<1>,<2>
+# LOG 12.03.57: H2 node(s) identified as:                                  C,D,<5>,<6>
+# LOG 12.03.57: Using gene trees in file:                                  .\gene_trees_3a.txt
+# LOG 12.03.57: Total gene trees:                                          1000
+# LOG 12.03.57: Main results and logs will be written to file:             ex2_output\ex2_test_out.txt
+# LOG 12.03.57: The number of groups for each tree will be calculated:     ex2_output\ex2_test_checknums.txt
+# LOG 12.03.57: Filtered trees will be saved (if necessary):               ex2_output\ex2_test_trees_filtered.txt
+# LOG 12.03.57: Filtering gene trees with # of polyploid groups over:      8
+# LOG 12.03.57: Detailed results will be written to file:                  ex2_output\ex2_test_det.txt
+# LOG 12.03.57: Detailed output will contain:                              Reconciliation scores only
+# LOG 12.03.57: Reconciling to:                                            Singly-labeled and MUL-trees
+# LOG 12.04.01: No trees filtered! Using your original set.
+# ---------
+# Tree #	H1 node	H2 node	Tree string	Total score
+ST			((((((x,y)<1>,z)<2>,B)<3>,A)<4>,C)<5>,D)<6>	8312
+MT-1	x	C	((((((x+,y)<1>,z)<2>,B)<3>,A)<4>,(C,x*)<5>)<6>,D)<7>	9109
+MT-2	x	D	((((((x+,y)<1>,z)<2>,B)<3>,A)<4>,C)<5>,(D,x*)<6>)<7>	8949
+MT-3	x	<5>	(((((((x+,y)<1>,z)<2>,B)<3>,A)<4>,C)<5>,x*)<6>,D)<7>	9259
+MT-4	x	<6>	(((((((x+,y)<1>,z)<2>,B)<3>,A)<4>,C)<5>,D)<6>,x*)<7>	9304
+MT-5	<1>	C	((((((x+,y+)<1>,z)<2>,B)<3>,A)<4>,(C,(x*,y*)<5>)<6>)<7>,D)<8>	8506
+MT-6	<1>	D	((((((x+,y+)<1>,z)<2>,B)<3>,A)<4>,C)<5>,(D,(x*,y*)<6>)<7>)<8>	8854
+MT-7	<1>	<5>	(((((((x+,y+)<1>,z)<2>,B)<3>,A)<4>,C)<5>,(x*,y*)<6>)<7>,D)<8>	8939
+MT-8	<1>	<6>	(((((((x+,y+)<1>,z)<2>,B)<3>,A)<4>,C)<5>,D)<6>,(x*,y*)<7>)<8>	9202
+MT-9	<2>	C	((((((x+,y+)<1>,z+)<2>,B)<3>,A)<4>,(C,((x*,y*)<5>,z*)<6>)<7>)<8>,D)<9>	5242
+MT-10	<2>	D	((((((x+,y+)<1>,z+)<2>,B)<3>,A)<4>,C)<5>,(D,((x*,y*)<6>,z*)<7>)<8>)<9>	8618
+MT-11	<2>	<5>	(((((((x+,y+)<1>,z+)<2>,B)<3>,A)<4>,C)<5>,((x*,y*)<6>,z*)<7>)<8>,D)<9>	7598
+MT-12	<2>	<6>	(((((((x+,y+)<1>,z+)<2>,B)<3>,A)<4>,C)<5>,D)<6>,((x*,y*)<7>,z*)<8>)<9>	8845
+# ---------
+The MUL-tree with the minimum parsimony score is MT-9:	((((((x+,y+)<1>,z+)<2>,B)<3>,A)<4>,(C,((x*,y*)<5>,z*)<6>)<7>)<8>,D)<9>
+Score = 5242
+# LOG: Total execution time: 30.637 seconds.
+# =========================================================================

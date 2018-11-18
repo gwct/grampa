@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 960 560" style="enable-background:new 0 0 960 560;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}
+	.st1{font-family:'CourierNewPSMT';}
+	.st2{font-size:50px;}
+</style>
+<path class="st0" d="M729,322.7H371.1v55.4"/>
+<path class="st0" d="M729,512.7H609.7V481"/>
+<path class="st0" d="M371.1,124.8H132.5v176.1"/>
+<path class="st0" d="M729,6H13.2v147.4"/>
+<path class="st0" d="M132.5,300.9H13.2V153.4"/>
+<path class="st0" d="M609.7,481H490.4v-47.5"/>
+<path class="st0" d="M490.4,180.2H371.1v-55.4"/>
+<path class="st0" d="M729,576H251.8v-99"/>
+<path class="st0" d="M729,386H490.4v47.5"/>
+<path class="st0" d="M729,449.3H609.7V481"/>
+<path class="st0" d="M729,132.7H490.4v47.5"/>
+<path class="st0" d="M729,259.3H609.7v-31.7"/>
+<path class="st0" d="M371.1,378.1H251.8v99"/>
+<path class="st0" d="M6,153.4h7.2"/>
+<path class="st0" d="M729,196H609.7v31.7"/>
+<path class="st0" d="M251.8,477H132.5V300.9"/>
+<path class="st0" d="M490.4,433.5H371.1v-55.4"/>
+<path class="st0" d="M609.7,227.7H490.4v-47.5"/>
+<path class="st0" d="M729,69.3H371.1v55.4"/>
+<text transform="matrix(1 0 0 1 734 400)" class="st1 st2">z+</text>
+<text transform="matrix(1 0 0 1 734 336.6667)" class="st1 st2">B</text>
+<text transform="matrix(1 0 0 1 734 526.6667)" class="st1 st2">y+</text>
+<text transform="matrix(1 0 0 1 734 463.3333)" class="st1 st2">x+</text>
+<text transform="matrix(1 0 0 1 734 146.6667)" class="st1 st2">z*</text>
+<text transform="matrix(1 0 0 1 734 20)" class="st1 st2">D</text>
+<text transform="matrix(1 0 0 1 734 273.3333)" class="st1 st2">y*</text>
+<text transform="matrix(1 0 0 1 734 210)" class="st1 st2">x*</text>
+<text transform="matrix(1 0 0 1 734 83.3333)" class="st1 st2">C</text>
+<text transform="matrix(1 0 0 1 734 590)" class="st1 st2">A</text>
+</svg>

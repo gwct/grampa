@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 960 560" style="enable-background:new 0 0 960 560;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}
+	.st1{font-family:'CourierNewPSMT';}
+	.st2{font-size:50px;}
+</style>
+<path class="st0" d="M642.2,530.3H223V357.5"/>
+<path class="st0" d="M747,387.3H642.2v-47.7"/>
+<path class="st0" d="M747,196.7H537.4v71.5"/>
+<path class="st0" d="M6,181.8h7.3"/>
+<path class="st0" d="M747,482.7H642.2v47.7"/>
+<path class="st0" d="M327.8,184.8H223v172.8"/>
+<path class="st0" d="M642.2,339.7H537.4v-71.5"/>
+<path class="st0" d="M223,357.5H13.3V181.8"/>
+<path class="st0" d="M747,578H642.2v-47.7"/>
+<path class="st0" d="M747,292H642.2v47.7"/>
+<path class="st0" d="M747,6H13.3v175.8"/>
+<path class="st0" d="M537.4,268.2H327.8v-83.4"/>
+<path class="st0" d="M747,101.3H327.8v83.4"/>
+<text transform="matrix(1 0 0 1 752 400.3333)" class="st1 st2">y</text>
+<text transform="matrix(1 0 0 1 752 209.6667)" class="st1 st2">z</text>
+<text transform="matrix(1 0 0 1 752 495.6667)" class="st1 st2">B</text>
+<text transform="matrix(1 0 0 1 752 591)" class="st1 st2">A</text>
+<text transform="matrix(1 0 0 1 752 305)" class="st1 st2">x</text>
+<text transform="matrix(1 0 0 1 752 19)" class="st1 st2">D</text>
+<text transform="matrix(1 0 0 1 752 114.3333)" class="st1 st2">C</text>
+</svg>
