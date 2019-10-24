@@ -11,11 +11,12 @@
 # Multiprocessing implemented Mar/Apr 2017
 #############################################################################
 
-import os, timeit, multiprocessing as mp, lib.reconcore as RC, lib.mul_recon as ALG,\
-	lib.opt_parse as OP, lib.mul_tree as MT, lib.spec_tree as ST, lib.gene_tree as GT,\
-	lib.global_vars as globs, lib.mul_out as OUT
+import sys, os, timeit, multiprocessing as mp
 from functools import partial
 import pickle
+
+sys.path.append("lib/");
+import reconcore as RC, mul_recon as ALG, opt_parse as OP, mul_tree as MT, spec_tree as ST, gene_tree as GT, global_vars as globs, mul_out as OUT
 
 def grampa(starttime):
 

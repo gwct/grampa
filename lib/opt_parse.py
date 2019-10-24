@@ -1,4 +1,4 @@
-import sys, os, lib.reconcore as RC, lib.global_vars as globs
+import sys, os, reconcore as RC, global_vars as globs
 
 #############################################################################
 

@@ -1,4 +1,4 @@
-import re, lib.recontree as RT, lib.reconcore as RC, lib.global_vars as globs
+import re, recontree as RT, reconcore as RC, global_vars as globs
 
 #############################################################################
 

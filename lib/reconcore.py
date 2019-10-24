@@ -6,7 +6,7 @@ from __future__ import print_function
 # Forked from core on 12.13.2015
 #############################################################################
 
-import sys, os, subprocess, datetime, time, lib.opt_parse as OP, lib.global_vars as globs
+import sys, os, subprocess, datetime, time, opt_parse as OP, global_vars as globs
 
 #############################################################################
 

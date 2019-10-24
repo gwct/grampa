@@ -1,4 +1,4 @@
-import os, lib.reconcore as RC, lib.mul_tree as MT, lib.global_vars as globs
+import os, reconcore as RC, mul_tree as MT, global_vars as globs
 import pickle
 
 #############################################################################

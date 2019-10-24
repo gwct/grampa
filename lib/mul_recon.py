@@ -5,7 +5,7 @@
 # Fall 2015, Combo algorithm implemented Spring 2016
 #############################################################################
 
-import os, itertools, lib.recontree as RT, lib.mul_tree as MT, lib.reconcore as RC, lib.gene_tree as GT, lib.global_vars as globs
+import os, itertools, recontree as RT, mul_tree as MT, reconcore as RC, gene_tree as GT, global_vars as globs
 import pickle
 
 #############################################################################
