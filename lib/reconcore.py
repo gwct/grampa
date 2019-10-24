@@ -6,7 +6,7 @@ from __future__ import print_function
 # Forked from core on 12.13.2015
 #############################################################################
 
-import sys, os, subprocess, datetime, time, opt_parse as OP, global_vars as globs
+import sys, os, subprocess, datetime, time, lib.opt_parse as OP, lib.global_vars as globs
 
 #############################################################################
 
@@ -108,9 +108,10 @@ def printWrite(o_name, v, o_line1, o_line2="", pad=0):
 		outline = o_line1 + " "*(pad-len(o_line1)) + o_line2;
 	if v in [1,2]:
 		print(outline);
-	f = open(o_name, "a");
-	f.write(outline + "\n");
-	f.close();
+	if o_name != "":
+		f = open(o_name, "a");
+		f.write(outline + "\n");
+		f.close();
 	
 #############################################################################
 

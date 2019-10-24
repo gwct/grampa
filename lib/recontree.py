@@ -340,7 +340,7 @@ def treeParse(tree, debug=0):
 
 		if debug == 1:
 			print(node);
-			print anc_match;
+			print(anc_match);
 			print(anc_tree);
 			print("---");
 

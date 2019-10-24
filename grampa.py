@@ -15,7 +15,7 @@ import os, timeit, multiprocessing as mp, lib.reconcore as RC, lib.mul_recon as 
 	lib.opt_parse as OP, lib.mul_tree as MT, lib.spec_tree as ST, lib.gene_tree as GT,\
 	lib.global_vars as globs, lib.mul_out as OUT
 from functools import partial
-import cPickle as pickle
+import pickle
 
 def grampa(starttime):
 

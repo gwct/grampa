@@ -1,4 +1,4 @@
-import recontree as RT, reconcore as RC, global_vars as globs
+import lib.recontree as RT, lib.reconcore as RC, lib.global_vars as globs
 
 #############################################################################
 def readGeneTree(gene_tree_input):

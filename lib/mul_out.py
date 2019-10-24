@@ -1,5 +1,5 @@
-import os, reconcore as RC, mul_tree as MT, global_vars as globs
-import cPickle as pickle
+import os, lib.reconcore as RC, lib.mul_tree as MT, lib.global_vars as globs
+import pickle
 
 #############################################################################
 
@@ -75,8 +75,8 @@ def checkOut(mul_trees, num_skipped, gene_trees_filtered):
 			outline += str(num_groups) + "\t" + str(num_fixed) + "\t" + str(2**num_groups);
 			if num_groups > globs.cap:
 				gene_trees_filtered[gene_num] = ["# Number of groups over group cap (-c set to " + str(globs.cap) + ") -- Filtering."];
-			 	outline += "\tNumber of groups over group cap (-c set to " + str(globs.cap) + ") -- Filtering.";
-			 	num_skipped += 1;
+				outline += "\tNumber of groups over group cap (-c set to " + str(globs.cap) + ") -- Filtering.";
+				num_skipped += 1;
 			checkfile.write(outline + "\n");
 		checkfile.write("# ----------------------------------\n");
 	checkfile.close();
