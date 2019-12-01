@@ -1,37 +1,38 @@
+
 <!doctype html>
-<head>
-	<script>
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-		ga('create', 'UA-98263199-1', 'auto');
-		ga('send', 'pageview');
-	</script>
-
-	<title>GRAMPA - Identify</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">	
-	<link type="text/css" rel="stylesheet" href="css/pure.css"  media="screen,projection" />
-	<link type="text/css" rel="stylesheet" href="css/scaffold.css"  media="screen,projection" />
-	<link rel='shortcut icon' href='img/favicon.ico' type='image/x-icon'/ >
-</head>
+    <head>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+            ga('create', 'UA-98263199-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+    
+        <title>GRAMPA - Identify</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">	
+        <link type="text/css" rel="stylesheet" href="css/pure.css"  media="screen,projection" />
+        <link type="text/css" rel="stylesheet" href="css/scaffold.css"  media="screen,projection" />
+        <link rel='shortcut icon' href='img/favicon.ico' type='image/x-icon'/ >
+    </head>
 
 <body>
-	<div class="pure-g" id="nav_row">
-		<div class="pure-u-3-24" id="margin"></div>
+        <div class="pure-g" id="nav_row">
+		<div class="pure-u-6-24" id="margin"></div>
 		<div class="pure-u-18-24" id="nav_col">
-			<a href=" index.html"><img class="pure_img" id="logo_nav" src="img/logo-small.png"></a>
-			<a class="title" href=" index.html">GRAMPA</a>
+			<a href="index.html"><img class="pure_img" id="logo_nav" src="img/logo-small.png"></a>
+			<a class="title" href="index.html">GRAMPA</a>
 			<div class="pure-menu pure-menu-horizontal" id="nav_bar">
 				<ul class="pure-menu-list" id="nav_list">
-					<li class="pure-menu-item"><a href=" index.html" class="nav_link">Home</a></li>
+					<li class="pure-menu-item"><a href="index.html" class="nav_link">Home</a></li>
 					<li class="pure-menu-item"><a href="about.html" class="nav_link">About</a></li>
 					<li class="pure-menu-item"><a href="readme.html" class="nav_link">README</a></li>
 					<li class="pure-menu-item"><a href="https://github.com/gwct/grampa" target="_blank" class="nav_link">Download</a></li>
 					<li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-						<a href="#" id="menuLink1" id="active" class="pure-menu-link">Examples</a>
+						<a href="#" id="menuLink1" class="pure-menu-link">Examples</a>
 							<ul class="pure-menu-children">
 								<li class="pure-menu-item"><a href="#" class="pure-menu-link">Identify mode of polyploidy</a></li>
 								<li class="pure-menu-item"><a href="example2.html" class="pure-menu-link">Place WGD on phylogeny</a></li>
@@ -41,8 +42,8 @@
 					<li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
 						<a href="#" id="menuLink1" class="pure-menu-link">Results</a>
 							<ul class="pure-menu-children">
-								<li class="pure-menu-item"><a href="https://gwct.github.io/grampa-results/yeast/yeast.html" class="pure-menu-link">Baker's Yeast</a></li>
-								<li class="pure-menu-item"><a href="https://gwct.github.io/grampa-results/wheat/wheat_all.html" class="pure-menu-link">Bread Wheat</a></li>
+								<li class="pure-menu-item"><a href="results/yeast/yeast.html" class="pure-menu-link">Baker's Yeast</a></li>
+								<li class="pure-menu-item"><a href="results/wheat/wheat_all.html" class="pure-menu-link">Bread Wheat</a></li>
 								<li class="pure-menu-item"><a href="performance.html" class="pure-menu-link">Performance</a></li>
 							</ul>
 					</li>
@@ -50,30 +51,25 @@
 				</ul>
 
 				<div class="mobile_dropdown" id="mobile_nav">
-						<a href="#" id="nav_link_dropdown">Navigation</a>
-						<div class="mobile_dropdown_links">
-							<ul class="pure-menu-list">
-								<li><a href=" index.html" class="mobile_nav_link" id="active_drop">Home</a></li>
-								<li><a href="about.html" class="mobile_nav_link">About</a></li>
-								<li><a href="readme.html" class="mobile_nav_link">README</a></li>
-								<li><a href="https://github.com/gwct/grampa" target="_blank" class="mobile_nav_link">Download</a></li>
-								<li><a href="#" class="mobile_nav_link">Example: Identify polyploidy</a></li>
-								<li><a href="example2.html" class="mobile_nav_link">Example: Place WGD on phylogeny</a></li>
-								<li><a href="example3.html" class="mobile_nav_link">Example: Count dups and losses</a></li>
-								<!-- <li><a href="results/yeast/yeast.html" class="mobile_nav_link">Results: Yeast</a></li> -->
-								<!-- <li><a href="results/wheat/wheat_all.html" class="mobile_nav_link">Results: Wheat</a></li> -->
-								<!-- <li><a href="performance.html" class="mobile_nav_link">Results: Performance</a></li> -->
-								<li><a href="links.html" class="mobile_nav_link">Other links</a></li>
-								<!-- <li><img id="email_logo" src="img/email-logo.png"><span id="email">grthomas@indiana.edu</span></li> -->
-						</div>
-					</div>			
-
+					<a href="#" id="nav_link_dropdown">Navigation</a>
+					<div class="mobile_dropdown_links">
+						<ul class="pure-menu-list">
+							<li><a href="index.html" class="mobile_nav_link" id="active_drop">Home</a></li>
+							<li><a href="about.html" class="mobile_nav_link">About</a></li>
+							<li><a href="readme.html" class="mobile_nav_link">README</a></li>
+							<li><a href="https://github.com/gwct/grampa" target="_blank" class="mobile_nav_link">Download</a></li>
+							<li><a href="#" class="mobile_nav_link">Example: Identify polyploidy</a></li>
+							<li><a href="example2.html" class="mobile_nav_link">Example: Place WGD on phylogeny</a></li>
+							<li><a href="example3.html" class="mobile_nav_link">Example: Count dups and losses</a></li>
+							<li><a href="links.html" class="mobile_nav_link">Other links</a></li>
+					</div>
+				</div>				
 			</div>
 		</div>
-		<div class="pure-u-3-24" id="margin"></div>
+		<!-- <div class="pure-u-3-24" id="margin"></div> -->
 	</div>
 
-	<div class="pure-g"><div class="pure-u-1" id="divider_row"></div></div>
+<div class="pure-g"><div class="pure-u-1" id="divider_row"></div></div>
 
 	<div class="pure-g" id="main_row">
 		<div class="pure-u-3-24" id="margin"></div>
@@ -118,8 +114,7 @@
 				<p>Since in reality we wouldn't know whether there is an allo-, auto-, or no polyploidy in this tree, we want GRAMPA to search all nodes as possible
 					polyploid lineages. That means we don't specify <code class="cb">-h1</code> or <code class="cb">-h2</code>.
 
-				<pre><code class="gp_cmd">python grampa.py -s spec_tree_3a.tre -g gene_trees_3a.txt \
-		-o allo_example_output -f allo_test -v 0</code></pre>
+				<pre><code class="gp_cmd">python grampa.py -s spec_tree_3a.tre -g gene_trees_3a.txt 		-o allo_example_output -f allo_test -v 0</code></pre>
 
 				<h3>Outputs</h3>
 				<p>The above command would create the directory <code class="cb">allo_example_output</code> with four output files</p>
@@ -187,8 +182,7 @@ Score = 5018
 				<p>Since in reality we wouldn't know whether there is an allo-, auto-, or no polyploidy in this tree, we want GRAMPA to search all nodes as possible
 					polyploid lineages. That means we don't specify <code class="cb">-h1</code> or <code class="cb">-h2</code>.
 
-				<pre><code class="gp_cmd">python grampa.py -s spec_tree_18.tre -g gene_trees_18.txt \
-		-o auto_example_output -f auto_test -v 0</code></pre>
+				<pre><code class="gp_cmd">python grampa.py -s spec_tree_18.tre -g gene_trees_18.txt 		-o auto_example_output -f auto_test -v 0</code></pre>
 
 				<h3>Outputs</h3>
 				<p>The above command would create the directory <code class="cb">auto_example_output</code> with four output files</p>
@@ -252,8 +246,7 @@ Score = 4807
 				<p>Since in reality we wouldn't know whether there is an allo-, auto-, or no polyploidy in this tree, we want GRAMPA to search all nodes as possible
 					polyploid lineages. That means we don't specify <code class="cb">-h1</code> or <code class="cb">-h2</code>.
 
-				<pre><code class="gp_cmd">python grampa.py -s spec_tree_33.tre -g gene_trees_33.txt \
-		-o nop_example_output -f nop_test -v 0</code></pre>
+				<pre><code class="gp_cmd">python grampa.py -s spec_tree_33.tre -g gene_trees_33.txt 		-o nop_example_output -f nop_test -v 0</code></pre>
 
 				<h3>Outputs</h3>
 				<p>The above command would create the directory <code class="cb">nop_example_output</code> with four output files</p>
@@ -292,14 +285,13 @@ Score = 4115
 		<div class="pure-u-3-24" id="margin"></div>
 	</div>
 
-	<div class="pure-g"><div class="pure-u-1" id="divider_row"></div></div>
-	<div class="pure-g" id="footer">
-		<div class="pure-u-1">
-			<div id="footer_text">
-				<center>Site designed and maintained by <a href="https://gwct.github.io/index.html" target="_blank">Gregg Thomas</a> | Some of the CSS used to design
-					this site is from the <a href="https://purecss.io/" target="_blank">Pure CSS</a> project.</center>
-			</div>
-		</div>
-	</div>
-	
+        <div class="pure-g"><div class="pure-u-1" id="divider_row"></div></div>
+    <div class="pure-g" id="footer">
+        <div class="pure-u-1">
+            <div id="footer_text">
+                    <center>Site designed and maintained by <a href="https://gwct.github.io/index.html" target="_blank">Gregg Thomas</a> | <a href="https://purecss.io/" target="_blank">Pure CSS</a> |
+                        Page built: 12/01/2019 10:17:27 MST</center>
+            </div>
+        </div>
+    </div>
 </body>
