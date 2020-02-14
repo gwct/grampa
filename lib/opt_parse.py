@@ -28,9 +28,10 @@ def optParse(errorflag):
 	parser.add_argument("--multree", dest="spec_tree_type", help="Set this option if your input species tree is a MUL-tree", action="store_true");
 	parser.add_argument("--labeltree", dest="label_opt", help="If this flag is set, the program will read your species tree and simply print it out with the internal nodes labeled.", action="store_true");
 	parser.add_argument("--buildmultrees", dest="mul_opt", help="Use this along with -s and possibly -h1 and -h2 to simply build MUL-trees from those options.", action="store_true");
+	parser.add_argument("--numtrees", dest="num_mul_opt", help="Use this along with -s and possibly -h1 and -h2 to simply count the number of MUL-trees from those options.", action="store_true");
 	parser.add_argument("--checknums", dest="check_nums", help="Use this flag in conjunction with all other options to check the number of nodes, groups, and combinations for each gene tree and MUL-tree. In general, gene trees with more than 15 groups to map take a very long time to reconcile.", action="store_true");
 	parser.add_argument("--maps", dest="maps_opt", help="Output the maps for each reconciliation in the detailed output file.", action="store_true");
-	parser.add_argument("--orthologies", dest="orth_opt", help=argparse.SUPPRESS, action="store_true");
+	#parser.add_argument("--orthologies", dest="orth_opt", help=argparse.SUPPRESS, action="store_true");
 	# help="BETA OPTION: When set, GRAMPA will try to disecern the relationships of polyploid genes in each gene tree (ie paralog vs homoeolog). This method is still under development and may not yet return reliable results!"
 	parser.add_argument("--tests", dest="test_opt", help="Use 'grampa.py --tests' the first time you run grampa to run through all the options with pre-set input files.", action="store_true");
 	parser.add_argument("--stats", dest="stats_opt", help=argparse.SUPPRESS, action="store_true");
@@ -61,9 +62,12 @@ def optParse(errorflag):
 		if args.mul_opt and args.verbosity not in [-2,-1]:
 			print("\n*** Message: --buildmultrees is set to True! Just printing out all the MUL-trees you requested. All options but -s, -h1, and -h2 will be ignored!\n");
 			globs.cap = 0;
+		if args.num_mul_opt and args.verbosity not in [-2,-1]:
+			print("\n*** Message: --numtrees is set to True! Just printing out the number of MUL-trees you requested. All options but -s, -h1, and -h2 will be ignored!\n");
+			globs.cap = 0;
 		# Checking if the --labeltree or --buildmultrees options have been set.
 
-		if not args.label_opt and not args.mul_opt and args.gene_input == None:
+		if not args.label_opt and not args.mul_opt and not args.num_mul_opt and args.gene_input == None:
 			RC.errorOut(2, "-g must be specified.");
 		# The next important input for doing reconciliations is the gene tree file. This checks that something has been input.
 
@@ -93,7 +97,7 @@ def optParse(errorflag):
 				args.lca_standard = 0;
 		# This checks the input species tree type.
 
-		if args.lca_standard != 1 and not args.mul_opt and not args.label_opt:
+		if args.lca_standard != 1 and not args.mul_opt and not args.num_mul_opt and not args.label_opt:
 			if args.group_cap > 18:
 				RC.errorOut(4, "For computational reasons, -c should not be set higher than 18.");
 			elif args.group_cap >=10:
@@ -113,19 +117,30 @@ def optParse(errorflag):
 
 		globs.spec_type = 'm' if args.spec_tree_type else 's';
 		# The rest of the code still uses the old --multree (-t) formatting for spec_type.
+		globs.spec_tree_input = args.spec_tree;
+		globs.gene_tree_input = args.gene_input;
+		globs.h1_input = args.h1_spec;
+		globs.h2_input = args.h2_spec;
 		globs.num_procs = args.processes;
 		globs.label_opt = args.label_opt;
 		globs.mul_opt = args.mul_opt;
+		globs.num_opt =  args.num_mul_opt;
 		globs.check_nums = args.check_nums;
 		globs.maps_opt = args.maps_opt;
-		globs.orth_opt = args.orth_opt;
+		#globs.orth_opt = args.orth_opt;
 		globs.stats = args.stats_opt;
 		if args.verbosity == -2:
 			globs.stats = False;
-
 		# Setting a few global (read-only) variables based on the input options.
 
-		if not args.label_opt:
+		if globs.stats:
+			try:
+				import psutil
+			except:
+				print("* MSG: psutil module not found. Not reporting --stats.");
+				globs.stats = False;
+
+		if not args.label_opt and not args.num_mul_opt:
 			if os.path.isdir(outdir):
 				outdir_suffix = 1;
 				outdir_prefix = outdir;
@@ -158,13 +173,11 @@ def optParse(errorflag):
 					RC.filePrep(globs.detoutfilename);
 				# If --checknum is not set, we have to prepare detailed output file.
 
-					if args.orth_opt:
+					if globs.orth_opt:
 						globs.labeled_tree_file = os.path.join(outdir, args.output_prefix + "_labeled_trees.txt");
 						globs.orth_file_name = os.path.join(outdir, args.output_prefix + "_orthologies.txt");
 					# The orthology output files.
 		### End output prep block.
-
-		return args.spec_tree, args.gene_input, args.h1_spec, args.h2_spec;
 
 	elif errorflag == 1:
 		parser.print_help();

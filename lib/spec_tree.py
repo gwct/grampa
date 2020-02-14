@@ -2,7 +2,7 @@ import sys, os, reconcore as RC, recontree as RT, global_vars as globs
 
 #############################################################################
 
-def readSpecTree(spec_tree_input):
+def readSpecTree(spec_tree_input, starttime):
 	if os.path.isfile(spec_tree_input):
 		spec_tree = open(spec_tree_input, "r").read().replace("\n", "").replace("\r","");
 	else:
@@ -37,9 +37,10 @@ def readSpecTree(spec_tree_input):
 
 	if globs.label_opt:
 		if globs.v != -1:
+			print();
 			print("# The input species tree with internal nodes labeled:");
 			print(st + "\n");
-		sys.exit();
+		RC.endProg(starttime);
 	# The output if --labeltree is set.
 
 	return sinfo, st;
@@ -80,6 +81,7 @@ def getHClades(h_list, sinfo, h_type):
 		else:
 			h_clades = list(map(set, [h_list.split(",")]));
 		# Split up the input info. If there is a space, multiple nodes/clades have been specified.
+
 
 		if not all(h in sinfo for hybrid_list in h_clades for h in hybrid_list if not h.isdigit()):
 			RC.errorOut(10, "Not all -" + h_type + " species are present in your species tree!");

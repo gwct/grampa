@@ -2,6 +2,33 @@
 # Global variables are exclusively read only.
 
 def init():
+	global version;
+	version = "1.3";
+
+	global releasedate;
+	releasedate = "February 14, 2020 <3";
+
+	global doi;
+	doi = "https://doi.org/10.1093/sysbio/syx044";
+
+	global http;
+	http = "https://gwct.github.io/grampa/";
+
+	global github;
+	github = "https://github.com/gwct/grampa";
+
+	global spec_tree_input;
+	spec_tree_input = "";
+
+	global gene_tree_input;
+	gene_tree_input = "";
+
+	global h1_input;
+	h1_input = "";
+
+	global h2_input;
+	h2_input = "";
+
 	global spec_type;
 	spec_type = "";
 
@@ -21,13 +48,16 @@ def init():
 	main_v = "";
 
 	global pad;
-	pad = 75;
+	pad = 85;
 
 	global label_opt;
 	label_opt = "";
 
 	global mul_opt;
 	mul_opt = "";
+
+	global num_opt;
+	num_opt = "";
 
 	global check_nums;
 	check_nums = "";

@@ -221,6 +221,10 @@ GT-25 to MT-9   0   2   1
 								<td>The program will simply label your input species tree.</td>
 							</tr>
 							<tr>
+								<td>--numtrees</td>
+								<td>The program will simply count the number of possible MUL-trees given <code class="cb">-s</code>. <code class="cb">-h1</code> and <code class="cb">-h2</code> may also be supplied.</td>
+							</tr>
+							<tr>
 								<td>--buildmultrees</td>
 								<td>Build MUL-trees given <code class="cb">-s</code>, <code class="cb">-h1</code>, and <code class="cb">-h2</code>.</td>
 							</tr>
@@ -233,8 +237,12 @@ GT-25 to MT-9   0   2   1
 								<td>Output the node maps for each reconciliation in addition to the scores. The maps will be placed in the detailed output file.</td>
 							</tr>
 							<tr>
+								<td>--version</td>
+								<td>Print out version info and exit.</td>
+							</tr>
+							<tr>
 								<td>--tests</td>
-								<td>Run the tests script</td>
+								<td>Run the tests script.</td>
 							</tr>
 						</tbody>
 					</table>
@@ -337,7 +345,7 @@ GT-25 to MT-9   0   2   1
 					<a name="-f"></a><h3><code class="cb">-f</code> : Output file prefix</h3>
 						<ul>
 							<p>By default, all output files created by GRAMPA will have the prefix 'grampa_'. You can specify a different prefix with this option.
-								For example, a run with <code class="cb">-p test</code> will generate the following output files, all within the output directory:</p>
+								For example, a run with <code class="cb">-f test</code> will generate the following output files, all within the output directory:</p>
 
 							<center><code class="cb">test_out.txt, test_det.txt, test_checknums.txt</code></center>
 						</ul>

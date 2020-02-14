@@ -1,11 +1,43 @@
-import re, recontree as RT, reconcore as RC, global_vars as globs
+import re, recontree as RT, reconcore as RC, global_vars as globs, sys
+
+#############################################################################
+def countMULTrees(hybrid_nodes, copy_nodes, st, sinfo, starttime):
+# Function to count the number of possible MUL-trees given a set of h1 and h2 nodes.
+	nt = len(sinfo);
+	num_mul_trees = 0;
+	for n1 in hybrid_nodes:
+		# print(n1);
+		if sinfo[n1][2] == 'tip':
+			n1_clade = [];
+		else:
+			n1_clade = RT.getCladeNode(n1, sinfo);
+		# print(n1_clade);
+		ni = 0;
+		for n2 in copy_nodes:
+			# print(n2);
+			if n2 not in n1_clade:
+				ni += 1;
+		# print(ni);
+		# print('--')
+		num_mul_trees += (ni);
+
+	if globs.num_opt:
+		print();
+		print("Total nodes in species tree: " + str(nt));
+		print("H1 nodes...................: " + ",".join(hybrid_nodes));
+		print("H2 nodes...................: " + ",".join(copy_nodes));
+		print("Possible MUL-trees.........: " + str(num_mul_trees));
+		print();
+		RC.endProg(starttime);
+
+	return num_mul_trees;
 
 #############################################################################
 
 def genMULTrees(hybrid_nodes, copy_nodes, st, sinfo, starttime):
 # genMULTree generates all MUL-trees given a species tree and a set of h1 and h2 nodes.
 	mul_trees = {};
-	mul_num = 1;
+	mul_num = 0;
 	gt_groups = {};
 
 	if globs.lca_opt != 0:
@@ -30,14 +62,14 @@ def genMULTrees(hybrid_nodes, copy_nodes, st, sinfo, starttime):
 				minfo, mt = RT.treeParse(mt_unlabel);
 				# Reading the MUL-tree as usual with treeParse.
 
+				mul_num += 1;
+				mul_trees[mul_num] = [mt, minfo, hybrid_clade, hybrid_node, copy_node];
+				
 				if globs.mul_opt:
-					outline = hybrid_node + "\t" + copy_node + "\t" + mulPrint(mt, hybrid_clade);
+					outline = str(mul_num) + "\t" + hybrid_node + "\t" + copy_node + "\t" + mulPrint(mt, hybrid_clade);
 					RC.printWrite(globs.outfilename, globs.main_v, outline);
 					continue;
 
-				mul_trees[mul_num] = [mt, minfo, hybrid_clade, hybrid_node, copy_node];
-				mul_num += 1;
-			
 	# This block builds the MUL-trees and prepares the main mul_dict:
 	# mul_trees -> mul_num : [MUL-tree string, MUL-tree dict, hybrid clade species, hybrid node, copy node, an empty list to add gene tree groups to later]
 	# mul_results -> mul_num : [an initial cumulative score of 0, { gene_num -> [[score for gt/mt combo, # dups for gt/mt combo, # losses for gt/mt combo, maps, node_dups, node_loss],[ditto if multiple maps with same score]]}

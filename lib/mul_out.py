@@ -2,53 +2,69 @@ import os, reconcore as RC, mul_tree as MT, global_vars as globs
 import pickle
 
 #############################################################################
+def startProg(call):
+	# A nice way to start the program.
+
+	print("#");
+	RC.printWrite(globs.outfilename, globs.main_v, "# =========================================================================");
+	RC.printWrite(globs.outfilename, globs.main_v, "# Welcome to GRAMPA -- Gene tree reconciliations with MUL-trees.");
+	RC.printWrite(globs.outfilename, globs.main_v, "# Version " + globs.version + " released on " + globs.releasedate);
+	RC.printWrite(globs.outfilename, globs.main_v, "# GRAMPA was developed by Gregg Thomas, S. Hussain Ather, and Matthew Hahn");
+	RC.printWrite(globs.outfilename, globs.main_v, "# Citation:      " + globs.doi);
+	RC.printWrite(globs.outfilename, globs.main_v, "# Website:       " + globs.http);
+	RC.printWrite(globs.outfilename, globs.main_v, "# Report issues: " + globs.github);
+	RC.printWrite(globs.outfilename, globs.main_v, "#");
+	RC.printWrite(globs.outfilename, globs.main_v, "# The date and time at the start is: " + RC.getDateTime());
+	RC.printWrite(globs.outfilename, globs.main_v, "# The program was called as: " + " ".join(call) + "\n#");
+
+#############################################################################
 
 def logOut(st, gene_trees_filtered, hybrid_nodes, copy_nodes, gene_tree_input,  h1_input, h2_input):
-	RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": The input species tree with internal nodes labeled:", st, globs.pad);
+	RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: The input species tree with internal nodes labeled", st, globs.pad);
 	if globs.spec_type == 's' and globs.lca_opt != 1:
-		RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": Input species tree is:", "Singly-labeled", globs.pad);
+		RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: Input species tree is", "Singly-labeled", globs.pad);
 		if not h1_input:
-			RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": No H1 node defined", "Searching all possible H1 nodes.", globs.pad);
+			RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: No H1 node defined", "Searching all possible H1 nodes.", globs.pad);
 		else:
-			RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": H1 node(s) identified as:", ",".join(hybrid_nodes), globs.pad);
+			RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: H1 node(s) identified as", ",".join(hybrid_nodes), globs.pad);
 		if not h2_input:
-			RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": No H2 node defined", "Searching all possible H2 nodes.", globs.pad);
+			RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: No H2 node defined", "Searching all possible H2 nodes.", globs.pad);
 		else:
-			RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": H2 node(s) identified as:", ",".join(copy_nodes), globs.pad);
+			RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: H2 node(s) identified as", ",".join(copy_nodes), globs.pad);
 	elif globs.spec_type == 'm':
-		RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": Input species tree is:", "MUL-tree", globs.pad);
+		RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: Input species tree is", "MUL-tree", globs.pad);
 	if not globs.mul_opt:
 		if os.path.isfile(gene_tree_input):
-			RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": Using gene trees in file:", gene_tree_input, globs.pad);
-			RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": Total gene trees:", gene_trees_filtered, globs.pad);
+			RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: Using gene trees in file", gene_tree_input, globs.pad);
+			RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: Total gene trees", gene_trees_filtered, globs.pad);
 		else:
-			RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": The input gene tree with internal nodes labeled:", gene_tree_input, globs.pad);
-	RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": Main results and logs will be written to file:", globs.outfilename, globs.pad);
+			RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: The input gene tree with internal nodes labeled", gene_tree_input, globs.pad);
+	RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: Main results and logs will be written to file", globs.outfilename, globs.pad);
 	if globs.lca_opt == 1:
-		RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": Reconciling to:", "Singly-labeled tree only.", globs.pad);
+		RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: Reconciling to", "Singly-labeled tree only.", globs.pad);
 	else:
 		if not globs.mul_opt:
-			RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": The number of groups for each tree will be calculated:", globs.checkfilename, globs.pad);
-			RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": Filtered trees will be saved (if necessary):", globs.gene_file_filtered, globs.pad);
-			RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": Filtering gene trees with # of polyploid groups over:", str(globs.cap), globs.pad);
+			RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: The number of groups for each tree will be calculated", globs.checkfilename, globs.pad);
+			RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: Filtered trees will be saved (if necessary)", globs.gene_file_filtered, globs.pad);
+			RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: Filtering gene trees with # of polyploid groups over", str(globs.cap), globs.pad);
 			if not globs.check_nums:
-				RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": Detailed results will be written to file:", globs.detoutfilename, globs.pad);
+				RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: Detailed results will be written to file", globs.detoutfilename, globs.pad);
 				if globs.maps_opt:
-					RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": Detailed output will contain:", "Reconciliation scores and maps", globs.pad);
+					RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: Detailed output will contain", "Reconciliation scores and maps", globs.pad);
 				else:
-					RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": Detailed output will contain:", "Reconciliation scores only", globs.pad);
+					RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: Detailed output will contain", "Reconciliation scores only", globs.pad);
 				if globs.lca_opt == 0:
-					RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": Reconciling to:", "MUL-trees only", globs.pad);
+					RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: Reconciling to", "MUL-trees only", globs.pad);
 				elif globs.lca_opt == 2:
-					RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": Reconciling to:", "Singly-labeled and MUL-trees", globs.pad);
+					RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: Reconciling to", "Singly-labeled and MUL-trees", globs.pad);
 				if globs.orth_opt:
-					RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": *BETA* Attempting to discern relationships of polyploid genes (paralog vs. homoeolog).")
-					RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": *BETA* Writing relationships to:", globs.orth_file_name, globs.pad);
-					RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": *BETA* Writing labeled tres to:", globs.labeled_tree_file, globs.pad);
+					RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: *BETA* Attempting to discern relationships of polyploid genes (paralog vs. homoeolog).")
+					RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: *BETA* Writing relationships to", globs.orth_file_name, globs.pad);
+					RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: *BETA* Writing labeled tres to", globs.labeled_tree_file, globs.pad);
 			elif globs.check_nums:
-				RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": --checknums set. NOT doing reconciliations, just running some numbers for you.");
+				RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: --checknums set. NOT doing reconciliations, just running some numbers for you.");
 		elif globs.mul_opt:
-			RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": --multree set. NOT doing reconciliations, just building your MUL-trees.");
+			RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: --multree set. NOT doing reconciliations, just building your MUL-trees.");
 
 #############################################################################
 
@@ -90,8 +106,8 @@ def checkOut(mul_trees, num_skipped, gene_trees_filtered):
 def filterOut(num_skipped, step, gene_trees_filtered):
 	gene_trees = {};
 	if num_skipped != 0:
-		RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": Filtered trees:", str(num_skipped), globs.pad);
-		RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": Final tree count for reconciliations:", str(len(gene_trees_filtered) - num_skipped), globs.pad);
+		RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: Filtered gene trees:", str(num_skipped), globs.pad);
+		RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: Final gene tree count for reconciliations:", str(len(gene_trees_filtered) - num_skipped), globs.pad);
 		step = RC.printStep(step, "# STEP " + str(step) + " " + RC.getLogTime() +  ": Writing filtered gene trees to file.");
 		filtered_file = open(globs.gene_file_filtered, "w");
 		for gene_num in gene_trees_filtered:
@@ -100,7 +116,7 @@ def filterOut(num_skipped, step, gene_trees_filtered):
 				gene_trees[gene_num] = gene_trees_filtered[gene_num]
 		filtered_file.close();
 	else:
-		RC.printWrite(globs.outfilename, globs.main_v, "# LOG " + RC.getLogTime() + ": No trees filtered! Using your original set.");
+		RC.printWrite(globs.outfilename, globs.main_v, "# " + RC.getDateTime() + " INFO: No trees filtered! Using your original set.");
 		gene_trees = gene_trees_filtered;
 
 	return gene_trees, step;
@@ -109,7 +125,7 @@ def filterOut(num_skipped, step, gene_trees_filtered):
 
 def mainOut(mul_trees, all_scores, min_num, min_score, min_maps, multiple_maps):
 	RC.printWrite(globs.outfilename, globs.v, "# Tree #\tH1 node\tH2 node\tTree string\tTotal score");
-	for mul_num, mul_tree in mul_trees.iteritems():
+	for mul_num, mul_tree in mul_trees.items():
 		if mul_num == min_num:
 			min_tree = mul_tree;
 
@@ -164,7 +180,7 @@ def detOut(gene_trees, min_tree, min_num, min_maps):
 	RC.printWrite(globs.detoutfilename, globs.v, det_header);
 	# Header info for the detailed output file.
 
-	for gene_num, cur_maps in min_maps.iteritems():
+	for gene_num, cur_maps in min_maps.items():
 		mul_map_string = "";
 		if len(cur_maps) != 1:
 			multiple_maps += 1;

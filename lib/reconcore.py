@@ -26,7 +26,7 @@ def endProg(starttime):
 	import timeit
 	endtime = timeit.default_timer();
 	totaltime = endtime - starttime;
-	printWrite(globs.outfilename, globs.main_v, "# LOG: Total execution time: " + str(round(totaltime,3)) + " seconds.");
+	printWrite(globs.outfilename, globs.main_v, "# " + getDateTime() +" INFO: Total execution time: " + str(round(totaltime,3)) + " seconds.");
 	printWrite(globs.outfilename, globs.main_v, "# =========================================================================");
 	sys.exit();
 
@@ -41,7 +41,7 @@ def getLogTime():
 
 def getDateTime():
 # Function to get the date and time in a certain format.
-	return datetime.datetime.now().strftime("%m.%d.%Y | %I:%M:%S");
+	return datetime.datetime.now().strftime("%m.%d.%Y | %H:%M:%S");
 
 #############################################################################
 
@@ -105,7 +105,7 @@ def printWrite(o_name, v, o_line1, o_line2="", pad=0):
 	if o_line2 == "":
 		outline = o_line1;
 	else:
-		outline = o_line1 + " "*(pad-len(o_line1)) + o_line2;
+		outline = o_line1 + "."*(pad-len(o_line1)) + o_line2;
 	if v in [1,2]:
 		print(outline);
 	if o_name != "":
@@ -135,8 +135,8 @@ def report_stats(msg="", procs="", step_start=0, prog_start=0, outdir="", stat_s
 		printWrite(logfilename, func_v, "# Step" + " " * 13 + "Step time (sec)" + " " * 6 + "Elapsed time (sec)" + " " * 4 + "Current mem usage (MB)" + " " * 4 + "Virtual mem usage (MB)");
 		printWrite(logfilename, func_v, "# " + "-" * 120);
 	else:
-		prog_elapsed = cur_time - prog_start;
-		step_elapsed = cur_time - step_start;
+		prog_elapsed = round(cur_time - prog_start, 5);
+		step_elapsed = round(cur_time - step_start, 5);
 		mem = sum([p.memory_info()[0] for p in procs]) / float(2 ** 20);
 		vmem = sum([p.memory_info()[1] for p in procs]) / float(2 ** 20);
 		printWrite(logfilename, func_v, msg + " " * (19-len(msg)) + str(step_elapsed) + " " * (21-len(str(step_elapsed))) + str(prog_elapsed) + " " * (22-len(str(prog_elapsed))) + str(mem) + " " * (26-len(str(mem))) + str(vmem));

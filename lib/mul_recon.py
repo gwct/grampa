@@ -86,10 +86,13 @@ def getSis(gs_node, check_node, check_clade, gs_dict):
 		return sis_clade;
 
 #############################################################################
-def collapseGroups(mul_input, gene_trees_filtered_cg, spec_type_cg, pickle_dir):
+def collapseGroups(mul_input, gene_trees_filtered_cg, spec_type_cg, v, pickle_dir, nmt):
 # The collapseGroups function goes through all gene tree-MUL-tree combos to collapse the groups.
 
 	mul_num, mul_tree = mul_input;
+	
+	if v == 1:
+		print("# " + RC.getDateTime() + " --> Collapsing groups for MUL-tree # " + str(mul_num) + " / " + str(nmt));
 
 	if mul_num == 0:
 		return mul_num, [];
@@ -209,7 +212,7 @@ def collapseGroups(mul_input, gene_trees_filtered_cg, spec_type_cg, pickle_dir):
 	del groups, fixed_groups, final_groups, gene_trees_filtered_cg, gt_groups;
 
 #############################################################################
-def mulRecon(mul_input, gene_trees, v, pickle_dir, retmap=False):
+def mulRecon(mul_input, gene_trees, v, pickle_dir, nmt, retmap=False):
 # The basis of the MUL-reconciliation algorithm is that there are now nodes that
 # have more than one possible map. We try all combinations of mappings for these
 # nodes and find which combination(s) results in the most parsimonious mutation score
@@ -233,6 +236,9 @@ def mulRecon(mul_input, gene_trees, v, pickle_dir, retmap=False):
 	# mulpicklefile = os.path.join(pickle_dir, str(mul_num) + "_tree.pickle");
 	# mul_tree = pickle.load(open(mulpicklefile, "rb"));
 
+	if v == 1:
+		print("# " + RC.getDateTime() + " --> Reconciling to MUL-tree # " + str(mul_num) + " / " + str(nmt));
+
 	min_maps = {};
 	total_score = 0;
 
@@ -240,7 +246,7 @@ def mulRecon(mul_input, gene_trees, v, pickle_dir, retmap=False):
 		groupfilename = os.path.join(pickle_dir, str(mul_num) + "_groups.pickle");
 		cur_groups = pickle.load(open(groupfilename, "rb"));
 
-	for gene_num, gene_tree in gene_trees.iteritems():
+	for gene_num, gene_tree in gene_trees.items():
 		gt, ginfo = gene_tree;
 
 		gene_score = 99999;
