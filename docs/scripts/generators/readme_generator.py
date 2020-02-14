@@ -45,7 +45,7 @@ html_template = """
 				<h2>Installation</h2>
 				<div class="readme_divider"></div>
 				<p>Clone or download the github repo: <a href="https://github.com/gwct/grampa" target="_blank">GRAMPA github</a></p>
-				<p>The only dependency is Python 2.7 or higher. You may want to add the GRAMPA folder to your $PATH variable for ease of use!</p>
+				<p>The only dependency is Python 3 or higher. You may want to add the GRAMPA folder to your $PATH variable for ease of use!</p>
 
 				<h2>Usage</h2>
 				<div class="readme_divider"></div>
