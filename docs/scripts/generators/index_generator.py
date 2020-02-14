@@ -33,7 +33,7 @@ html_template = """
 				<div id="buttons_container">
 					<a class="button-secondary pure-button" id="install_btn" href="about.html">About &raquo;</a><span id="buffer"></span>
 					<a class="button-secondary pure-button" id="install_btn" href="readme.html">README &raquo;</a><span id="buffer"></span>
-					<a class="button-secondary pure-button" id="install_btn" href="https://github.com/gwct/grampa" target="_blank">Download &raquo;</a>
+					<a class="button-secondary pure-button" id="install_btn" href="https://github.com/gwct/grampa/releases/latest" target="_blank">Download &raquo;</a>
 				</div>
 			</div>
 		</div>
