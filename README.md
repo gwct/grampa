@@ -54,7 +54,7 @@ This would perform a full search for the optimal (lowest-scoring) MUL-tree on th
 | Option | Description | 
 | ------ | ----------- |
 | -s | A file or string containing a bifurcating, rooted species tree in Newick format. This tree can either be singly-labeled or MUL. |
-| -g | A file containing one or more rooted, Newick formatted gene trees. |
+| -g | A file containing one or more bifurcating, rooted, Newick formatted gene trees. Gene trees with polytomies will be removed from the dataset. |
 | -h1 | A space separated list of nodes to search as the polyploid clade. Only used with `-t s`. If nothing is entered all nodes will be considered. |
 | -h2 | A space separated list of nodes to search as possible parental lineages for all nodes specified with `-h1`. If nothing is entered all possible nodes for the current `h1` will be considered. |
 | -d | An option to specify whether to do reconciliations to MUL-trees only (0), the singly-labeled tree only (1), or both (2). Default: 2 |

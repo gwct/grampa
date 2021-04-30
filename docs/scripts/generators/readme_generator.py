@@ -177,7 +177,8 @@ GT-25 to MT-9   0   2   1
 							</tr>
 							<tr>
 								<td>-g</td>
-								<td>A file containing one or more rooted, Newick formatted gene trees.</td>
+								<td>A file containing one or more bifurcating, rooted, Newick formatted gene trees. Gene trees with polytomies are currently not supported
+									and will be automatically filtered from the analysis.</td>
 							</tr>
 							<tr>
 								<td>-h1</td>
@@ -280,7 +281,8 @@ GT-25 to MT-9   0   2   1
 
 					<a name="-g"></a><h3><code class="cb">-g</code> : A file containing newick formatted gene trees.</h3>
 						<ul>
-							<p>This file should contain one or more Newick formatted gene trees, with one tree per line in the file.</p>
+							<p>This file should contain one or more bifurcating, Newick formatted gene trees, with one tree per line in the file. Currentky, gene trees with
+								unresolved nodes (polytomies) are not supported as they falsely increase the number of losses counted in that tree.</p>
 							<p><b>The tip labels in the gene trees must end with _[species label]</b> where [species label] matches a tip label in the species tree
 								This is necessary so GRAMPA can initialize the mappings correctly.</p>
 							<p>Alternatively, if you wish to reconcile to only a single gene tree, you can simply paste the tree string into the command line.</p>

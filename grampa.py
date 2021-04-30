@@ -16,7 +16,7 @@ from functools import partial
 import pickle
 
 sys.path.append("lib/");
-import reconcore as RC, mul_recon as ALG, opt_parse as OP, mul_tree as MT, spec_tree as ST, gene_tree as GT, global_vars as globs, mul_out as OUT
+import lib.reconcore as RC, mul_recon as ALG, opt_parse as OP, mul_tree as MT, spec_tree as ST, gene_tree as GT, global_vars as globs, mul_out as OUT
 
 def grampa(starttime):
 	###########################
@@ -56,6 +56,8 @@ def grampa(starttime):
 
 		step = RC.printStep(step, "# " + RC.getDateTime() + " --> STEP " + str(step) + " " + RC.getLogTime() +  ": Counting MUL-trees");
 		num_mul_trees = MT.countMULTrees(hybrid_nodes, copy_nodes, st, sinfo, starttime);
+	else:
+		num_mul_trees = 0;
 
 	###########################
 	### Gene trees
@@ -83,7 +85,7 @@ def grampa(starttime):
 			if result[2]:
 				num_skipped += 1;	
 		# Parsing the gene trees to get info about each node in each tree.
-
+		#sys.exit();
 		if num_skipped == len(gene_trees):
 			RC.errorOut(14, "Couldn't find any gene trees in your gene tree input file (-g)!");
 		# If the input is a file, we assume each line contains one gene tree.
@@ -92,7 +94,7 @@ def grampa(starttime):
 	## Reading the input files.
 	if globs.stats:
 		step_start_time = RC.report_stats("Read gene trees", pids, step_start_time, prog_start_time, globs.output_directory);
-
+	
 	###########################
 
 	OUT.logOut(st, str(len(gene_trees_filtered)), hybrid_nodes, copy_nodes, globs.gene_tree_input, globs.h1_input, globs.h2_input);

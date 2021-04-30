@@ -14,7 +14,7 @@ def optParse(errorflag):
 	parser = argparse.ArgumentParser(description="GRAMPA: Gene-tree Reconciliation Algorithm with MUL-trees for Polyploid Analysis.");
 
 	parser.add_argument("-s", dest="spec_tree", help="A file or string containing a ROOTED, bifurcating, newick formatted species tree in newick format on which to search for polyploid events.");
-	parser.add_argument("-g", dest="gene_input", help="A file containing one or more ROOTED, bifurcating, newick formatted gene trees to reconcile. The labels in the gene tree MUST end with '_[species name]' and contain no other underscores. Also accepts a single tree string.");
+	parser.add_argument("-g", dest="gene_input", help="A file containing one or more ROOTED, bifurcating (no polytomies), newick formatted gene trees to reconcile. The labels in the gene tree MUST end with '_[species name]' and contain no other underscores. Also accepts a single tree string.");
 	parser.add_argument("-h1", dest="h1_spec", help="A space separated list of species labels or internal nodes that define the polyploid clade. Example: 'x,y,z y,z' or '2 4'", default=False);
 	parser.add_argument("-h2", dest="h2_spec", help="A space separated list of species labels or internal node labels that make up the clade that you wish to place the second polyploid clade sister to. Example: 'c'", default=False);
 	parser.add_argument("-c", dest="group_cap", help="The maxmimum number of groups to consider for any gene tree. Default: 8. Max value: 15.", type=int, default=8);
