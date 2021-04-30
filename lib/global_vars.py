@@ -3,10 +3,12 @@
 
 def init():
 	global version;
-	version = "1.3";
+	#version = "1.3";
+	version = "1.3.1"
 
 	global releasedate;
-	releasedate = "February 14, 2020 <3";
+	#releasedate = "February 14, 2020 <3";
+	releasedate = "April 30, 2021";
 
 	global doi;
 	doi = "https://doi.org/10.1093/sysbio/syx044";
