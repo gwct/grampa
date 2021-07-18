@@ -36,6 +36,8 @@ Change log:
 Simply download the program and run it. You may want to add the GRAMPA folder to your $PATH variable for ease of use.
 ### The only dependency is Python 3 or higher
 
+GRAMPA is also available through [bioconda](https://anaconda.org/bioconda/grampa). Thanks to [nathanweeks](https://github.com/nathanweeks) for setting that up!
+
 ## Usage
 
 The first thing you should do when you try to run GRAMPA is make sure everything is working with some test files. You can do this easily by running the --tests command:
@@ -46,7 +48,7 @@ If all tests pass, then you're good to go! Basic usage in a real case would be:
 
 `python grampa.py -s [species tree file] -g [gene trees file] -o [output directory]`
 
-This would perform a full search for the optimal (lowest-scoring) MUL-tree on the input species tree. The other important options are `-h1` and `-h2`. Read more about them below and on the project website.
+This would perform a full search for the optimal (lowest-scoring) MUL-tree on the input species tree. The other important options are `-h1` and `-h2`. Read more about them below and on the [project website](https://gwct.github.io/grampa/).
 
 
 ### Options
