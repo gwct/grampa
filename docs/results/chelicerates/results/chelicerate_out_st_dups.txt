@@ -1,0 +1,35 @@
+# =========================================================================
+#		  GRAMPA: MUL-tree reconciliation
+#			08.19.2017 | 04:53:19
+# LOG 04.53.19: Number of processes:                                       4
+# LOG 04.53.29: The input species tree with internal nodes labeled:        ((CSCUL,(LRECL,(SMIMO,(LHESP,PTEPI)<1>)<2>)<3>)<4>,((MOCCI,ISCAP)<5>,TURTI)<6>)<7>
+# LOG 04.53.29: Using gene trees in file:                                  .\chelicerate_trees_filtered.txt
+# LOG 04.53.29: Total gene trees:                                          8678
+# LOG 04.53.29: Main results and logs will be written to file:             chel-gp-st-22\grampa_out.txt
+# LOG 04.53.29: Reconciling to:                                            Singly-labeled tree only.
+# LOG 04.53.29: Filtered trees:                                            659
+# LOG 04.53.29: Final tree count for reconciliations:                      8019
+# ---------
+# Tree #	H1 node	H2 node	Tree string	Total score
+ST		((CSCUL,(LRECL,(SMIMO,(LHESP,PTEPI)<1>)<2>)<3>)<4>,((MOCCI,ISCAP)<5>,TURTI)<6>)<7>	105581
+# ---------
+The tree with the minimum parsimony score is the singly-labled tree (ST):	((CSCUL,(LRECL,(SMIMO,(LHESP,PTEPI)<1>)<2>)<3>)<4>,((MOCCI,ISCAP)<5>,TURTI)<6>)<7>
+Score = 105581
+Species tree node	# dups mapped
+TURTI	1308
+ISCAP	550
+<3>	2313
+LHESP	238
+LRECL	403
+PTEPI	1068
+<2>	1903
+<1>	645
+<7>	13436
+MOCCI	995
+<6>	402
+SMIMO	345
+<4>	2872
+<5>	150
+CSCUL	1027
+# LOG: Total execution time: 36.098 seconds.
+# =========================================================================

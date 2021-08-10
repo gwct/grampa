@@ -1,0 +1,161 @@
+<!doctype html>
+	<head>
+		<title>Chelicerate GRAMPA Analysis</title>
+		<link type="text/css" rel="stylesheet" href="css/scaffold.css"  media="screen,projection" />
+		<link rel='shortcut icon' href='img/chelicerate.ico' type='image/x-icon'/ >
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	</head>
+
+<body>
+
+	<div class="grid" id="nav">
+		<div class="col col-1" id="nav_left">
+			<img id="logo_img" src="img/chelicerate_logo.png">
+		</div>
+		<div class="col col-1-spacer-main"></div>
+		<div class="col col-10" id="nav_right">
+			Chelicerate GRAMPA analysis
+		</div>
+	</div>
+
+	<div class="grid" id="nav_bar">
+		<!-- <div class="col col-1" id="nav_div">
+			<a href="../chelicerates/index.html" class="navlink" id="nav_btn">Original analysis</a>
+		</div> -->
+
+		<div class="col col-1" id="nav_div">
+			<div class="dropdown">
+				<a href="#" class="navlink" id="nav_btn">Species list</a>
+					<div class="dropdown_table">
+						<table class="striped centered">
+							<thead><th>Species name</th><th>Species ID</th></thead>
+							<tr><td>Tetranychus urticae</td><td>TURTI</td></tr>
+							<tr><td>Metaseiulus occidentalis</td><td>MOCCI</td></tr>
+							<tr><td>Ixodes scapularis</td><td>ISCAP</td></tr>
+							<tr><td>Centruroides sculpturatus</td><td>CSCUL</td></tr>
+							<tr><td>Loxosceles reclusa</td><td>LRECL</td></tr>
+							<tr><td>Stegodyphus mimosarum</td><td>SMIMO</td></tr>
+							<tr><td>Latrodectus hesperus</td><td>LHESP</td></tr>
+							<tr><td>Parasteatoda tepidariorum</td><td>PTEPI</td></tr>
+						</table>
+					</div>
+			</div>
+		</div>
+
+		<div class="col col-1" id="nav_div">
+			<a href="inputs/chelicerata-spec.tre" class="navlink" id="nav_btn">Species tree</a>
+		</div>
+
+		<div class="col col-1" id="nav_div">
+			<a href="inputs/chelicerata-gt-final-notung.txt" class="navlink" id="nav_btn">Gene trees</a>
+		</div>
+
+		<div class="col col-1" id="nav_div">
+			<a href="results/chel_notung_trees_filtered.txt" class="navlink" id="nav_btn">Gene trees (filtered)</a>
+		</div>
+
+		<div class="col col-1" id="nav_div">
+			<a href="results/chel_notung_out.txt" class="navlink" id="nav_btn">Main output table</a>
+		</div>
+
+		<div class="col col-1" id="nav_div">
+			<a href="results/chel_notung_det.txt" class="navlink" id="nav_btn">Detailed output</a>
+		</div>
+
+		<div class="col col-1" id="nav_div">
+			<a href="results/chel_notung_checknums.txt" class="navlink" id="nav_btn">Checknum file</a>
+		</div>
+
+	</div>
+
+	<div class="grid" id="main_grid">
+		<div class="col col-1"></div>
+		<div class="col col-5">
+			<h2>Chelicerate input phylogeny</h2>
+			<img src="img/chelicerate_phylo.png" id="phylo_img">
+			<h3>H1 Node: All possible nodes</h3>
+			<h3>H2 Nodes: All possible nodes</h3>
+			<h3>8,235 trees after filtering</h3>
+		</div>
+		<div class="col col-5">
+			<h2>Chelicerate output phylogeny</h2>
+			<img src="img/chelicerate_phylo.png" id="phylo_img">
+			<h3>Optimal H1 node: None</h3>
+			<h3>Optimal H2 node: None</h3>
+		</div>
+		<div class="col col-1"></div>
+	</div>
+
+	<div class="grid" id="divider">
+		<div class="col col-1-margin"></div>
+		<div class="col col-11"><div class="divider"></div></div>
+		<div class="col col-1-margin"></div>
+	</div>
+
+	<div class="grid" id="main_grid" style="padding-bottom:20px;">
+		<div class="col col-1" id="plot_margin"></div>
+		<div class="col col-10" id="plot_content">
+			<div id="1f771aed-82d9-49cc-bf06-2e7b49bd114e" style="height: 500; width: 1000px;" class="plotly-graph-div"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("1f771aed-82d9-49cc-bf06-2e7b49bd114e", [{"opacity": 0.6, "y": [62584, 64118, 65245, 65394, 65484, 65562, 65579, 65579, 65590, 66031, 66193, 66331, 66335, 66343, 66439, 66440, 66556, 66592, 66606, 66625, 66665, 66678, 66702, 66862, 66862, 66897, 66897, 66946, 67083, 67149, 67153, 67290, 67304, 67313, 67322, 67342, 67357, 67392, 67422, 67502, 67502, 67539, 67540, 67543, 67549, 67556, 67602, 67740, 67875, 68035, 68043, 68060, 68072, 68082, 68095, 68113, 68113, 68126, 68154, 68169, 68169, 68175, 68202, 68232, 68260, 68268, 68312, 68369, 68371, 68388, 68389, 68437, 68500, 68603, 68622, 68702, 68717, 68776, 68782, 68797, 68850, 68884, 68986, 68995, 68999, 69027, 69028, 69028, 69036, 69138, 69150, 69180, 69180, 69199, 69236, 69239, 69247, 69407, 69417, 69477, 69568, 69568, 69578, 69736, 69745, 69756, 69892, 69912, 69971, 70084, 70093, 70128, 70280, 70312, 70335, 70408, 70606, 70628, 70653, 70698, 70707, 70791, 70823, 70850, 70854, 70855, 71017, 71017, 71030, 71035, 71048, 71048, 71055, 71132, 71191, 71243, 71283, 71292, 71313, 71331, 71332, 71382, 71396, 71431, 71431, 71474, 71479, 71511, 71622, 71627, 71716, 71768, 71806, 71883, 71920, 71960, 71989, 72012, 72095, 72126, 72127, 72129, 72165, 72165, 72176, 72196, 72328, 72343, 72350, 72439, 72439, 72486, 72539, 72652, 72691, 72723, 72727, 72814, 72820, 72895, 72916, 72937, 73096, 73202, 73244, 73303], "type": "scatter", "mode": "markers", "x": ["ST", "<4>-TURTI", "<2>-TURTI", "<3>-TURTI", "<4>-ISCAP", "<4>-<5>", "<4>-<7>", "<4>-<6>", "<4>-MOCCI", "TURTI-TURTI", "<2>-<7>", "<5>-<7>", "<1>-TURTI", "<5>-<4>", "MOCCI-TURTI", "<3>-<7>", "<2>-<4>", "PTEPI-LRECL", "<2>-MOCCI", "<3>-MOCCI", "CSCUL-TURTI", "PTEPI-TURTI", "<1>-LRECL", "<2>-<3>", "<2>-LRECL", "<6>-<4>", "<6>-<7>", "MOCCI-MOCCI", "<7>-<7>", "ISCAP-TURTI", "<3>-ISCAP", "<6>-LRECL", "ISCAP-<6>", "<2>-ISCAP", "LHESP-TURTI", "ISCAP-<7>", "<1>-MOCCI", "<5>-LRECL", "LRECL-TURTI", "<5>-<6>", "<5>-TURTI", "ISCAP-LRECL", "PTEPI-MOCCI", "SMIMO-TURTI", "<2>-CSCUL", "CSCUL-MOCCI", "PTEPI-SMIMO", "PTEPI-<2>", "LHESP-LRECL", "<3>-<5>", "TURTI-MOCCI", "LRECL-LRECL", "LHESP-MOCCI", "ISCAP-<4>", "LRECL-MOCCI", "ISCAP-<5>", "ISCAP-MOCCI", "SMIMO-LRECL", "CSCUL-ISCAP", "PTEPI-LHESP", "PTEPI-<1>", "<3>-<6>", "MOCCI-<7>", "<1>-ISCAP", "SMIMO-MOCCI", "<1>-<7>", "<2>-<5>", "CSCUL-<7>", "CSCUL-LRECL", "ISCAP-ISCAP", "<2>-<6>", "PTEPI-ISCAP", "LHESP-LHESP", "TURTI-LRECL", "MOCCI-LRECL", "SMIMO-LHESP", "<1>-<3>", "PTEPI-<3>", "<6>-LHESP", "<5>-LHESP", "ISCAP-LHESP", "TURTI-<7>", "PTEPI-<7>", "LRECL-ISCAP", "LHESP-ISCAP", "LRECL-LHESP", "MOCCI-ISCAP", "MOCCI-<5>", "CSCUL-LHESP", "<5>-CSCUL", "SMIMO-ISCAP", "<3>-<4>", "<3>-CSCUL", "TURTI-LHESP", "MOCCI-LHESP", "ISCAP-CSCUL", "CSCUL-CSCUL", "<6>-CSCUL", "TURTI-ISCAP", "<1>-CSCUL", "<1>-SMIMO", "<1>-<2>", "CSCUL-<5>", "<1>-<5>", "LHESP-<7>", "LRECL-<7>", "SMIMO-<7>", "MOCCI-<6>", "PTEPI-CSCUL", "<1>-<4>", "PTEPI-PTEPI", "PTEPI-<5>", "LHESP-SMIMO", "<5>-<3>", "<6>-<3>", "CSCUL-<6>", "<5>-SMIMO", "<1>-<6>", "<6>-SMIMO", "ISCAP-SMIMO", "SMIMO-SMIMO", "ISCAP-<3>", "<5>-<5>", "LRECL-<5>", "LHESP-<5>", "PTEPI-<4>", "CSCUL-<3>", "CSCUL-<4>", "LRECL-SMIMO", "SMIMO-<5>", "TURTI-<6>", "TURTI-<5>", "CSCUL-SMIMO", "LHESP-CSCUL", "<4>-<4>", "SMIMO-CSCUL", "PTEPI-<6>", "TURTI-SMIMO", "MOCCI-SMIMO", "SMIMO-PTEPI", "MOCCI-CSCUL", "LRECL-CSCUL", "TURTI-CSCUL", "LHESP-PTEPI", "LHESP-<1>", "<6>-<2>", "LHESP-<2>", "<5>-<2>", "<5>-PTEPI", "<6>-PTEPI", "ISCAP-PTEPI", "LHESP-<3>", "TURTI-<4>", "LRECL-PTEPI", "CSCUL-PTEPI", "SMIMO-<3>", "ISCAP-<2>", "MOCCI-<4>", "TURTI-PTEPI", "<1>-<1>", "MOCCI-PTEPI", "LRECL-<6>", "SMIMO-<1>", "SMIMO-<2>", "LHESP-<6>", "<3>-<3>", "CSCUL-<2>", "SMIMO-<6>", "<2>-<2>", "LRECL-<3>", "LRECL-<2>", "<5>-<1>", "<6>-<1>", "ISCAP-<1>", "LHESP-<4>", "<6>-<6>", "SMIMO-<4>", "LRECL-<4>", "TURTI-<3>", "MOCCI-<3>", "LRECL-<1>", "CSCUL-<1>", "TURTI-<2>", "MOCCI-<2>", "TURTI-<1>", "MOCCI-<1>"]}], {"autosize": false, "title": "GRAMPA Results: chel_notung_out.txt", "paper_bgcolor": "#fffae6", "plot_bgcolor": "#e1e1ea", "yaxis": {"titlefont": {"color": "#737373", "family": "Arial, sans-serif", "size": 20}, "title": "Score"}, "height": 500, "width": 1000, "titlefont": {"family": "Arial, sans-serif", "size": 30}, "xaxis": {"tickangle": 90, "titlefont": {"color": "#737373", "family": "Arial, sans-serif", "size": 20}, "title": "H1-H2 Node"}, "margin": {"b": 150, "r": 20, "pad": 0, "t": 70, "l": 70}}, {"linkText": "Export to plot.ly", "showLink": true})</script>
+		</div>
+		<div class="col col-1" id="plot_margin"></div>
+	</div>
+
+	<div class="grid" id="divider">
+		<div class="col col-1-margin"></div>
+		<div class="col col-11"><div class="divider"></div></div>
+		<div class="col col-1-margin"></div>
+	</div>
+
+	<div class="grid" id="main_grid" style="padding-bottom:20px;">
+		<div class="col col-1" id="plot_margin"></div>
+		<div class="col col-6" id="plot_content">
+		<h2>Number of duplications per node in the species tree</h2>
+			<img src="img/chel-notung-spec-dups.png" id="phylo_img">
+		</div>
+		<div class="col col-5" id="plot_margin">
+			<table class="striped centered", style="padding-left:150px;padding-right:150px;">
+				<!-- <thead><th>Node</th><th># dups (pre-Notung)</th><th># dups (after Notung)</thead>
+				<tr><td>TURTI</td><td>1308</td><td>2547</td></tr>
+				<tr><td>ISCAP</td><td>550</td><td>1873</td></tr>
+				<tr><td><3></td><td>2313</td><td>1466</td></tr>
+				<tr><td>LHESP</td><td>238</td><td>1064</td></tr>
+				<tr><td>LRECL</td><td>403</td><td>2280</td></tr>
+				<tr><td>PTEPI</td><td>1068</td><td>4072</td></tr>
+				<tr><td><2></td><td>1903</td><td>1374</td></tr>
+				<tr><td><1></td><td>645</td><td>637</td></tr>
+				<tr><td><7></td><td>13436</td><td>5858</td></tr>
+				<tr><td>MOCCI</td><td>995</td><td>2370</td></tr>
+				<tr><td><6></td><td>402</td><td>241</td></tr>
+				<tr><td>SMIMO</td><td>345</td><td>1568</td></tr>
+				<tr><td><4></td><td>2872</td><td>2803</td></tr>
+				<tr><td><5></td><td>150</td><td>185</td></tr>
+				<tr><td>CSCUL</td><td>1027</td><td>4412</td></tr> -->
+				<thead><th>Node</th><th># dups</thead>
+				<tr><td>TURTI</td><td>2547</td></tr>
+				<tr><td>ISCAP</td><td>1873</td></tr>
+				<tr><td><3></td><td>1466</td></tr>
+				<tr><td>LHESP</td><td>1064</td></tr>
+				<tr><td>LRECL</td><td>2280</td></tr>
+				<tr><td>PTEPI</td><td>4072</td></tr>
+				<tr><td><2></td><td>1374</td></tr>
+				<tr><td><1></td><td>637</td></tr>
+				<tr><td><7></td><td>5858</td></tr>
+				<tr><td>MOCCI</td><td>2370</td></tr>
+				<tr><td><6></td><td>241</td></tr>
+				<tr><td>SMIMO</td><td>1568</td></tr>
+				<tr><td><4></td><td>2803</td></tr>
+				<tr><td><5></td><td>185</td></tr>
+				<tr><td>CSCUL</td><td>4412</td></tr>
+			</table>	
+		</div>
+	</div>
+
+
+	<div class="grid" id="footer_grid">
+		<div class="col col-12" id="footer">
+			Site designed and maintained by <a href="https://gwct.github.io/index.html">Gregg Thomas</a> -- Contact: grthomas@indiana.edu -- Some of the CSS used here is from the <a href="http://materializecss.com/">Materialize Project</a>
+		</div>
+	</div>
+
+</body>
+</html>

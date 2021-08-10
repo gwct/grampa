@@ -1,0 +1,215 @@
+html {
+  line-height: 1.5;
+  font-family:Arial;
+  font-weight: normal;
+  color: rgba(0, 0, 0, 0.87);
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color:#b6a19e;
+  margin:0;
+}
+
+@font-face {
+    font-family: Myriad-Pro;
+    src: url(Myriad-Pro.ttf);
+}
+
+@media (min-width: 1400px) {
+/* Add `.grid` for the table */
+  .grid {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  /* Add `.col` for the table cells, or columns */
+  .col {
+    display: table-cell;
+    text-align: left;
+  }
+
+  /* Set the widths */
+  .col-1 { width: 8.333333%; }
+  .col-1-margin {width: 5%;}
+  .col-1-spacer-main {width: 1%;}
+  .col-1-spacer {width: 2%;}
+  .col-2 { width: 16.666667%; }
+  .col-3 { width: 25%; }
+  .col-4 { width: 33.333333%; }
+  .col-5 { width: 41.666667%; }
+  .col-6 { width: 50%; }
+  .col-7 { width: 58.333333%; }
+  .col-8 { width: 66.666667%; }
+  .col-9 { width: 75%; }
+  .col-10 { width: 83.333333%; }
+  .col-11 { width: 91.666667%; }
+  .col-12 { width: 100%; }
+}
+
+#nav {
+  color: #fff;
+  background-color:#6b7a8f;
+}
+
+#nav_left {
+  vertical-align:middle;
+  padding-left:40px;
+}
+
+#nav_right {
+  vertical-align:middle;
+  font-family:Myriad-Pro;
+  font-size:3em;
+  color:#fff;
+}
+
+.divider {
+  height: 1px;
+  background-color: #e0e0e0;
+}
+
+#divider {
+  background-color:#fff;
+  padding:30px 0px;
+}
+
+#nav_bar {
+  background-color:#a8b1bd;
+}
+
+#main_grid{
+  border-top:0;
+  background-color:#fff;
+  box-shadow: 10px 10px 5px #373737;
+}
+
+.plotly-graph-div {
+  width:50%;
+  margin:0 auto;
+}
+
+#plot_div {
+  position:relative;
+}
+
+a {
+  text-decoration:none;
+}
+
+#footer_grid {
+  bottom:0;
+}
+
+#footer { 
+  display:block;
+  margin-top: 20px;
+  height: 50px;
+  line-height: 50px;
+  color: #000;
+  background-color:#6b7a8f;
+  text-align:center;
+  font-size:x-small;
+}
+
+table {
+  width:100%;
+}
+
+td, th {
+  padding: 5px 5px;
+  display: table-cell;
+  text-align: left;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+
+table.striped > tbody > tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+table.striped > tbody > tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table.striped > tbody > tr > td {
+  border-radius: 0;
+}
+
+table.centered thead tr th, table.centered tbody tr td {
+  text-align: center;
+}
+
+#nav_div {
+  text-align:center;
+}
+
+#nav_btn {
+  display:block;
+  padding:5px 10px;
+  color:#000;
+}
+
+#nav_btn:hover {
+  transition: .5s ease-out;
+  background-color:#d6d6c2;
+  text-decoration:none;
+}
+
+.dropdown {
+  position:relative;
+}
+/* Dropdown Content (Hidden by Default) */
+
+.navlink {
+  font-size:large;
+}
+
+.dropdown_links {
+  width:100%;
+  display:block;
+  visibility:hidden;
+  opacity: 0;
+  position: absolute;
+  background-color: #f2f2f2;
+  font-size:large;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index:1000;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+/* Links inside the dropdown */
+.dropdown_links a {
+  color: black;
+  text-decoration: none;
+  display: block;
+  padding: 0 5px;
+  line-height:25px;
+}
+/* Change color of dropdown links on hover */
+.dropdown_links a:hover { 
+  background-color: rgb(206, 200, 208);
+}
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown_links {
+  visibility:visible;
+  opacity: 1;
+}
+
+.dropdown_table {
+  width:500px;
+  display:block;
+  visibility:hidden;
+  opacity: 0;
+  position: absolute;
+  background-color: #f2f2f2;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index:1000;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+.dropdown:hover .dropdown_table {
+  visibility:visible;
+  opacity: 1;
+}
+
