@@ -6,3 +6,4 @@ data/tests_out.txt
 data/tests_out_det.txt
 gitadd.sh
 img/*
+support/

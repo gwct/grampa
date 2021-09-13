@@ -28,11 +28,11 @@ def readSpecTree(spec_tree_input, starttime):
 			spec_tree = spec_tree.replace(h, h+"*", 1);
 	# If the user entered a MUL-tree, some internal re-labeling must be done to those labels that appear twice.
 
-	try:
-		sinfo, st = RT.treeParse(spec_tree);
+	# try:
+	sinfo, st = RT.treeParse(spec_tree);
 		# Parsing of the species tree.
-	except:
-		RC.errorOut(9, "Error reading species tree!");
+	# except:
+	# 	RC.errorOut(9, "Error reading species tree!");
 	# Reading the species tree file.
 
 	if globs.label_opt:
@@ -40,6 +40,7 @@ def readSpecTree(spec_tree_input, starttime):
 			print();
 			print("# The input species tree with internal nodes labeled:");
 			print(st + "\n");
+			print(sinfo);
 		RC.endProg(starttime);
 	# The output if --labeltree is set.
 

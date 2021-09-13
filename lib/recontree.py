@@ -360,7 +360,21 @@ def treeParse(tree, debug=0):
 
 	nofo = {};
 	for node in nodes:
-		nofo[node] = [bl[node], ancs[node], nodes[node], supports[node]];
+		if nodes[node] == "tip":
+			orig_node = node;
+			while node[0] == " " or node[-1] == " ":
+				if node[0] == " ":
+					node = node[1:];
+				if node[-1] == " ":
+					node = node[:-1];
+			nofo[node] = [bl[orig_node], ancs[orig_node], nodes[orig_node], supports[orig_node]];
+			topo = topo.replace(orig_node, node);
+		# This block checks for preceding and trailing spaces in the tip labels of the tree and removes them
+		# if found. This was causing errors later on when matching gene tree to species tree labels for mapping.
+
+		else:
+			nofo[node] = [bl[node], ancs[node], nodes[node], supports[node]];
+		# For all internal nodes just add the node as is.
 	# Now we just restructure everything to the old format for legacy support
 
 	if debug == 1:
