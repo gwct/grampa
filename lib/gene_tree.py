@@ -21,7 +21,10 @@ def readGeneTree(gene_tree_input):
 		return gene_num, gene_tree, True;
 	# Tries the gene tree parsing code and if anything goes wrong, catches exception and filters the tree.
 
-	if len([g for g in ginfo if ginfo[g][2] != 'tip']) != len([g for g in ginfo if ginfo[g][2] == 'tip']) - 1:
+	num_tips = len([n for n in ginfo if ginfo[n][2] == 'tip']);
+	num_internal = len([n for n in ginfo if ginfo[n][2] != 'tip']);
+
+	if num_tips != num_internal - 1:
 		gene_tree = ["# This line may not contain a tree, or if so it may be unrooted or contain a polytomy -- Filtering."];
 		return gene_num, gene_tree, True;
 	# Another check for gene tree parsing and formatting errors.
