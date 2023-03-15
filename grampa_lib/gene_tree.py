@@ -5,7 +5,6 @@ import grampa_lib.reconcore as RC
 def readGeneTree(gene_tree_input):
 # Reading gene tree dictionaries.
 	gene_num, gene_tree = gene_tree_input;
-	print(gene_tree);
 
 	if gene_tree.strip() == '':
 		gene_tree = ["# Empty line -- Filtering."];
