@@ -124,84 +124,191 @@
 
 				<a name="output"></a><h3>Output</h3>
 				<p>All output files will be placed in the directory specified with <code class="cb">-o</code></p>
-				<p>GRAMPA creates three main output files and a filtered tree file (if necessary).</p>
+				<p>GRAMPA creates four output files, a log file, and a filtered tree file (if necessary).</p>
 				<p>GRAMPA also creates a directory within the output directory called <b>groups_dir</b>. This just stores the gene tree groupings for each MUL-tree
 					(in <a href="https://docs.python.org/2/library/pickle.html" target="_blank">pickled</a> format) so GRAMPA doesn't eat up a lot of RAM during
 					reconciliations. This can be ignored/deleted</p>
 				<ol>
-					<li><h4>grampa_out.txt</h4>
-						<p>This is the main output file and contains some log info for the current run and it gives the total reconciliation score for each MUL-tree
-							considered. At the bottom of the file it will display the MUL-tree with the minimum reconciliation score.</p>
+					<li><h4>grampa-scores.txt</h4>
+						<p>This is the main output file and contains the total reconciliation score for each MUL-tree considered, sorted in ascending order. </p>
 
-<pre><code># Tree #    H1 node H2 node Tree string Total score
-ST          (((a,(x,(y,z)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,(c,d)&lt;5&gt;)&lt;6&gt; 115
-MT-1    &lt;2&gt; a   ((((a,(x*,(y*,z*)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,(x+,(y+,z+)&lt;4&gt;)&lt;5&gt;)&lt;6&gt;,b)&lt;7&gt;,(c,d)&lt;8&gt;)&lt;9&gt;  119
-MT-2    &lt;2&gt; c   (((a,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,((c,(x*,(y*,z*)&lt;5&gt;)&lt;6&gt;)&lt;7&gt;,d)&lt;8&gt;)&lt;9&gt;  96
-MT-3    &lt;2&gt; b   (((a,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,(b,(x*,(y*,z*)&lt;4&gt;)&lt;5&gt;)&lt;6&gt;)&lt;7&gt;,(c,d)&lt;8&gt;)&lt;9&gt;  130
-MT-4    &lt;2&gt; d   (((a,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,(c,(d,(x*,(y*,z*)&lt;5&gt;)&lt;6&gt;)&lt;7&gt;)&lt;8&gt;)&lt;9&gt;  76
-MT-5    &lt;2&gt; &lt;3&gt; ((((a,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,(x*,(y*,z*)&lt;4&gt;)&lt;5&gt;)&lt;6&gt;,b)&lt;7&gt;,(c,d)&lt;8&gt;)&lt;9&gt;  119
-MT-6    &lt;2&gt; &lt;2&gt; (((a,((x+,(y+,z+)&lt;1&gt;)&lt;2&gt;,(x*,(y*,z*)&lt;3&gt;)&lt;4&gt;)&lt;5&gt;)&lt;6&gt;,b)&lt;7&gt;,(c,d)&lt;8&gt;)&lt;9&gt;  145
-MT-7    &lt;2&gt; &lt;6&gt; ((((a,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,(c,d)&lt;5&gt;)&lt;6&gt;,(x*,(y*,z*)&lt;7&gt;)&lt;8&gt;)&lt;9&gt;  132
-MT-8    &lt;2&gt; &lt;4&gt; ((((a,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,(x*,(y*,z*)&lt;5&gt;)&lt;6&gt;)&lt;7&gt;,(c,d)&lt;8&gt;)&lt;9&gt;  118
-MT-9    &lt;2&gt; &lt;5&gt; (((a,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,((c,d)&lt;5&gt;,(x*,(y*,z*)&lt;6&gt;)&lt;7&gt;)&lt;8&gt;)&lt;9&gt;  95
-# ---------
-The MUL-tree with the minimum parsimony score is MT-4:  (((a,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,(c,(d,(x*,(y*,z*)&lt;5&gt;)&lt;6&gt;)&lt;7&gt;)&lt;8&gt;)&lt;9&gt;
-Score = 76
+<!--
+<pre><code>mul.tree        h1.node h2.node score   labeled.tree
+106     &lt;2&gt;     d       76      (((a,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,(c,(d,(x*,(y*,z*)&lt;5&gt;)&lt;6&gt;)&lt;7&gt;)&lt;8&gt;)&lt;9&gt;
+114     &lt;3&gt;     d       86      (((a+,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,(c,(d,(a*,(x*,(y*,z*)&lt;5&gt;)&lt;6&gt;)&lt;7&gt;)&lt;8&gt;)&lt;9&gt;)&lt;10&gt;
+110     &lt;2&gt;     &lt;5&gt;     95      (((a,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,((c,d)&lt;5&gt;,(x*,(y*,z*)&lt;6&gt;)&lt;7&gt;)&lt;8&gt;)&lt;9&gt;
+120     &lt;4&gt;     d       95      (((a+,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b+)&lt;4&gt;,(c,(d,((a*,(x*,(y*,z*)&lt;5&gt;)&lt;6&gt;)&lt;7&gt;,b*)&lt;8&gt;)&lt;9&gt;)&lt;10&gt;)&lt;11&gt;
+105     &lt;2&gt;     c       96      (((a,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,((c,(x*,(y*,z*)&lt;5&gt;)&lt;6&gt;)&lt;7&gt;,d)&lt;8&gt;)&lt;9&gt;
+117     &lt;3&gt;     &lt;5&gt;     104     (((a+,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,((c,d)&lt;5&gt;,(a*,(x*,(y*,z*)&lt;6&gt;)&lt;7&gt;)&lt;8&gt;)&lt;9&gt;)&lt;10&gt;
+113     &lt;3&gt;     c       106     (((a+,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,((c,(a*,(x*,(y*,z*)&lt;5&gt;)&lt;6&gt;)&lt;7&gt;)&lt;8&gt;,d)&lt;9&gt;)&lt;10&gt;
+122     &lt;4&gt;     &lt;5&gt;     113     (((a+,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b+)&lt;4&gt;,((c,d)&lt;5&gt;,((a*,(x*,(y*,z*)&lt;6&gt;)&lt;7&gt;)&lt;8&gt;,b*)&lt;9&gt;)&lt;10&gt;)&lt;11&gt;
+123     &lt;4&gt;     &lt;6&gt;     113     ((((a+,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b+)&lt;4&gt;,(c,d)&lt;5&gt;)&lt;6&gt;,((a*,(x*,(y*,z*)&lt;7&gt;)&lt;8&gt;)&lt;9&gt;,b*)&lt;10&gt;)&lt;11&gt;
+0       NA      NA      115     (((a,(x,(y,z)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,(c,d)&lt;5&gt;)&lt;6&gt;
 </code></pre>
+-->
 
-						<ul>
-							<li>The first line has the headers for the columns of the output table. Note that H1 node and H2 node are always nodes in the singly
-								labeled tree.</li>
-							<li>The total reconciliation score in the last column is the sum of all reconciliation scores for all gene trees for that MUL-tree.</li>
-						</ul>
-					</li>
+						<p>
+							The first line of this file contains the headers, defined as follows for each subsequent row:
+                        </p>
+                        
+                        <center>
+							<table class="pure-table pure-table-bordered pure-table-striped">
+								<thead>
+                                	<tr>
+										<th>mul.tree</th>
+										<th>h1.node</th>
+										<th>h2.node</th>
+										<th>score</th>
+										<th>mul.tree</th>
+                                	</tr>
+                                </thead>
+								<tbody>
+									<tr>
+										<td>The ID of the MUL-tree</td>
+                                        <td>The H1 node in the species tree for the current MUL-tree</td>
+                                        <td>The H2 node in the species tree for the current MUL-tree</td>
+                                        <td>The total parsimony score for the current MUL-tree</td>
+                                        <td>The Newick formatted tree string for the MUL-tree, with hybrid clades indicated with *</td>
+                                    </tr>
+								</tbody>
+							</table>
+						</center>
 
-					<li><h4>grampa_det.txt</h4>
+						<h3>
+							Please note that the input singly-labeled species tree always has the ID of 0
+                        </h3>
+
+					<li><h4>grampa-detailed.txt</h4>
 						<p>The secondary output file contains detailed output describing the reconciliation scores from each gene tree to the lowest scoring MUL-tree.</p>
 
-<pre><code># MT-4:(((a,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,(c,(d,(x*,(y*,z*)&lt;5&gt;)&lt;6&gt;)&lt;7&gt;)&lt;8&gt;)&lt;9&gt;   H1 Node:&lt;2&gt; H2 Node:d
-# GT/MT combo   # dups  # losses    Total score
-GT-1 to MT-4    1   1   2
-GT-2 to MT-4    1   2   3
-GT-3 to MT-4    1   3   4
-GT-4 to MT-4    1   2   3
-.
-.
-.
-GT-25 to MT-4   0   1   1
-# Gene trees with multiple maps:    1
-# Total parsimony score for MT-4: 76
+<!--                        
+<pre><code>mul.tree	gene.tree	dups	losses	total.score
+106	1	1	1	2
+106	2	1	2	3
+106	3	1	3	4
+106	4	1	2	3
+106	5	1	3	4
+106	6	1	3	4
+106	7	0	0	0
+106	8	1	3	4
 </code></pre>
-					
-						<ul>
-							<li>The first line contains info about the MUL-tree and the second line contains the headers for the rest of the table</li>
-							<li>Note that the lowest score for some GT/MT combos can have multiple maps. In these cases, we report all possible scores</li>
-						</ul>
-					</li>
+-->
 
-					<li><h4>grampa_checknums.txt</h4>
+						<p>
+							The first line of this file contains the headers, defined as follows for each subsequent row:
+                        </p>
+                        
+                        <center>
+							<table class="pure-table pure-table-bordered pure-table-striped">
+								<thead>
+                                	<tr>
+										<th>mul.tree</th>
+										<th>gene.tree</th>
+										<th>dups</th>
+										<th>losses</th>
+										<th>total score</th>
+                                	</tr>
+                                </thead>
+								<tbody>
+									<tr>
+										<td>The ID of the MUL-tree</td>
+                                        <td>The ID of the gene tree being reconciled to the MUL-tree</td>
+                                        <td>The number of duplications on this gene tree given this MUL-tree</td>
+                                        <td>The number of losses on this gene tree given this MUL-tree</td>
+                                        <td>The sum of dups and losses for this gene tree and MUL-tree</td>
+                                    </tr>
+								</tbody>
+							</table>
+						</center>
+
+						<h3>
+                        	Note that the lowest score for some GT/MT combos can have multiple maps. In these cases, we report all possible scores.
+                        </h3>
+
+                    <li><h4>grampa-dup-counts.txt</h4>
+						<p>
+							For the <b>6 lowest scoring MUL-trees</b>, GRAMPA counts the number of duplications along each branch in the MUL-tree summed
+                            over all gene trees.
+                        </p>
+                        
+						<p>
+							The first line of this file contains the headers, defined as follows for each subsequent row:
+                        </p>
+                        
+                        <center>
+							<table class="pure-table pure-table-bordered pure-table-striped">
+								<thead>
+                                	<tr>
+										<th>mul.tree</th>
+										<th>node</th>
+										<th>dups</th>
+                                	</tr>
+                                </thead>
+								<tbody>
+									<tr>
+										<td>The ID of the MUL-tree</td>
+                                        <td>The node ID for the current MUL-tree</td>
+                                        <td>The total number of duplications over all gene tres along the branch above the node in the MUL-tree</td>
+                                    </tr>
+								</tbody>
+							</table>
+						</center>                        
+                        
+					<li><h4>grampa-checknums.txt</h4>
 						<p>GRAMPA must calculate how many combinations of maps there are for each gene-tree/MUL-tree pair and filter out those that are over
 							the group cap in any combo before any reconciliations can be done. This filtering ensures that all MUL-trees are reconciled to
 							the same set of gene-trees. The number of groups for each gene-tree/MUL-tree is recorded in this file.</p>
 
-<pre><code># GT/MT combo   # Groups    # Fixed # Combinations
-# MT-1:((((a,(x*,(y*,z*)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,(x+,(y+,z+)&lt;4&gt;)&lt;5&gt;)&lt;6&gt;,b)&lt;7&gt;,(c,d)&lt;8&gt;)&lt;9&gt;   H1 Node:&lt;2&gt; H2 Node:a
-GT-1 to MT-1    2   0   4
-GT-2 to MT-1    1   1   2
-GT-3 to MT-1    1   1   2
-GT-4 to MT-1    1   1   2
-.
-.
-.
-GT-25 to MT-9   0   2   1
+<!--
+<pre><code>mul.tree        gene.tree       groups  fixed   combinations    over.cap.filtered
+# MT-1:((((a+,a*)<1>,(x,(y,z)<2>)<3>)<4>,b)<5>,(c,d)<6>)<7>     H1 Node:a       H2 Node:a
+1       1       1       0       2       N
+1       2       1       0       2       N
+1       3       1       0       2       N
+1       4       1       0       2       N
+1       5       1       0       2       N
+1       6       1       0       2       N
 </code></pre>
+-->
 
-						<ul>
-							<li>The first line in the file contains the table headers. For each MUL-tree there is also a line giving som info about it.</li>
-							<li>If a gene tree is over the cap specified with <code class="cb">-c X</code> then the message <code class="cb">Number of 
-								groups over group cap (-c set to X) -- Filtering.</code> will also be displayed on the line.</li>
-						</ul>
-					</li>
+						<p>
+							The first line of this file contains the headers, defined as follows for each subsequent row:
+                        </p>
+                        
+                        <center>
+							<table class="pure-table pure-table-bordered pure-table-striped">
+								<thead>
+                                	<tr>
+										<th>mul.tree</th>
+										<th>gene.tree</th>
+										<th>groups</th>
+										<th>fixed</th>
+										<th>combinations</th>
+                                        <th>over.cap.filtered</th>
+                                	</tr>
+                                </thead>
+								<tbody>
+									<tr>
+										<td>The ID of the MUL-tree</td>
+                                        <td>The ID of the gene tree to be reconciled to the MUL-tree</td>
+                                        <td>The number of distinct hybrid clades in the gene tree</td>
+                                        <td>The number of hybrid clades in the gene tree that also group with a sister species from the singly-labeled tree</td>
+                                        <td>The total number of mappings to try for the gene tree with this MUL-tree</td>
+                                        <td>Either Y or N to indicate whether the number of groups exceeds the number set with -c</td>
+                                    </tr>
+								</tbody>
+							</table>
+						</center>
+                        
+                    <li><h4>grampa-trees-filtered.txt</h4>
+						<p>
+							A text file with the gene trees used for this GRAMPA run, after filtering by the group cap. One tree per line.
+                        </p>
+                    
+                    <li><h4>grampa.log</h4>
+						<p>
+							A log file containing run time information and a summary of the lowest scoring MUL-tree.
+                        </p>
 				</ol>
 
 				<div class="pure-g">
@@ -241,10 +348,6 @@ GT-25 to MT-9   0   2   1
 									If nothing is entered all possible nodes for the current <code class="cb">h1</code> will be considered.</td>
 							</tr>
 							<tr>
-								<td>-d</td>
-								<td>An option to specify whether to do reconciliations to MUL-trees only (0), the singly-labeled tree only (1), or both (2). Default: 2</td>
-							</tr>
-							<tr>
 								<td>-c</td>
 								<td>The maximum number of initial groups to consider for any gene tree. Default: 8, Max value: 18</td>
 							</tr>
@@ -254,11 +357,11 @@ GT-25 to MT-9   0   2   1
 							</tr>
 							<tr>
 								<td>-f</td>
-								<td>By default, all output files created by GRAMPA will have the prefix 'grampa_'. You can specify a different prefix with this option.</td>
+								<td>By default, all output files created by GRAMPA will have the prefix 'grampa-'. You can specify a different prefix with this option.</td>
 							</tr>
 							<tr>
 								<td>-v</td>
-								<td>Control the amount of output printed to the screen. Print all output (1) or just some log info (0). Default: 1</td>
+								<td>Control the amount of output printed to the screen. 0: print nothing. 1: print only some info at the start. 2: print all log info to screen. 3 (default): print all log info to the screen as well as progress updates for certain steps.</td>
 							</tr>
 							<tr>
 								<td>-p</td>
@@ -278,11 +381,19 @@ GT-25 to MT-9   0   2   1
 							</tr>
 							<tr>
 								<td>--buildmultrees</td>
-								<td>Build MUL-trees given <code class="cb">-s</code>, <code class="cb">-h1</code>, and <code class="cb">-h2</code>.</td>
+								<td>Build MUL-trees given <code class="cb">-s</code>, <code class="cb">-h1</code>, and <code class="cb">-h2</code> and write them to the log file.</td>
 							</tr>
 							<tr>
 								<td>--checknums</td>
 								<td>If this flag is entered, the program will just calculate the number of groups per gene tree and exit. No reconciliations will be done.</td>
+							</tr>
+							<tr>
+								<td>--st-only</td>
+								<td>Only do reconciliations to the input singly-labeled species tree.</td>
+							</tr>
+							<tr>
+								<td>--no-st</td>
+								<td>Skip doing reconciliations to the input singly-labled species tree.</td>
 							</tr>
 							<tr>
 								<td>--maps</td>
@@ -359,6 +470,7 @@ GT-25 to MT-9   0   2   1
 								of H1 and H2!</h4>
 						</ul>
 
+					<!--
 					<a name="-d"></a><h3><code class="cb">-d</code> : Reconciliation type option</h3>
 						<ul>
 							<p>GRAMPA can do reconciliations to singly-labeled and MUL-trees. If you know a polyploidy event has taken place, you may wish to only 
@@ -377,6 +489,7 @@ GT-25 to MT-9   0   2   1
 							<p>Setting <code class="cb">-d 1</code> also means you can use GRAMPA to count duplications and losses in the absence of polyploidy, 
 								like any other reconciliation program!</p>
 						</ul>
+                    -->
 
 					<a name="-c"></a><h3><code class="cb">-c</code> : The group cap</h3>
 						<ul>
@@ -426,6 +539,14 @@ GT-25 to MT-9   0   2   1
 							<center><code class="cb">(((a,(x,(y,z)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,(c,d)&lt;5&gt;)&lt;6&gt;</code></center>
 						</ul>
 
+					<a name="--numtrees"></a><h3><code class="cb">--numtrees</code> : Building MUL-trees</h3>
+						<ul>
+							<p>
+								This option quickly calculates how many MUL-trees are to be built with a given H1 and H2 set. If neither H1 or H2 are set
+                                it will display the total number of MUL-trees possible for the input species tree. This information is printed to the screen.
+                            </p>
+						</ul>                        
+                        
 					<a name="--buildmultrees"></a><h3><code class="cb">--buildmultrees</code> : Building MUL-trees</h3>
 						<ul>
 							<p>This option can be used with <code class="cb">-s</code>, <code class="cb">-h1</code>, and <code class="cb">-h2</code> to build
@@ -440,6 +561,10 @@ GT-25 to MT-9   0   2   1
 							<p>Will yield the following output in the main output file (multree_ex/grampa_out.txt):</p>
 
 							<center><code class="cb">((((a,(x+,(y+,z+)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,(x*,(y*,z*)&lt;5&gt;)&lt;6&gt;)&lt;7&gt;,(c,d)&lt;8&gt;)&lt;9&gt;</code></center>
+                            
+                            <p>
+								The MUL-trees are written to the log file.
+                            </p>
 						</ul>
 
 					<a name="--checknums"></a><h3><code class="cb">--checknums</code> : Group counting</h3>
@@ -449,30 +574,48 @@ GT-25 to MT-9   0   2   1
 								best setting for <code class="cb">-c</code>.</p>
 						</ul>
 
+					<a name="--st-only"></a><h3><code class="cb">--st-only</code> : Group counting</h3>
+						<ul>
+							<p>
+                            	By default, GRAMPA reconciles the gene trees to all specified MUL-trees as well as the singly-labeled input species tree. Set this option to ONLY
+                                do reconciliations to the singly-labeled input species tree.
+                            </p>
+						</ul>                        
+
+					<a name="--no-st"></a><h3><code class="cb">--no-st</code> : Group counting</h3>
+						<ul>
+							<p>
+                            	By default, GRAMPA reconciles the gene trees to all specified MUL-trees as well as the singly-labeled input species tree. Set this option to SKIP
+                                reconciliations to the singly-labeled input species tree.
+                            </p>
+						</ul>  
+                                                
 					<a name="--maps"></a><h3><code class="cb">--maps</code> : Output node mappings</h3>
 						<ul>
-							<p>Set this option to output the LCA node mappings along with the reconciliation scores to the detailed output file. This adds a column
-							to the _det.txt output file with that gene tree with the nodes re-labeled to include the maps, dups, and losses along that branch.</p>
-
-<pre><code># GT/MT combo	# dups	# losses	Total score	Maps
-GT-1 to MT-4	1	1	2	(((1_a[a+-0],((1_x[x+-0],(1_y[y+-0],1_z[z+-0])&lt;1&gt;[&lt;1&gt;+-0])&lt;2&gt;[&lt;2&gt;+-0],(2_x[x+-0],(2_y[y+-0],2_z[z+-0])&lt;3&gt;[&lt;1&gt;+-0])&lt;4&gt;[&lt;2&gt;+-0])&lt;5&gt;[&lt;2&gt;+-1])&lt;6&gt;[&lt;3&gt;+-0],1_b[b+-0])&lt;7&gt;[&lt;4&gt;+-0],(1_c[c+-0],1_d[d+-0])&lt;8&gt;[&lt;8&gt;+-0])&lt;9&gt;[&lt;9&gt;+-0]
-GT-2 to MT-4	1	2	3	((((1_a[a+-0],(1_x[x+-0],(1_y[y+-0],1_z[z+-0])&lt;1&gt;[&lt;1&gt;+-0])&lt;2&gt;[&lt;2&gt;+-0])&lt;3&gt;[&lt;3&gt;+-0],(2_x[x+-0],(2_y[y+-0],2_z[z+-0])&lt;4&gt;[&lt;1&gt;+-0])&lt;5&gt;[&lt;2&gt;+-0])&lt;6&gt;[&lt;3&gt;+-1],1_b[b+-0])&lt;7&gt;[&lt;4&gt;+-0],(1_c[c+-0],1_d[d+-0])&lt;8&gt;[&lt;8&gt;+-0])&lt;9&gt;[&lt;9&gt;+-0]
-GT-3 to MT-4	1	3	4	((((1_a[a+-0],(1_x[x+-0],(1_y[y+-0],1_z[z+-0])&lt;1&gt;[&lt;1&gt;+-0])&lt;2&gt;[&lt;2&gt;+-0])&lt;3&gt;[&lt;3&gt;+-0],1_b[b+-0])&lt;4&gt;[&lt;4&gt;+-0],(2_x[x+-0],(2_y[y+-0],2_z[z+-0])&lt;5&gt;[&lt;1&gt;+-0])&lt;6&gt;[&lt;2&gt;+-0])&lt;7&gt;[&lt;4&gt;+-1],(1_c[c+-0],1_d[d+-0])&lt;8&gt;[&lt;8&gt;+-0])&lt;9&gt;[&lt;9&gt;+-0]
-GT-4 to MT-4	1	2	3	((((1_a[a+-0],(2_x[x+-0],(2_y[y+-0],2_z[z+-0])&lt;1&gt;[&lt;1&gt;+-0])&lt;2&gt;[&lt;2&gt;+-0])&lt;3&gt;[&lt;3&gt;+-0],(1_x[x+-0],(1_y[y+-0],1_z[z+-0])&lt;4&gt;[&lt;1&gt;+-0])&lt;5&gt;[&lt;2&gt;+-0])&lt;6&gt;[&lt;3&gt;+-1],1_b[b+-0])&lt;7&gt;[&lt;4&gt;+-0],(1_c[c+-0],1_d[d+-0])&lt;8&gt;[&lt;8&gt;+-0])&lt;9&gt;[&lt;9&gt;+-0]
-
-.
-.
-.
-GT-25 to MT-4	0	1	1	(((1_a[a+-0],1_x[x+-0])&lt;1&gt;[&lt;3&gt;+-0],1_b[b+-0])&lt;2&gt;[&lt;4&gt;+-0],(1_c[c+-0],(1_d[d+-0],(2_x[x*-0],(1_y[y*-0],1_z[z*-0])&lt;3&gt;[&lt;5&gt;+-0])&lt;4&gt;[&lt;6&gt;+-0])&lt;5&gt;[&lt;7&gt;+-0])&lt;6&gt;[&lt;8&gt;+-0])&lt;7&gt;[&lt;9&gt;+-0]
-# Gene trees with multiple maps:    1
-# Total parsimony score for MT-4: 76
+							<p>
+                            	This option adds a column to the <b>grampa-detailed.txt</b> with the actual LCA node mappings for each gene tree and MUL-tree combo. The column
+                                contains a Newick formatted version of the gene tree with nodes labeled as follows:
+                            </p>
+                            
+                            <center><code class="cb">Node[Map-Dups]</code></center>
+                            
+                            <p>
+								Where Map indicates the node in the MUL-tree that this gene tree node maps to and Dups the number of duplications this mapping incurs. These trees 
+                                can be rendered with a tree viewer such as <a href="http://doua.prabi.fr/software/seaview" target="_blank">SeaView</a>
+								or <a href="http://tree.bio.ed.ac.uk/software/figtree/" target="_blank">FigTree</a>.
+                            </p>
+<!--
+<pre><code>mul.tree        gene.tree       dups    losses  total.score     maps
+106     1       1       1       2       (((1_a[a+-0],((1_x[x+-0],(1_y[y+-0],1_z[z+-0])&lt;1&gt;[&lt;1&gt;+-0])&lt;2&gt;[&lt;2&gt;+-0],(2_x[x+-0],(2_y[y+-0],2_z[z+-0])&lt;3&gt;[&lt;1&gt;+-0])&lt;4&gt;[&lt;2&gt;+-0])&lt;5&gt;[&lt;2&gt;+-1])&lt;6&gt;[&lt;3&gt;+-0],1_b[b+-0])&lt;7&gt;[&lt;4&gt;+-0],(1_c[c+-0],1_d[d+-0])&lt;8&gt;[&lt;8&gt;+-0])&lt;9&gt;[&lt;9&gt;+-0]
+106     2       1       2       3       ((((1_a[a+-0],(1_x[x+-0],(1_y[y+-0],1_z[z+-0])&lt;1&gt;[&lt;1&gt;+-0])&lt;2&gt;[&lt;2&gt;+-0])&lt;3&gt;[&lt;3&gt;+-0],(2_x[x+-0],(2_y[y+-0],2_z[z+-0])&lt;4&gt;[&lt;1&gt;+-0])&lt;5&gt;[&lt;2&gt;+-0])&lt;6&gt;[&lt;3&gt;+-1],1_b[b+-0])&lt;7&gt;[&lt;4&gt;+-0],(1_c[c+-0],1_d[d+-0])&lt;8&gt;[&lt;8&gt;+-0])&lt;9&gt;[&lt;9&gt;+-0]
+106     3       1       3       4       ((((1_a[a+-0],(1_x[x+-0],(1_y[y+-0],1_z[z+-0])&lt;1&gt;[&lt;1&gt;+-0])&lt;2&gt;[&lt;2&gt;+-0])&lt;3&gt;[&lt;3&gt;+-0],1_b[b+-0])&lt;4&gt;[&lt;4&gt;+-0],(2_x[x+-0],(2_y[y+-0],2_z[z+-0])&lt;5&gt;[&lt;1&gt;+-0])&lt;6&gt;[&lt;2&gt;+-0])&lt;7&gt;[&lt;4&gt;+-1],(1_c[c+-0],1_d[d+-0])&lt;8&gt;[&lt;8&gt;+-0])&lt;9&gt;[&lt;9&gt;+-0]
+106     4       1       2       3       ((((1_a[a+-0],(2_x[x+-0],(2_y[y+-0],2_z[z+-0])&lt;1&gt;[&lt;1&gt;+-0])&lt;2&gt;[&lt;2&gt;+-0])&lt;3&gt;[&lt;3&gt;+-0],(1_x[x+-0],(1_y[y+-0],1_z[z+-0])&lt;4&gt;[&lt;1&gt;+-0])&lt;5&gt;[&lt;2&gt;+-0])&lt;6&gt;[&lt;3&gt;+-1],1_b[b+-0])&lt;7&gt;[&lt;4&gt;+-0],(1_c[c+-0],1_d[d+-0])&lt;8&gt;[&lt;8&gt;+-0])&lt;9&gt;[&lt;9&gt;+-0]
+106     5       1       3       4       (((1_a[a+-0],(1_x[x+-0],(1_y[y+-0],1_z[z+-0])&lt;1&gt;[&lt;1&gt;+-0])&lt;2&gt;[&lt;2&gt;+-0])&lt;3&gt;[&lt;3&gt;+-0],(1_b[b+-0],(2_x[x+-0],(2_y[y+-0],2_z[z+-0])&lt;4&gt;[&lt;1&gt;+-0])&lt;5&gt;[&lt;2&gt;+-0])&lt;6&gt;[&lt;4&gt;+-0])&lt;7&gt;[&lt;4&gt;+-1],(1_c[c+-0],1_d[d+-0])&lt;8&gt;[&lt;8&gt;+-0])&lt;9&gt;[&lt;9&gt;+-0]
+106     6       1       3       4       (((1_a[a+-0],(1_x[x+-0],(1_y[y+-0],1_z[z+-0])&lt;1&gt;[&lt;1&gt;+-0])&lt;2&gt;[&lt;2&gt;+-0])&lt;3&gt;[&lt;3&gt;+-0],1_b[b+-0])&lt;4&gt;[&lt;4&gt;+-0],((1_c[c+-0],(2_x[x*-0],(2_y[y*-0],2_z[z*-0])&lt;5&gt;[&lt;5&gt;+-0])&lt;6&gt;[&lt;6&gt;+-0])&lt;7&gt;[&lt;8&gt;+-0],1_d[d+-0])&lt;8&gt;[&lt;8&gt;+-1])&lt;9&gt;[&lt;9&gt;+-0]
+106     7       0       0       0       (((1_a[a+-0],(1_x[x+-0],(1_y[y+-0],1_z[z+-0])&lt;1&gt;[&lt;1&gt;+-0])&lt;2&gt;[&lt;2&gt;+-0])&lt;3&gt;[&lt;3&gt;+-0],1_b[b+-0])&lt;4&gt;[&lt;4&gt;+-0],(1_c[c+-0],(1_d[d+-0],(2_x[x*-0],(2_y[y*-0],2_z[z*-0])&lt;5&gt;[&lt;5&gt;+-0])&lt;6&gt;[&lt;6&gt;+-0])&lt;7&gt;[&lt;7&gt;+-0])&lt;8&gt;[&lt;8&gt;+-0])&lt;9&gt;[&lt;9&gt;+-0]
+106     8       1       3       4       (((1_a[a+-0],(1_x[x+-0],(1_y[y+-0],1_z[z+-0])&lt;1&gt;[&lt;1&gt;+-0])&lt;2&gt;[&lt;2&gt;+-0])&lt;3&gt;[&lt;3&gt;+-0],1_b[b+-0])&lt;4&gt;[&lt;4&gt;+-0],((1_c[c+-0],1_d[d+-0])&lt;5&gt;[&lt;8&gt;+-0],(2_x[x*-0],(2_y[y*-0],2_z[z*-0])&lt;6&gt;[&lt;5&gt;+-0])&lt;7&gt;[&lt;6&gt;+-0])&lt;8&gt;[&lt;8&gt;+-1])&lt;9&gt;[&lt;9&gt;+-0]
 </code></pre>
-							
-							<p>The last column is the gene tree with the nodes relabeled as:</p>
-							<center><code class="cb">Node[Map-Dups]</code></center>
-							<p>where Dups is 1 if the node is a duplication node and 0 if not.</p>
-							<p>These trees can be rendered with a tree viewer such as <a href="http://doua.prabi.fr/software/seaview" target="_blank">SeaView</a>
-								or <a href="http://tree.bio.ed.ac.uk/software/figtree/" target="_blank">FigTree</a>.</p>
+-->							
 						</ul>
 			</div>
 		</div>
@@ -484,7 +627,7 @@ GT-25 to MT-4	0	1	1	(((1_a[a+-0],1_x[x+-0])&lt;1&gt;[&lt;3&gt;+-0],1_b[b+-0])&lt
         <div class="pure-u-1">
             <div id="footer_text">
                     <center>Site designed and maintained by <a href="https://gwct.github.io/" target="_blank">Gregg Thomas</a> | <a href="https://purecss.io/" target="_blank">Pure CSS</a> |
-                        Page built: 04/30/2021 09:42:19 MDT</center>
+                        Page built: 03/14/2023 22:43:19 Eastern Daylight Time</center>
             </div>
         </div>
     </div>
