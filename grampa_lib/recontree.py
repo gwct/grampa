@@ -18,7 +18,8 @@
 # Forked from core treeparse 12.08.2015
 #############################################################################
 
-import re, sys
+import re
+import sys
 # re is used to replace internal labels in trees when necessary.
 # I label internal nodes as '<#>'
 

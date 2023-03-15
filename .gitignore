@@ -7,3 +7,6 @@ data/tests_out_det.txt
 gitadd.sh
 img/*
 support/
+testW/
+baseline-sim-out/
+*.code-workspace

@@ -1,4 +1,5 @@
-import recontree as RT, mul_tree as MT, global_vars as globs
+import grampa_lib.recontree as RT
+import grampa_lib.mul_tree as MT
 
 def orthLabel(gene_trees, min_maps, min_tree, min_clade):
 

@@ -5,8 +5,13 @@
 # Fall 2015, Combo algorithm implemented Spring 2016
 #############################################################################
 
-import os, itertools, recontree as RT, mul_tree as MT, reconcore as RC, gene_tree as GT, global_vars as globs
+import os
+import itertools
 import pickle
+import grampa_lib.recontree as RT
+import grampa_lib.mul_tree as MT
+import grampa_lib.reconcore as RC
+import grampa_lib.gene_tree as GT
 
 #############################################################################
 
@@ -86,13 +91,14 @@ def getSis(gs_node, check_node, check_clade, gs_dict):
 		return sis_clade;
 
 #############################################################################
-def collapseGroups(mul_input, gene_trees_filtered_cg, spec_type_cg, v, pickle_dir, nmt):
+def collapseGroups(mul_input, gene_trees_filtered, mul_input_flag, v, pickle_dir, nmt):
 # The collapseGroups function goes through all gene tree-MUL-tree combos to collapse the groups.
 
 	mul_num, mul_tree = mul_input;
 	
-	if v == 1:
-		print("# " + RC.getDateTime() + " --> Collapsing groups for MUL-tree # " + str(mul_num) + " / " + str(nmt));
+	if v == 3:
+		print("# " + RC.getDateTime() + "  Collapsing gene tree groupings" + " " * 20 + "MUL-tree # " + str(mul_num) + " / " + str(nmt));
+	# Status update
 
 	if mul_num == 0:
 		return mul_num, [];
@@ -101,8 +107,8 @@ def collapseGroups(mul_input, gene_trees_filtered_cg, spec_type_cg, v, pickle_di
 
 	mt, minfo, hybrid_clade, hybrid_node, copy_node = mul_tree[0], mul_tree[1], mul_tree[2], mul_tree[3], mul_tree[4];
 
-	for gene_num in gene_trees_filtered_cg:
-		gene_tree = gene_trees_filtered_cg[gene_num];
+	for gene_num in gene_trees_filtered:
+		gene_tree = gene_trees_filtered[gene_num];
 		if len(gene_tree) == 1:
 			continue;
 		# If the gene tree was previously filtered, the list will only contain the filter message and it should be skipped here.
@@ -167,15 +173,15 @@ def collapseGroups(mul_input, gene_trees_filtered_cg, spec_type_cg, v, pickle_di
 
 		sisters = {};
 
-		if spec_type_cg == 's':
+		if mul_input_flag:
+			copy_clade = RT.getClade(copy_node, minfo);
+			mul_hybrid_node = hybrid_node;
+			mul_copy_node = copy_node;
+		else:
 			mul_hybrid_node = [n for n in minfo if set(RT.getClade(n, minfo)) == set(hybrid_clade)][0];
 			copy_clade = [c + "*" for c in hybrid_clade];
 			mul_copy_node = [n for n in minfo if set(RT.getClade(n, minfo)) == set(copy_clade)][0];
 			# The copy clade is defined.
-		elif spec_type_cg == 'm':
-			copy_clade = RT.getClade(copy_node, minfo);
-			mul_hybrid_node = hybrid_node;
-			mul_copy_node = copy_node;
 
 		hybrid_anc = minfo[mul_hybrid_node][1];
 		copy_anc = minfo[mul_copy_node][1];
@@ -209,7 +215,7 @@ def collapseGroups(mul_input, gene_trees_filtered_cg, spec_type_cg, v, pickle_di
 
 	groupoutfile = os.path.join(pickle_dir, str(mul_num) + "_groups.pickle");
 	pickle.dump(gt_groups, open(groupoutfile, "wb"));
-	del groups, fixed_groups, final_groups, gene_trees_filtered_cg, gt_groups;
+	del groups, fixed_groups, final_groups, gene_trees_filtered, gt_groups;
 
 #############################################################################
 def mulRecon(mul_input, gene_trees, v, pickle_dir, nmt, retmap=False):
@@ -236,8 +242,9 @@ def mulRecon(mul_input, gene_trees, v, pickle_dir, nmt, retmap=False):
 	# mulpicklefile = os.path.join(pickle_dir, str(mul_num) + "_tree.pickle");
 	# mul_tree = pickle.load(open(mulpicklefile, "rb"));
 
-	if v == 1:
-		print("# " + RC.getDateTime() + " --> Reconciling to MUL-tree # " + str(mul_num) + " / " + str(nmt));
+	if v == 3:
+		print("# " + RC.getDateTime() + "  Reconciliation" + " " * 36 + "MUL-tree # " + str(mul_num) + " / " + str(nmt));
+	# Status update
 
 	min_maps = {};
 	total_score = 0;

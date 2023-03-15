@@ -1,5 +1,11 @@
 ## Given a GT, a MT, an LCA in the MT, and a set of maps
-import sys, os, re, time, recontree as RT, reconcore as RC, mul_recon as ALG
+import sys
+import os
+import re
+import time
+import grampa_lib.recontree as RT
+import grampa_lb.reconcore as RC
+import grampa_lib.mul_recon as ALG
 
 def lcaCheck(gt, ginfo, maps, dups, hybrid_clade, gene_num, loutfile, orthoutfile):
 

@@ -88,6 +88,9 @@ def init():
 	global detoutfilename;
 	detoutfilename = "";
 
+	global dupcountfilename;
+	dupcountfilename = "";
+
 	global checkfilename;
 	checkfilename = "";
 
