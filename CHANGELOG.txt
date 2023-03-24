@@ -1,3 +1,6 @@
+2023.03.24
+- Hybrid tip labels now have '+' added to them in the dup-counts output
+
 2023.03.11
 - Re-factored code
 - Removed `-d` and replaced with the `--st-only` and `--no-st` options, which seems clearer

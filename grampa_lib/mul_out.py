@@ -161,7 +161,10 @@ def mainOut(globs, all_scores, lowest_maps, multiple_maps):
 				## End map loop
 
 				for node in main_dups:
-					outline = [str(mul_num), node, str(main_dups[node])];
+					out_node = node;
+					if node in hybrid_clade:
+						out_node = node + "+";
+					outline = [str(mul_num), out_node, str(main_dups[node])];
 					dupout.write("\t".join(outline) + "\n");			
 				# Write out the counts per node
 			## For the lowest scoring trees, also output counts of duplications per node
