@@ -18,8 +18,8 @@ def readNav(active_url):
     for x in range(len(navlines)):
         if active_url in navlines[x]:
             navlines[x] = navlines[x].replace(active_url, "#");
-            if 'class="nav_link"' in navlines[x]:
-                navlines[x] = navlines[x].replace('class="nav_link"', 'class="nav_link" id="active"');
+            if 'class="nav-link"' in navlines[x]:
+                navlines[x] = navlines[x].replace('class="nav-link"', 'class="nav-link" id="active"');
     return "".join(navlines);
 
 def readWheatNav(runtype):

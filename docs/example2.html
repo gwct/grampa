@@ -14,83 +14,95 @@
         <title>GRAMPA - Place</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">	
-        <link type="text/css" rel="stylesheet" href="css/pure.css"  media="screen,projection" />
+        <!-- <link type="text/css" rel="stylesheet" href="css/pure.css"  media="screen,projection" /> -->
+        <link type="text/css" rel="stylesheet" href="css/grid.css"  media="screen,projection" />
         <link type="text/css" rel="stylesheet" href="css/scaffold.css"  media="screen,projection" />
         <link rel='shortcut icon' href='img/favicon.ico' type='image/x-icon'/ >
     </head>
 
 <body>
-        <div class="pure-g" id="nav_row">
-		<div class="pure-u-6-24" id="margin"></div>
-		<div class="pure-u-18-24" id="nav_col">
-			<a href="index.html"><img class="pure_img" id="logo_nav" src="img/logo-small.png"></a>
-			<a class="title" href="index.html">GRAMPA</a>
-			<div class="pure-menu pure-menu-horizontal" id="nav_bar">
-				<ul class="pure-menu-list" id="nav_list">
-					<li class="pure-menu-item"><a href="index.html" class="nav_link">Home</a></li>
-					<li class="pure-menu-item"><a href="about.html" class="nav_link">About</a></li>
-					<li class="pure-menu-item"><a href="readme.html" class="nav_link">README</a></li>
-					<li class="pure-menu-item"><a href="https://github.com/gwct/grampa/releases/latest" target="_blank" class="nav_link">Download</a></li>
-					<li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-						<a href="#" id="menuLink1" class="pure-menu-link">Examples</a>
-							<ul class="pure-menu-children">
-								<li class="pure-menu-item"><a href="example1.html" class="pure-menu-link">Identify mode of polyploidy</a></li>
-								<li class="pure-menu-item"><a href="#" class="pure-menu-link">Place WGD on phylogeny</a></li>
-								<li class="pure-menu-item"><a href="example3.html" class="pure-menu-link">Count duplications and losses</a></li>
-							</ul>
-					</li>
-					<li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-						<a href="#" id="menuLink1" class="pure-menu-link">Results</a>
-							<ul class="pure-menu-children">
-								<li class="pure-menu-item"><a href="results/yeast/yeast.html" class="pure-menu-link">Baker's Yeast</a></li>
-								<li class="pure-menu-item"><a href="results/wheat/wheat_all.html" class="pure-menu-link">Bread Wheat</a></li>
-								<li class="pure-menu-item"><a href="performance.html" class="pure-menu-link">Performance</a></li>
-							</ul>
-					</li>
-					<li class="pure-menu-item"><a href="links.html" class="nav_link">Other links</a></li>
-				</ul>
-
-				<div class="mobile_dropdown" id="mobile_nav">
-					<a href="#" id="nav_link_dropdown">Navigation</a>
-					<div class="mobile_dropdown_links">
-						<ul class="pure-menu-list">
-							<li><a href="index.html" class="mobile_nav_link" id="active_drop">Home</a></li>
-							<li><a href="about.html" class="mobile_nav_link">About</a></li>
-							<li><a href="readme.html" class="mobile_nav_link">README</a></li>
-							<li><a href="https://github.com/gwct/grampa" target="_blank" class="mobile_nav_link">Download</a></li>
-							<li><a href="example1.html" class="mobile_nav_link">Example: Identify polyploidy</a></li>
-							<li><a href="#" class="mobile_nav_link">Example: Place WGD on phylogeny</a></li>
-							<li><a href="example3.html" class="mobile_nav_link">Example: Count dups and losses</a></li>
-							<li><a href="links.html" class="mobile_nav_link">Other links</a></li>
-					</div>
-				</div>				
+    	<!-- Desktop nav menu -->
+	<div class="row" id="desktop-nav">
+		<div class="col-3-24" id="margin"></div>
+		<div class="col-3-24" id="nav-link-cell"><a class="nav-link" href="index.html">Home</a></div>
+		<div class="col-3-24" id="nav-link-cell"><a class="nav-link" href="about.html">About</a></div>
+		<div class="col-3-24" id="nav-link-cell"><a class="nav-link" href="readme.html">README</a></div>
+		
+		<div class="col-3-24 dropdown" id="nav-link-cell">
+			<a href="#" class="nav-link">Examples&#x21b4;</a>
+			<div class="dropdown_container">
+				<div class="dropdown_list_item"><a href="example1.html" class="nav-link-drop">&#x26AC; Identify mode of polyploidy</a></div>
+				<div class="dropdown_list_item"><a href="#" class="nav-link-drop">&#x26AC; Place WGD on phylogeny</a></div>
+				<div class="dropdown_list_item"><a href="example3.html" class="nav-link-drop">&#x26AC; Count duplications and losses</a></div>
 			</div>
 		</div>
-		<!-- <div class="pure-u-3-24" id="margin"></div> -->
+
+		<div class="col-3-24 dropdown" id="nav-link-cell">
+			<a href="#" class="nav-link">Results&#x21b4;</a>
+			<div class="dropdown_container">
+				<div class="dropdown_list_item"><a href="results/yeast/yeast.html" class="nav-link-drop">&#x26AC; Baker's Yeast</a></div>
+				<div class="dropdown_list_item"><a href="results/wheat/wheat_all.html" class="nav-link-drop">&#x26AC; Bread Wheat</a></div>
+				<div class="dropdown_list_item"><a href="performance.html" class="nav-link-drop">&#x26AC; Performance</a></div>
+			</div>
+		</div>
+
+		<div class="col-3-24" id="nav-link-cell"><a class="nav-link" href="links.html">Links</a></div>
+	
+		<div class="col-3-24" id="margin"></div>
 	</div>
+	<!-- Desktop nav menu -->
 
-    <div class="pure-g"><div class="pure-u-1" id="divider_row"></div></div>
+	<!-- Mobile nav menu -->
+	<div class="row" id="mobile_nav">
+		<div class="col-24-24 dropdown" id="nav_link_cell">
+			<a href="#" class="nav_link"><img id="mobile_logo_nav" src="img/nav.png"></a> <span id="nav-text">Navigation</span>
+			<div class="dropdown_container mobile_drop">
+				<div class="dropdown_list_item"><a href="index.html" id="mobile_nav_link" id="active_drop">Home</a></div>
+				<div class="dropdown_list_item"><a href="about.html" id="mobile_nav_link">About</a></div>
+				<div class="dropdown_list_item"><a href="readme.html" id="mobile_nav_link">README</a></div>
+				<div class="dropdown_list_item"><a href="https://github.com/gwct/grampa" target="_blank" id="mobile_nav_link">Download</a></div>
+				<div class="dropdown_list_item"><a href="example1.html" id="mobile_nav_link">Example: Identify polyploidy</a></div>
+				<div class="dropdown_list_item"><a href="#" id="mobile_nav_link">Example: Place WGD on phylogeny</a></div>
+				<div class="dropdown_list_item"><a href="example3.html" id="mobile_nav_link">Example: Count dups and losses</a></div>
+				<div class="dropdown_list_item"><a href="links.html" id="mobile_nav_link">Other links</a></div>
+			</div>
+		</div>  
+	</div>
+	<!-- Mobile nav menu -->
 
-	<div class="pure-g" id="main_row">
-		<div class="pure-u-3-24" id="margin"></div>
-		<div class="pure-u-18-24" id="main_col">
+	<div class="row" id="main_row">
+		<div class="col-3-24" id="margin"></div>
+		<div class="col-18-24" id="main_col">
 			<div id="main_content">
+
 				<h1>Placing a known WGD on a phylogeny</h1>
+
 				<h4>Below are the inputs, commands, and outputs to do an analysis with GRAMPA to place a known WGD on a phylogeny. The inputs are based on
 					simulated data. For more detailed info on the simulations check
 					<a href="http://biorxiv.org/content/early/2017/03/21/058149" target="_blank">our paper</a>.</h4>
 
 				<h3>Inputs</h3>
+
 				<p>Suppose you have a set of species, of which you have evidence that a some may be the result of a polyploidization event. You also may have
 					an idea about the parental lineages of the polyploid species. So you build a species tree of your taxa and, since species tree reconstruction
-					programs output singly-labeled trees, you get this as the result:
-				<img class="pure-img" id="logo_main" src="example_data/ex2/spec_tree.png">
+					programs output singly-labeled trees, you get this as the result:</p>
+
+				<div class="row img-row">
+					<div class="col-8-24 img-margin-left"></div>
+					<div class="col-8-24 img-col">
+						<img class="grid-img" src="example_data/ex2/spec_tree.png">
+					</div>
+					<div class="col-8-24 img-margin-right"></div>
+				</div>			
+
 				<p>Your hypothesis is that species x, y, and z may be the result of polyploidization (but you're not sure if all of them are). The singly-labeled tree
 					implicitly identifies one of the parental lineages of the suspected polyploids by placing the polyploid species sister to it (in this case lineage
 					B seems to be one of the parents). You also think this tree may be the result of an allopolyploidy, and you think some lineage sister to C, D, the
 					C,D clade, or at the root of the tree may have hybridized with some lineage related to B to form the x,y,z clade. Working with this prior knowledge
 					GRAMPA can test your hypotheses of polyploidization.</p>
+
 				<p>The input files you would need are:</p>
+
 				<ol>
 					<li>Singly-labeled species tree: <a href="example_data/ex2/spec_tree_3a.tre" download>spec_tree_3a.tre</a></li>
 					<li>Gene trees from your set of species (in this case 1000 gene trees simulated with gain and loss) : 
@@ -98,27 +110,31 @@
 				</ol>
 
 				<h3>GRAMPA command</h3>
+
 				<p>Since we have some idea of the lineages involved in the polyploidization event, we would want to limit GRAMPA's search to those lineages
 					with the <code class="cb">-h1</code> and <code class="cb">-h2</code> search parameters.</p>
 
-				<pre><code class="gp_cmd">python grampa.py -s spec_tree_3a.tre 		-g gene_trees_3a.txt -h1 "x 1 2" -h2 "C D 5 6" 		-o ex2_output -f ex2_test -v 0</code></pre>
+				<center><pre class="cmd"><code>python grampa.py -s spec_tree_3a.tre -g gene_trees_3a.txt -h1 "x 1 2" -h2 "C D 5 6" -o ex2_output -f ex2_test -v 0</code></pre></center>
 				
-				<p>Above we have specified <code class="cb">-h1</code> and <code class="cb">-h2</code> by using the node labels in the tree. Alternatively, we could specify
-					an equivalent <code class="cb">-h1</code> and <code class="cb">-h2</code> search by defining the labels based on the sets of tips that define them:</p>
-				<pre><code class="gp_cmd">python grampa.py -s spec_tree_3a.tre -g gene_trees_3a.txt 		-h1 "x x,y x,y,z" -h2 "C D A,x,y,z,B,C A,x,y,z,B,C,D" 		-o ex2_output -f ex2_test -v 0</code></pre>	
+				<p>Above we have specified <code class="inline">-h1</code> and <code class="inline">-h2</code> by using the node labels in the tree. Alternatively, we could specify
+					an equivalent <code class="inline">-h1</code> and <code class="inline">-h2</code> search by defining the labels based on the sets of tips that define them:</p>
+
+				<center><pre class="cmd"><code >python grampa.py -s spec_tree_3a.tre -g gene_trees_3a.txt -h1 "x x,y x,y,z" -h2 "C D A,x,y,z,B,C A,x,y,z,B,C,D" -o ex2_output -f ex2_test -v 0</code></pre></center>
 				
 				<p>These two commands are equivalent. The second method is slightly more cumbersome, but does not require you to have internal labels on your tree.
-					Although, GRAMPA can easily add internal labels to your input tree with the <code class="cb">--labeltree</code> command.</p>
+					Although, GRAMPA can easily add internal labels to your input tree with the <code class="inline">--labeltree</code> command.</p>
 
 				<h3>Outputs</h3>
-				<p>The above command would create the directory <code class="cb">ex2_output</code> with three output files</p>
+
+				<p>The above command would create the directory <b>ex2_output</b> with three output files</p>
 				<ul>
 					<li><a href="example_data/ex2/ex2_output/ex2_test_checknums.txt" download>ex2_test_checknums.txt</a></li>
 					<li><a href="example_data/ex2/ex2_output/ex2_test_det.txt" download>ex2_test_det.txt</a></li>
 					<li><a href="example_data/ex2/ex2_output/ex2_test_out.txt" download>ex2_test_out.txt</a></li>
 				</ul>
-				<p>Since we are trying to determine the mode of polyploidy, we are interested in the <code class="cb">ex2_test_out.txt</code> file. This file contains
+				<p>Since we are trying to determine the mode of polyploidy, we are interested in the <b>ex2_test_out.txt</b> file. This file contains
 					log info and the total reconciliation scores for each MUL-tree considered and looks something like this:</p>
+
 <pre><code># Tree #    H1 node H2 node Tree string Total score
 ST          ((((((x,y)&lt;1&gt;,z)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,C)&lt;5&gt;,D)&lt;6&gt; 8312
 MT-1    x   C   ((((((x+,y)&lt;1&gt;,z)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,(C,x*)&lt;5&gt;)&lt;6&gt;,D)&lt;7&gt;    9109
@@ -138,19 +154,26 @@ Score = 5242
 				<p>GRAMPA tells us MUL-tree 9 is the lowest scoring tree:</p>
 
 				<center><code class="cb">((((((x+,y+)&lt;1&gt;,z+)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,(C,((x*,y*)&lt;5&gt;,z*)&lt;6&gt;)&lt;7&gt;)&lt;8&gt;,D)&lt;9&gt;</code></center>
-				<img class="pure-img" id="logo_main" src="example_data/ex2/mt_9.png">
+
+				<div class="row img-row">
+					<div class="col-9-24 img-margin-left"></div>
+					<div class="col-6-24 img-col">
+						<img class="grid-img" src="example_data/ex2/mt_9.png">
+					</div>
+					<div class="col-9-24 img-margin-right"></div>
+				</div>			
+
 				<p>In other words, GRAMPA has identified the x,y,z clade as the polyploid clade and has identified the C lineage as the second parental lineage!</p>
 			</div>
 		</div>
-		<div class="pure-u-3-24" id="margin"></div>
+		<div class="col-3-24" id="margin"></div>
 	</div>
 
-        <div class="pure-g"><div class="pure-u-1" id="divider_row"></div></div>
-    <div class="pure-g" id="footer">
-        <div class="pure-u-1">
+        <div class="sep-div-2"></div>
+    <div class="row" id="footer">
+        <div class="col-1-1">
             <div id="footer_text">
-                    <center>Site designed and maintained by <a href="https://gwct.github.io/" target="_blank">Gregg Thomas</a> | <a href="https://purecss.io/" target="_blank">Pure CSS</a> |
-                        Page built: 02/14/2020 15:29:10 MST</center>
+                    <center>Site designed and maintained by <a href="https://gwct.github.io/" target="_blank">Gregg Thomas</a> | Page built: 03/28/2023 14:43:55 Eastern Daylight Time</center>
             </div>
         </div>
     </div>

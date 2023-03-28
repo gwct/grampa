@@ -4,8 +4,8 @@
 ############################################################
 
 import sys, os
-sys.path.append('..')
-import lib.read_chunks as RC
+sys.path.append(os.path.abspath('../lib/'))
+import read_chunks as RC
 
 ######################
 # HTML template
@@ -18,28 +18,39 @@ html_template = """
 <body>
     {nav}
 
-    <div class="pure-g"><div class="pure-u-1" id="divider_row"></div></div>
-
-	<div class="pure-g" id="main_row">
-		<div class="pure-u-3-24" id="margin"></div>
-		<div class="pure-u-18-24" id="main_col">
+	<div class="row" id="main_row">
+		<div class="col-3-24" id="margin"></div>
+		<div class="col-18-24" id="main_col">
 			<div id="main_content">
+
 				<h1>Placing a known WGD on a phylogeny</h1>
+
 				<h4>Below are the inputs, commands, and outputs to do an analysis with GRAMPA to place a known WGD on a phylogeny. The inputs are based on
 					simulated data. For more detailed info on the simulations check
 					<a href="http://biorxiv.org/content/early/2017/03/21/058149" target="_blank">our paper</a>.</h4>
 
 				<h3>Inputs</h3>
+
 				<p>Suppose you have a set of species, of which you have evidence that a some may be the result of a polyploidization event. You also may have
 					an idea about the parental lineages of the polyploid species. So you build a species tree of your taxa and, since species tree reconstruction
-					programs output singly-labeled trees, you get this as the result:
-				<img class="pure-img" id="logo_main" src="example_data/ex2/spec_tree.png">
+					programs output singly-labeled trees, you get this as the result:</p>
+
+				<div class="row img-row">
+					<div class="col-8-24 img-margin-left"></div>
+					<div class="col-8-24 img-col">
+						<img class="grid-img" src="example_data/ex2/spec_tree.png">
+					</div>
+					<div class="col-8-24 img-margin-right"></div>
+				</div>			
+
 				<p>Your hypothesis is that species x, y, and z may be the result of polyploidization (but you're not sure if all of them are). The singly-labeled tree
 					implicitly identifies one of the parental lineages of the suspected polyploids by placing the polyploid species sister to it (in this case lineage
 					B seems to be one of the parents). You also think this tree may be the result of an allopolyploidy, and you think some lineage sister to C, D, the
 					C,D clade, or at the root of the tree may have hybridized with some lineage related to B to form the x,y,z clade. Working with this prior knowledge
 					GRAMPA can test your hypotheses of polyploidization.</p>
+
 				<p>The input files you would need are:</p>
+
 				<ol>
 					<li>Singly-labeled species tree: <a href="example_data/ex2/spec_tree_3a.tre" download>spec_tree_3a.tre</a></li>
 					<li>Gene trees from your set of species (in this case 1000 gene trees simulated with gain and loss) : 
@@ -47,31 +58,31 @@ html_template = """
 				</ol>
 
 				<h3>GRAMPA command</h3>
+
 				<p>Since we have some idea of the lineages involved in the polyploidization event, we would want to limit GRAMPA's search to those lineages
 					with the <code class="cb">-h1</code> and <code class="cb">-h2</code> search parameters.</p>
 
-				<pre><code class="gp_cmd">python grampa.py -s spec_tree_3a.tre \
-		-g gene_trees_3a.txt -h1 "x 1 2" -h2 "C D 5 6" \
-		-o ex2_output -f ex2_test -v 0</code></pre>
+				<center><pre class="cmd"><code>python grampa.py -s spec_tree_3a.tre -g gene_trees_3a.txt -h1 "x 1 2" -h2 "C D 5 6" -o ex2_output -f ex2_test -v 0</code></pre></center>
 				
-				<p>Above we have specified <code class="cb">-h1</code> and <code class="cb">-h2</code> by using the node labels in the tree. Alternatively, we could specify
-					an equivalent <code class="cb">-h1</code> and <code class="cb">-h2</code> search by defining the labels based on the sets of tips that define them:</p>
-				<pre><code class="gp_cmd">python grampa.py -s spec_tree_3a.tre -g gene_trees_3a.txt \
-		-h1 "x x,y x,y,z" -h2 "C D A,x,y,z,B,C A,x,y,z,B,C,D" \
-		-o ex2_output -f ex2_test -v 0</code></pre>	
+				<p>Above we have specified <code class="inline">-h1</code> and <code class="inline">-h2</code> by using the node labels in the tree. Alternatively, we could specify
+					an equivalent <code class="inline">-h1</code> and <code class="inline">-h2</code> search by defining the labels based on the sets of tips that define them:</p>
+
+				<center><pre class="cmd"><code >python grampa.py -s spec_tree_3a.tre -g gene_trees_3a.txt -h1 "x x,y x,y,z" -h2 "C D A,x,y,z,B,C A,x,y,z,B,C,D" -o ex2_output -f ex2_test -v 0</code></pre></center>
 				
 				<p>These two commands are equivalent. The second method is slightly more cumbersome, but does not require you to have internal labels on your tree.
-					Although, GRAMPA can easily add internal labels to your input tree with the <code class="cb">--labeltree</code> command.</p>
+					Although, GRAMPA can easily add internal labels to your input tree with the <code class="inline">--labeltree</code> command.</p>
 
 				<h3>Outputs</h3>
-				<p>The above command would create the directory <code class="cb">ex2_output</code> with three output files</p>
+
+				<p>The above command would create the directory <b>ex2_output</b> with three output files</p>
 				<ul>
 					<li><a href="example_data/ex2/ex2_output/ex2_test_checknums.txt" download>ex2_test_checknums.txt</a></li>
 					<li><a href="example_data/ex2/ex2_output/ex2_test_det.txt" download>ex2_test_det.txt</a></li>
 					<li><a href="example_data/ex2/ex2_output/ex2_test_out.txt" download>ex2_test_out.txt</a></li>
 				</ul>
-				<p>Since we are trying to determine the mode of polyploidy, we are interested in the <code class="cb">ex2_test_out.txt</code> file. This file contains
+				<p>Since we are trying to determine the mode of polyploidy, we are interested in the <b>ex2_test_out.txt</b> file. This file contains
 					log info and the total reconciliation scores for each MUL-tree considered and looks something like this:</p>
+
 <pre><code># Tree #    H1 node H2 node Tree string Total score
 ST          ((((((x,y)&lt;1&gt;,z)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,C)&lt;5&gt;,D)&lt;6&gt; 8312
 MT-1    x   C   ((((((x+,y)&lt;1&gt;,z)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,(C,x*)&lt;5&gt;)&lt;6&gt;,D)&lt;7&gt;    9109
@@ -91,11 +102,19 @@ Score = 5242
 				<p>GRAMPA tells us MUL-tree 9 is the lowest scoring tree:</p>
 
 				<center><code class="cb">((((((x+,y+)&lt;1&gt;,z+)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,(C,((x*,y*)&lt;5&gt;,z*)&lt;6&gt;)&lt;7&gt;)&lt;8&gt;,D)&lt;9&gt;</code></center>
-				<img class="pure-img" id="logo_main" src="example_data/ex2/mt_9.png">
+
+				<div class="row img-row">
+					<div class="col-9-24 img-margin-left"></div>
+					<div class="col-6-24 img-col">
+						<img class="grid-img" src="example_data/ex2/mt_9.png">
+					</div>
+					<div class="col-9-24 img-margin-right"></div>
+				</div>			
+
 				<p>In other words, GRAMPA has identified the x,y,z clade as the polyploid clade and has identified the C lineage as the second parental lineage!</p>
 			</div>
 		</div>
-		<div class="pure-u-3-24" id="margin"></div>
+		<div class="col-3-24" id="margin"></div>
 	</div>
 
     {footer}

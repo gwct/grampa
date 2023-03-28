@@ -4,8 +4,8 @@
 ############################################################
 
 import sys, os
-sys.path.append('..')
-import lib.read_chunks as RC
+sys.path.append(os.path.abspath('../lib/'))
+import read_chunks as RC
 
 ######################
 # HTML template
@@ -18,65 +18,131 @@ html_template = """
 <body>
     {nav}
 
-					<li class="pure-menu-item"><a href="trees/wheat_A.tre" class="nav_link" download>Species tree</a></li>
-					<li class="pure-menu-item"><a href="trees/wheat_all_trees.txt" class="nav_link" download>Gene trees</a></li>
-					<li class="pure-menu-item"><a href="output/wheat_all_A_out.txt" class="nav_link" download>Main output table</a></li>
-					<!-- <li class="pure-menu-item"><a href="results/wheat_all_A_out_det.txt" class="nav_link" download>Detailed output</a></li> -->
-				</ul>
-			</div>
-		</div>
-	</div>
+	<div class="row" id="main_row">
+		<div class="col-2-24" id="margin"></div>
+		<div class="col-20-24" id="main_col">
+			<div id="main_content">
 
-    <div class="pure-g"><div class="pure-u-1" id="divider_row"></div></div>
-	<div class="pure-g" id="results_row">
-		<div class="pure-u-2-24" id="margin"></div>
-		<div class="pure-u-20-24" id="results_col">
-			<div class="pure-g">
-				<div class="pure-u-12-24">
-					<h2>Wheat input phylogeny</h2>
-					<img class="pure-img" id="logo_main" src="img/wheat_A_phylo.png">
-					<h3>H1 Node: All possible nodes</h3>
-					<h3>H2 Nodes: All possible nodes</h3>
-					<h3>7,362 trees after filtering</h3>
+				<h1>Wheat Results (all sub-genomes)</h1>
+
+				<div class="row">
+					<a name="install"></a>
+					<div class="col-1" id="jump_row">
+						<div id="jump_container">
+							<center>Files:
+							<a class="jump_link" href="trees/wheat_A.tre" download>Species tree</a>
+							<a class="jump_link" href="trees/wheat_all_trees.txt" download>Gene trees</a>
+							<a class="jump_link" href="output/wheat_all_A_out.txt" download>Main output table</a>
+							<a class="jump_link" href="wheat_ab.html">AB sub-genome results</a>
+							<a class="jump_link" href="wheat_ad.html">AD sub-genome results</a>
+							<a class="jump_link" href="wheat_bd.html">BD sub-genome results</a>
+							</center>
+						</div>
+					</div>
+				</div>					
+
+				<div class="row">
+					<div class="col-12-24">
+						<center><h2>Input phylogeny</h2></center>
+						<div class="row img-row">
+							<div class="col-5-24 img-margin-left"></div>
+							<div class="col-14-24 img-col">						
+								<img class="grid-img" src="img/wheat_A_phylo.png">			
+							</div>
+							<div class="col-5-24 img-margin-right"></div>
+						</div>	
+						<h3>H1 Node: All possible nodes</h3>
+						<h3>H2 Nodes: All possible nodes</h3>
+						<h3>7,362 trees after filtering</h3>									
+					</div>
+
+					<div class="col-12-24">
+						<center><h2>Optimal Wheat MUL-tree</h2></center>
+						<div class="row img-row">
+							<div class="col-5-24 img-margin-left"></div>
+							<div class="col-14-24 img-col">						
+								<img class="grid-img" src="img/wheat_all_mul.png">			
+							</div>
+							<div class="col-5-24 img-margin-right"></div>
+						</div>	
+						<h3>Optimal H1 node: TAES (A sub-genome)</h3>
+						<h3>Optimal H2 node: 2 (B sub-genome)</h3>
+						<h3>Second H2 node: ATAU (D sub-genome)</h3>				
+					</div>
 				</div>
-				<div class="pure-u-12-24">
-					<h2>Optimal Wheat MUL-tree</h2>
-					<img class="pure-img" id="logo_main" src="img/wheat_all_mul.png">
-					<h3>Optimal H1 node: TAES (A sub-genome)</h3>
-					<h3>Optimal H2 node: 2 (B sub-genome)</h3>
-					<h3>Second H2 node: ATAU (D sub-genome)</h3>
+
+				<div class="sep-div-2"></div>
+				
+				<div class="row">
+					<div class="col-1">
+						<h2>Score plot</h2>
+						<center>
+						{p1}
+						</center>
+					</div>
+				</div>
+
+				<div class="sep-div-2"></div>
+
+				<div class="row">
+					<div class="col-1">
+						<h2>Score plot with alternate species topology 1</h2>
+						<center>
+						{p2}
+						</center>
+					</div>
+				</div>
+
+				<div class="sep-div-2"></div>
+
+				<div class="row">
+					<div class="col-1">
+						<h2>Score plot with alternate species topology 2</h2>
+						<center>
+						{p3}
+						</center>
+					</div>
+				</div>
+
+				<div class="sep-div-2"></div>
+
+
+				<center><h2>Known wheat phylogeny</h2></center>
+				<div class="row img-row">							
+					<div class="col-9-24 img-margin-left"></div>
+					<div class="col-6-24 img-col">						
+						<img class="grid-img" src="img/wheat_full_phylo.png">			
+					</div>
+					<div class="col-9-24 img-margin-right"></div>
+				</div>	
+
+				<div class="sep-div-2"></div>
+
+				<div class="row">
+					<div class="col-6-24 margin"></div>
+					<div class="col-12-24">
+						<h2>Species list</h2>
+						<div class="table-container">
+							<table class="stripe-table" id="spec_table">
+								<thead><th>Species name</th><th>Species ID</th></thead>
+								<tr><td>Setaria italica</td><td>SITA</td></tr>
+								<tr><td>Zea mays</td><td>ZMAY</td></tr>
+								<tr><td>Sorghum bicolor</td><td>SBIC</td></tr>
+								<tr><td>Leersia perrieri</td><td>LPER</td></tr>
+								<tr><td>Oryza sativa</td><td>OSAT</td></tr>
+								<tr><td>Bracypodium distachyon</td><td>BDIS</td></tr>
+								<tr><td>Hordeum vulgare</td><td>HVUL</td></tr>
+								<tr><td>Triticum aestivum</td><td>TAES</td></tr>
+								<tr><td>Triticum urartu</td><td>TURA</td></tr>
+								<tr><td>Aegilops tauschii</td><td>ATAU</td></tr>
+							</table>
+						</div>
+					</div>
+					<div class="col-6-24 margin"></div>
 				</div>
 			</div>
-			<div class="pure-g"><div class="pure-u-1" id="divider_row"></div></div>
-			<div class="pure-g">
-				<div class="pure-u-1">
-					<h2>Score plot</h2>
-					<center>
-					{p1}
-					p2 = '';
-                    p3 = '';</c
-                    
-                    enter>
-					<h2>Score plot with alternate species topology 1</h2>
-					<center>
-					{p2}
-					</center>
-					<h2>Score plot with alternate species topology 2</h2>
-					<center>
-					{p3}
-					</center>
-				</div>
-			</div>
-			<div class="pure-g">
-				<div class="pure-u-1">
-					<h2>Known wheat phylogeny</h2>
-					<img class="pure-img" id="logo_main" src="img/wheat_full_phylo.png">
-				</div>
-			</div>
-			<div class="pure-g"><div class="pure-u-1" id="divider_row"></div></div>
-			<div class="pure-g"><div class="pure-u-1" id="divider_row"></div></div>
+			<div class="col-2-24" id="margin"></div>
 		</div>
-		<div class="pure-u-2-24" id="margin"></div>
 	</div>
 
     {footer}
@@ -91,7 +157,7 @@ print("Generating " + pagefile + "...");
 title = "GRAMPA - Wheat (all)"
 
 head = RC.readResultsHead(title);
-nav = RC.readWheatNav("all");
+nav = RC.readNav(pagefile);
 footer = RC.readFooter();
 
 p1 = '<div id="ce2743d9-bab8-432f-a19f-7568c2b7f136" style="height: 500; width: 1000px;" class="plotly-graph-div"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("ce2743d9-bab8-432f-a19f-7568c2b7f136", [{"opacity": 0.6, "y": [75321, 78413, 82751, 82751, 92517, 92517, 92947, 93161, 93394, 93668, 93868, 94395, 94753, 94948, 95042, 95180, 95216, 95531, 95606, 96077, 96077, 96628, 96783, 96957, 96957, 97055, 97336, 97340, 97421, 97746, 98034, 98035, 98157, 98222, 98451, 98560, 98573, 98614, 98650, 98663, 98687, 98792, 98816, 98868, 98888, 98892, 98934, 98934, 98961, 99012, 99033, 99093, 99093, 99186, 99445, 99473, 99707, 99708, 99746, 99759, 99763, 99806, 99809, 99870, 99870, 99892, 99902, 99952, 99952, 99966, 99968, 100013, 100015, 100021, 100039, 100051, 100053, 100061, 100064, 100067, 100108, 100132, 100142, 100148, 100151, 100154, 100154, 100156, 100160, 100207, 100216, 100225, 100228, 100240, 100244, 100263, 100286, 100319, 100326, 100377, 100386, 100394, 100394, 100430, 100435, 100446, 100463, 100476, 100477, 100487, 100503, 100504, 100532, 100534, 100542, 100549, 100562, 100571, 100585, 100604, 100604, 100607, 100607, 100611, 100611, 100620, 100624, 100626, 100644, 100644, 100679, 100699, 100700, 100706, 100714, 100727, 100729, 100731, 100747, 100754, 100769, 100775, 100779, 100785, 100790, 100811, 100828, 100832, 100834, 100853, 100862, 100868, 100872, 100895, 100915, 100928, 100928, 100934, 100939, 100943, 100962, 100994, 101020, 101022, 101039, 101054, 101064, 101097, 101098, 101117, 101140, 101153, 101165, 101165, 101177, 101180, 101207, 101215, 101239, 101244, 101272, 101280, 101282, 101297, 101330, 101332, 101358, 101364, 101388, 101396, 101451, 101467, 101506, 101510, 101532, 101547, 101626, 101630, 101673, 101676, 101715, 101719, 101738, 101741, 101747, 101754, 101754, 101775, 101787, 101792, 101793, 101794, 101859, 101864, 101876, 101889, 101910, 101947, 101947, 101966, 101984, 102055, 102242, 102304, 102308, 102428, 102498, 102529, 102538, 102545, 102569, 102607, 102615, 102639, 102663, 102670, 102726, 102767, 102790, 102798, 102906, 102979, 103025, 103036, 103057, 103084, 103096, 103099, 103126, 103131, 103136, 103136, 103140, 103140, 103180, 103180, 103227, 103324, 103430, 103468, 103552, 103555, 103574, 103617, 103662, 103662, 103719, 103804, 103805, 103916, 103962, 103988, 103998, 104053, 104056, 104126, 104238, 104275, 104296, 104355, 107054, 107255, 110905, 110905, 112961, 113043, 113063, 113144, 113152, 113287, 113325, 113386, 113418, 113476, 113497, 113525, 113537, 113613, 113625, 113630, 113647, 113842, 113905, 113906], "type": "scatter", "mode": "markers", "x": ["TAES-ATAU", "TAES-<2>", "<1>-ATAU", "<1>-<2>", "TAES-<1>", "TAES-TURA", "TAES-<3>", "ST", "<2>-<2>", "<1>-<3>", "TAES-HVUL", "<2>-<9>", "<1>-<9>", "<3>-<9>", "<9>-<9>", "ATAU-TURA", "<1>-HVUL", "TAES-<9>", "<4>-<9>", "<6>-<8>", "<6>-<9>", "<1>-<4>", "TAES-BDIS", "<2>-<3>", "<2>-HVUL", "TAES-<4>", "<2>-<4>", "ZMAY-ZMAY", "<1>-BDIS", "<1>-<5>", "TURA-ATAU", "TAES-<5>", "<1>-<6>", "<2>-<6>", "TAES-LPER", "<7>-<9>", "<2>-<5>", "TAES-SITA", "<1>-SITA", "<1>-LPER", "<1>-<8>", "<2>-BDIS", "TAES-OSAT", "<1>-OSAT", "<2>-<8>", "TAES-<6>", "TURA-HVUL", "TURA-<9>", "ZMAY-<9>", "<5>-<9>", "TAES-<8>", "<8>-<9>", "<8>-<6>", "<2>-SITA", "<3>-<6>", "SBIC-<9>", "OSAT-<9>", "<1>-<7>", "TAES-<7>", "TURA-BDIS", "TAES-ZMAY", "<3>-<8>", "HVUL-HVUL", "<8>-HVUL", "<2>-LPER", "<7>-HVUL", "TAES-SBIC", "<3>-BDIS", "<3>-<4>", "LPER-<9>", "SBIC-HVUL", "<1>-ZMAY", "ATAU-<9>", "ATAU-HVUL", "SITA-SITA", "ZMAY-HVUL", "OSAT-HVUL", "<2>-OSAT", "<5>-HVUL", "SITA-<9>", "HVUL-<9>", "BDIS-BDIS", "TURA-LPER", "<1>-SBIC", "BDIS-<9>", "ZMAY-SBIC", "ZMAY-<7>", "OSAT-OSAT", "TURA-TURA", "<2>-<7>", "LPER-LPER", "ATAU-ATAU", "SBIC-SITA", "<3>-SITA", "LPER-HVUL", "SITA-HVUL", "ATAU-TAES", "BDIS-HVUL", "<3>-<5>", "<3>-LPER", "<4>-<8>", "OSAT-LPER", "OSAT-<5>", "<8>-BDIS", "TURA-OSAT", "TURA-<2>", "SBIC-SBIC", "OSAT-TURA", "<7>-ATAU", "<8>-ATAU", "<7>-BDIS", "ATAU-BDIS", "<5>-TURA", "<3>-OSAT", "SBIC-BDIS", "OSAT-ATAU", "<5>-ATAU", "SBIC-ATAU", "<7>-TURA", "SBIC-ZMAY", "SBIC-<7>", "<6>-SITA", "<2>-ZMAY", "<8>-TURA", "TURA-SITA", "<4>-SITA", "ZMAY-ATAU", "ZMAY-BDIS", "<7>-SITA", "<7>-<8>", "OSAT-BDIS", "<4>-LPER", "HVUL-TURA", "SBIC-TURA", "<5>-BDIS", "<8>-LPER", "ZMAY-SITA", "<2>-SBIC", "ZMAY-TURA", "HVUL-ATAU", "LPER-ATAU", "<3>-ZMAY", "TURA-<5>", "LPER-BDIS", "HVUL-BDIS", "<7>-<7>", "<7>-LPER", "BDIS-ATAU", "SITA-ATAU", "SITA-BDIS", "<3>-SBIC", "SBIC-LPER", "ATAU-LPER", "<8>-<5>", "LPER-TURA", "LPER-OSAT", "LPER-<5>", "SBIC-<8>", "ZMAY-LPER", "SITA-TURA", "BDIS-TURA", "<4>-OSAT", "<3>-<3>", "SITA-LPER", "BDIS-LPER", "TURA-<3>", "HVUL-LPER", "<5>-SITA", "<4>-ZMAY", "ZMAY-<8>", "<8>-OSAT", "<3>-<7>", "<4>-<6>", "<4>-<5>", "<4>-SBIC", "OSAT-SITA", "<6>-ZMAY", "<7>-OSAT", "ATAU-SITA", "<6>-SBIC", "HVUL-SITA", "LPER-SITA", "TURA-ZMAY", "SBIC-OSAT", "ATAU-OSAT", "BDIS-SITA", "ZMAY-OSAT", "<5>-<5>", "<5>-<8>", "TURA-SBIC", "<4>-<7>", "SITA-OSAT", "BDIS-OSAT", "HVUL-OSAT", "<6>-<7>", "<7>-<5>", "<5>-ZMAY", "SBIC-<5>", "OSAT-ZMAY", "SITA-ZMAY", "BDIS-<5>", "SITA-SBIC", "<5>-SBIC", "ZMAY-<5>", "ATAU-ZMAY", "HVUL-ZMAY", "ATAU-<5>", "LPER-ZMAY", "TURA-<8>", "TURA-<4>", "BDIS-ZMAY", "OSAT-SBIC", "HVUL-SBIC", "ATAU-SBIC", "TURA-<7>", "LPER-SBIC", "BDIS-SBIC", "SITA-<7>", "SITA-<8>", "SITA-<5>", "HVUL-<5>", "<8>-<8>", "<8>-<4>", "<5>-<7>", "OSAT-<8>", "OSAT-<7>", "LPER-<8>", "ATAU-<7>", "HVUL-<7>", "OSAT-<4>", "LPER-<7>", "BDIS-<7>", "ATAU-<8>", "BDIS-<8>", "HVUL-<8>", "ATAU-<3>", "<7>-<3>", "<7>-<4>", "<8>-<3>", "<7>-<6>", "OSAT-<3>", "TURA-<6>", "SBIC-<3>", "<4>-<4>", "LPER-<4>", "<5>-<3>", "SBIC-<4>", "ATAU-<4>", "ZMAY-<3>", "OSAT-<6>", "<5>-<6>", "<5>-<4>", "BDIS-<4>", "BDIS-<3>", "HVUL-<2>", "HVUL-<3>", "ZMAY-<4>", "LPER-<3>", "HVUL-<4>", "SITA-<3>", "ZMAY-<6>", "SBIC-<6>", "SITA-<4>", "LPER-<6>", "ATAU-<1>", "ATAU-<2>", "<7>-<2>", "OSAT-<2>", "<8>-<2>", "<5>-<2>", "<6>-<6>", "SBIC-<2>", "BDIS-<6>", "SITA-<6>", "ZMAY-<2>", "ATAU-<6>", "LPER-<2>", "BDIS-<2>", "HVUL-<6>", "SITA-<2>", "<1>-<1>", "TAES-TAES", "TURA-TAES", "TURA-<1>", "HVUL-<1>", "<7>-<1>", "OSAT-<1>", "<8>-<1>", "<5>-<1>", "SBIC-<1>", "ZMAY-<1>", "HVUL-TAES", "<7>-TAES", "OSAT-TAES", "<8>-TAES", "<5>-TAES", "LPER-<1>", "BDIS-<1>", "SITA-<1>", "SBIC-TAES", "ZMAY-TAES", "LPER-TAES", "SITA-TAES", "BDIS-TAES"]}], {"autosize": false, "title": "GRAMPA Results: wheat_all_A_out.txt", "paper_bgcolor": "#fffae6", "plot_bgcolor": "#e1e1ea", "yaxis": {"titlefont": {"color": "#737373", "family": "Arial, sans-serif", "size": 20}, "title": "Score"}, "height": 500, "width": 1000, "titlefont": {"family": "Arial, sans-serif", "size": 30}, "xaxis": {"tickangle": 90, "titlefont": {"color": "#737373", "family": "Arial, sans-serif", "size": 20}, "title": "H1-H2 Node"}, "margin": {"b": 150, "r": 20, "pad": 0, "t": 70, "l": 70}}, {"linkText": "Export to plot.ly", "showLink": true})</script>'

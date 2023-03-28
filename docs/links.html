@@ -14,75 +14,87 @@
         <title>GRAMPA - Links</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">	
-        <link type="text/css" rel="stylesheet" href="css/pure.css"  media="screen,projection" />
+        <!-- <link type="text/css" rel="stylesheet" href="css/pure.css"  media="screen,projection" /> -->
+        <link type="text/css" rel="stylesheet" href="css/grid.css"  media="screen,projection" />
         <link type="text/css" rel="stylesheet" href="css/scaffold.css"  media="screen,projection" />
         <link rel='shortcut icon' href='img/favicon.ico' type='image/x-icon'/ >
     </head>
 
 <body>
-        <div class="pure-g" id="nav_row">
-		<div class="pure-u-6-24" id="margin"></div>
-		<div class="pure-u-18-24" id="nav_col">
-			<a href="index.html"><img class="pure_img" id="logo_nav" src="img/logo-small.png"></a>
-			<a class="title" href="index.html">GRAMPA</a>
-			<div class="pure-menu pure-menu-horizontal" id="nav_bar">
-				<ul class="pure-menu-list" id="nav_list">
-					<li class="pure-menu-item"><a href="index.html" class="nav_link">Home</a></li>
-					<li class="pure-menu-item"><a href="about.html" class="nav_link">About</a></li>
-					<li class="pure-menu-item"><a href="readme.html" class="nav_link">README</a></li>
-					<li class="pure-menu-item"><a href="https://github.com/gwct/grampa/releases/latest" target="_blank" class="nav_link">Download</a></li>
-					<li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-						<a href="#" id="menuLink1" class="pure-menu-link">Examples</a>
-							<ul class="pure-menu-children">
-								<li class="pure-menu-item"><a href="example1.html" class="pure-menu-link">Identify mode of polyploidy</a></li>
-								<li class="pure-menu-item"><a href="example2.html" class="pure-menu-link">Place WGD on phylogeny</a></li>
-								<li class="pure-menu-item"><a href="example3.html" class="pure-menu-link">Count duplications and losses</a></li>
-							</ul>
-					</li>
-					<li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-						<a href="#" id="menuLink1" class="pure-menu-link">Results</a>
-							<ul class="pure-menu-children">
-								<li class="pure-menu-item"><a href="results/yeast/yeast.html" class="pure-menu-link">Baker's Yeast</a></li>
-								<li class="pure-menu-item"><a href="results/wheat/wheat_all.html" class="pure-menu-link">Bread Wheat</a></li>
-								<li class="pure-menu-item"><a href="performance.html" class="pure-menu-link">Performance</a></li>
-							</ul>
-					</li>
-					<li class="pure-menu-item"><a href="#" class="nav_link" id="active">Other links</a></li>
-				</ul>
-
-				<div class="mobile_dropdown" id="mobile_nav">
-					<a href="#" id="nav_link_dropdown">Navigation</a>
-					<div class="mobile_dropdown_links">
-						<ul class="pure-menu-list">
-							<li><a href="index.html" class="mobile_nav_link" id="active_drop">Home</a></li>
-							<li><a href="about.html" class="mobile_nav_link">About</a></li>
-							<li><a href="readme.html" class="mobile_nav_link">README</a></li>
-							<li><a href="https://github.com/gwct/grampa" target="_blank" class="mobile_nav_link">Download</a></li>
-							<li><a href="example1.html" class="mobile_nav_link">Example: Identify polyploidy</a></li>
-							<li><a href="example2.html" class="mobile_nav_link">Example: Place WGD on phylogeny</a></li>
-							<li><a href="example3.html" class="mobile_nav_link">Example: Count dups and losses</a></li>
-							<li><a href="#" class="mobile_nav_link">Other links</a></li>
-					</div>
-				</div>				
+    	<!-- Desktop nav menu -->
+	<div class="row" id="desktop-nav">
+		<div class="col-3-24" id="margin"></div>
+		<div class="col-3-24" id="nav-link-cell"><a class="nav-link" href="index.html">Home</a></div>
+		<div class="col-3-24" id="nav-link-cell"><a class="nav-link" href="about.html">About</a></div>
+		<div class="col-3-24" id="nav-link-cell"><a class="nav-link" href="readme.html">README</a></div>
+		
+		<div class="col-3-24 dropdown" id="nav-link-cell">
+			<a href="#" class="nav-link">Examples&#x21b4;</a>
+			<div class="dropdown_container">
+				<div class="dropdown_list_item"><a href="example1.html" class="nav-link-drop">&#x26AC; Identify mode of polyploidy</a></div>
+				<div class="dropdown_list_item"><a href="example2.html" class="nav-link-drop">&#x26AC; Place WGD on phylogeny</a></div>
+				<div class="dropdown_list_item"><a href="example3.html" class="nav-link-drop">&#x26AC; Count duplications and losses</a></div>
 			</div>
 		</div>
-		<!-- <div class="pure-u-3-24" id="margin"></div> -->
+
+		<div class="col-3-24 dropdown" id="nav-link-cell">
+			<a href="#" class="nav-link">Results&#x21b4;</a>
+			<div class="dropdown_container">
+				<div class="dropdown_list_item"><a href="results/yeast/yeast.html" class="nav-link-drop">&#x26AC; Baker's Yeast</a></div>
+				<div class="dropdown_list_item"><a href="results/wheat/wheat_all.html" class="nav-link-drop">&#x26AC; Bread Wheat</a></div>
+				<div class="dropdown_list_item"><a href="performance.html" class="nav-link-drop">&#x26AC; Performance</a></div>
+			</div>
+		</div>
+
+		<div class="col-3-24" id="nav-link-cell"><a class="nav-link" id="active" href="#">Links</a></div>
+	
+		<div class="col-3-24" id="margin"></div>
 	</div>
+	<!-- Desktop nav menu -->
 
-    <div class="pure-g"><div class="pure-u-1" id="divider_row"></div></div>
+	<!-- Mobile nav menu -->
+	<div class="row" id="mobile_nav">
+		<div class="col-24-24 dropdown" id="nav_link_cell">
+			<a href="#" class="nav_link"><img id="mobile_logo_nav" src="img/nav.png"></a> <span id="nav-text">Navigation</span>
+			<div class="dropdown_container mobile_drop">
+				<div class="dropdown_list_item"><a href="index.html" id="mobile_nav_link" id="active_drop">Home</a></div>
+				<div class="dropdown_list_item"><a href="about.html" id="mobile_nav_link">About</a></div>
+				<div class="dropdown_list_item"><a href="readme.html" id="mobile_nav_link">README</a></div>
+				<div class="dropdown_list_item"><a href="https://github.com/gwct/grampa" target="_blank" id="mobile_nav_link">Download</a></div>
+				<div class="dropdown_list_item"><a href="example1.html" id="mobile_nav_link">Example: Identify polyploidy</a></div>
+				<div class="dropdown_list_item"><a href="example2.html" id="mobile_nav_link">Example: Place WGD on phylogeny</a></div>
+				<div class="dropdown_list_item"><a href="example3.html" id="mobile_nav_link">Example: Count dups and losses</a></div>
+				<div class="dropdown_list_item"><a href="#" id="mobile_nav_link">Other links</a></div>
+			</div>
+		</div>  
+	</div>
+	<!-- Mobile nav menu -->
 
-	<div class="pure-g" id="main_row">
-		<div class="pure-u-3-24" id="margin"></div>
-		<div class="pure-u-18-24" id="main_col">
+	<div class="row" id="main_row">
+		<div class="col-3-24" id="margin"></div>
+		<div class="col-18-24" id="main_col">
 			<div id="main_content">
-				<img class="pure-img" id="logo_main" src="img/logo2.png">
+
+				<div class="row img-row img-no-mobile">
+					<div class="col-8-24 img-margin-left"></div>
+					<div class="col-8-24 img-col">
+						<img class="grid-img" id="logo_main" src="img/logo2.png">
+					</div>
+					<div class="col-8-24 img-margin-right"></div>
+				</div>
+
 				<h1>Links</h1>
+
 				<h3>People and places related to GRAMPA:</h3>
+
 					<ul>
+						<p><a href="https://gwct.github.io/" target="_blank">Gregg Thomas</a> / The lead developer of GRAMPA</p>
 						<p><a href="http://www.indiana.edu/~hahnlab/" target="_blank">Hahn lab</a> / GRAMPA was developed in Matthew Hahn's lab at Indiana University</p>
 						<p><a href="https://github.com/gwct/grampa" target="_blank">GRAMPA github</a> / GRAMPA's github repository.</p>	
 					</ul>
+
 				<h3>Helpful software:</h3>
+
 					<ul>
 						<p><a href="http://www.drive5.com/muscle/" target="_blank">MUSCLE</a> / Fast alignment software for DNA or amino acid sequences.</p>
 						<p><a href="http://sco.h-its.org/exelixis/web/software/raxml/index.html" target="_blank">RAxML</a> / Maximum likelihood software for making
@@ -97,22 +109,25 @@
 						<p><a href="https://github.com/arvestad/jprime" target="_blank">JPrIME</a> / Software used to simulate gene trees with varying rates of
 							gene gain and loss.</p>
 					</ul>
+
 				<h3>Previous versions of GRAMPA</h3>
+
+				<p>Versions after these are located in <a href="https://github.com/gwct/grampa/releases" target="_blank">the github repo.</a></p>
+
 				<ul>
 					<p><a href="prev/v1.1.zip" download>Version 1.1</a> / March 22, 2016 / Implemented gene tree filtering and several useful options. No parallelization.</p>
 					<p><a href="prev/v1.0.zip" download>Version 1.0</a> / Summer 2015 / The first release. No gene tree filtering.</p>
 				</ul>
 			</div>
 		</div>
-		<div class="pure-u-3-24" id="margin"></div>
+		<div class="col-3-24" id="margin"></div>
 	</div>
 
-        <div class="pure-g"><div class="pure-u-1" id="divider_row"></div></div>
-    <div class="pure-g" id="footer">
-        <div class="pure-u-1">
+        <div class="sep-div-2"></div>
+    <div class="row" id="footer">
+        <div class="col-1-1">
             <div id="footer_text">
-                    <center>Site designed and maintained by <a href="https://gwct.github.io/" target="_blank">Gregg Thomas</a> | <a href="https://purecss.io/" target="_blank">Pure CSS</a> |
-                        Page built: 02/14/2020 15:29:11 MST</center>
+                    <center>Site designed and maintained by <a href="https://gwct.github.io/" target="_blank">Gregg Thomas</a> | Page built: 03/28/2023 14:43:55 Eastern Daylight Time</center>
             </div>
         </div>
     </div>

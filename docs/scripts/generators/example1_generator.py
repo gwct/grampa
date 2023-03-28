@@ -4,8 +4,8 @@
 ############################################################
 
 import sys, os
-sys.path.append('..')
-import lib.read_chunks as RC
+sys.path.append(os.path.abspath('../lib/'))
+import read_chunks as RC
 
 ######################
 # HTML template
@@ -18,20 +18,20 @@ html_template = """
 <body>
     {nav}
 
-<div class="pure-g"><div class="pure-u-1" id="divider_row"></div></div>
-
-	<div class="pure-g" id="main_row">
-		<div class="pure-u-3-24" id="margin"></div>
-		<div class="pure-u-18-24" id="main_col">
+	<div class="row" id="main_row">
+		<div class="col-3-24" id="margin"></div>
+		<div class="col-18-24" id="main_col">
 			<div id="main_content">
+
 				<h1>Infer presence and mode of polyploidy</h1>
+
 				<h4>Below are the inputs, commands, and outputs to do several analyses with GRAMPA. The inputs are based on
 					simulated data. For more detailed info on the simulations check
 					<a href="http://biorxiv.org/content/early/2017/03/21/058149" target="_blank">our paper</a>.</h4>
 
-				<div class="pure-g">
+				<div class="row">
 					<a name="allo"></a>
-					<div class="pure-u-1" id="jump_row">
+					<div class="col-1" id="jump_row">
 						<center>
 						<div id="jump_container">
 							Jump to section:
@@ -44,38 +44,62 @@ html_template = """
 				</div>	
 
 				<h1>Allopolyploidy</h1>
+
 				<h3>Inputs</h3>
+
 				<p>1000 gene trees were simulated with gain and loss using <a href="https://github.com/arvestad/jprime" target="_blank">JPrIME</a> based on the
 					following allopolyploid-like MUL-tree:</p>
-				<img class="pure-img" id="logo_main" src="example_data/ex1/allo_3a/allo_m.png">
+
+				<div class="row img-row">
+					<div class="col-9-24 img-margin-left"></div>
+					<div class="col-6-24 img-col">
+						<img class="grid-img" src="example_data/ex1/allo_3a/allo_m.png">
+					</div>
+					<div class="col-9-24 img-margin-right"></div>
+				</div>				
+
 				<p>In this scenario, lineages B and C hybridized to form an allopolyploid lineage that diversified into the x,y,z clade.</p>
+
 				<p>We then remove one polyploid clade from the MUL-tree to get a singly-labeled tree as input for GRAMPA. This is the same topology as above, except
 					that the x,y,z clade sister to C is removed. This is the type of tree that typical phylogenetic reconstruction programs would produce even in
 					the presence of allopolyploidy:</p>
-				<img class="pure-img" id="logo_main" src="example_data/ex1/allo_3a/allo_s.png">
+
+				<div class="row img-row">
+					<div class="col-9-24 img-margin-left"></div>
+					<div class="col-6-24 img-col">
+						<img class="grid-img" src="example_data/ex1/allo_3a/allo_s.png">
+					</div>
+					<div class="col-9-24 img-margin-right"></div>
+				</div>				
+
 				<p>So, the input files for this search are:</p>
+
 				<ol>
 					<li>Singly-labeled species tree: <a href="example_data/ex1/allo_3a/spec_tree_3a.tre" download>spec_tree_3a.tre</a></li>
 					<li>1000 gene trees simulated from an allopolyploid MUL-tree: <a href="example_data/ex1/allo_3a/gene_trees_3a.txt" download>gene_trees_3a.txt</a></li>
 				</ol>
 
 				<h3>GRAMPA command</h3>
-				<p>Since in reality we wouldn't know whether there is an allo-, auto-, or no polyploidy in this tree, we want GRAMPA to search all nodes as possible
-					polyploid lineages. That means we don't specify <code class="cb">-h1</code> or <code class="cb">-h2</code>.
 
-				<pre><code class="gp_cmd">python grampa.py -s spec_tree_3a.tre -g gene_trees_3a.txt \
-		-o allo_example_output -f allo_test -v 0</code></pre>
+				<p>Since in reality we wouldn't know whether there is an allo-, auto-, or no polyploidy in this tree, we want GRAMPA to search all nodes as possible
+					polyploid lineages. That means we don't specify <code class="inline">-h1</code> or <code class="inline">-h2</code>.
+
+				<center><pre class="cmd"><code>python grampa.py -s spec_tree_3a.tre -g gene_trees_3a.txt -o allo_example_output -f allo_test -v 0</code></pre></center>
 
 				<h3>Outputs</h3>
+
 				<p>The above command would create the directory <code class="cb">allo_example_output</code> with four output files</p>
+
 				<ul>
 					<li><a href="example_data/ex1/allo_3a/allo_example_output/allo_test_checknums.txt" download>allo_test_checknums.txt</a></li>
 					<li><a href="example_data/ex1/allo_3a/allo_example_output/allo_test_det.txt" download>allo_test_det.txt</a></li>
 					<li><a href="example_data/ex1/allo_3a/allo_example_output/allo_test_out.txt" download>allo_test_out.txt</a></li>
 					<li><a href="example_data/ex1/allo_3a/allo_example_output/allo_test_trees_filtered.txt" download>allo_test_trees_filtered.txt</a></li>
 				</ul>
+
 				<p>Since we are trying to determine the mode of polyploidy, we are interested in the <code class="cb">allo_test_out.txt</code> file. This file contains
 					log info and the total reconciliation scores for each MUL-tree considered and looks something like this:</p>
+
 <pre><code># Tree #    H1 node H2 node Tree string Total score
 ST          ((((((x,y)&lt;1&gt;,z)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,C)&lt;5&gt;,D)&lt;6&gt; 7980
 MT-1    A   A   ((((((x,y)&lt;1&gt;,z)&lt;2&gt;,B)&lt;3&gt;,(A+,A*)&lt;4&gt;)&lt;5&gt;,C)&lt;6&gt;,D)&lt;7&gt;    8272
@@ -95,13 +119,21 @@ Score = 5018
 				<p>GRAMPA tells us MUL-tree 74 is the lowest scoring tree:</p>
 
 				<center><code class="cb">((((((x+,y+)&lt;1&gt;,z+)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,(C,((x*,y*)&lt;5&gt;,z*)&lt;6&gt;)&lt;7&gt;)&lt;8&gt;,D)&lt;9&gt;</code></center>
-				<img class="pure-img" id="logo_main" src="example_data/ex1/allo_3a/mt_74.png">
+
+				<div class="row img-row">
+					<div class="col-9-24 img-margin-left"></div>
+					<div class="col-6-24 img-col">
+						<img class="grid-img" src="example_data/ex1/allo_3a/mt_74.png">
+					</div>
+					<div class="col-9-24 img-margin-right"></div>
+				</div>	
+
 				<p>Notice that this is the same topology that was used to simulate the gene-trees. GRAMPA has successfully identified an allopolyploid MUL-tree and
 					placed the second polyploid lineage on the correct branch!</p>
 
-				<div class="pure-g">
+				<div class="row">
 					<a name="auto"></a>
-					<div class="pure-u-1" id="jump_row">
+					<div class="col-1" id="jump_row">
 						<center>
 						<div id="jump_container">
 							Jump to section:
@@ -114,35 +146,57 @@ Score = 5018
 				</div>	
 
 				<h1>Autopolyploidy</h1>
+
 				<p>1000 gene trees were simulated with gain and loss using <a href="https://github.com/arvestad/jprime" target="_blank">JPrIME</a> based on the
 					following autopolyploid-like MUL-tree:</p>
-				<img class="pure-img" id="logo_main" src="example_data/ex1/auto_18/auto_m.png">
+
+				<div class="row img-row">
+					<div class="col-9-24 img-margin-left"></div>
+					<div class="col-6-24 img-col">
+						<img class="grid-img" src="example_data/ex1/auto_18/auto_m.png">
+					</div>
+					<div class="col-9-24 img-margin-right"></div>
+				</div>	
+
 				<p>In this scenario, a lineage sister to species C underwent autopolyploidization and subsequently diversified into the x,y,z clade.</p>
+
 				<p>We then remove one polyploid clade from the MUL-tree to get a singly-labeled tree as input for GRAMPA. This is the same topology as above, except
 					that one x,y,z clade is removed. This is the type of tree that typical phylogenetic reconstruction programs would produce even in
 					the presence of autopolyploidy:</p>
-				<img class="pure-img" id="logo_main" src="example_data/ex1/auto_18/auto_s.png">
+
+				<div class="row img-row">
+					<div class="col-9-24 img-margin-left"></div>
+					<div class="col-6-24 img-col">
+						<img class="grid-img" src="example_data/ex1/auto_18/auto_s.png">
+					</div>
+					<div class="col-9-24 img-margin-right"></div>
+				</div>	
+
 				<p>So, the input files for this search are:</p>
+
 				<ol>
 					<li>Singly-labeled species tree: <a href="example_data/ex1/auto_18/spec_tree_18.tre" download>spec_tree_18.tre</a></li>
 					<li>1000 gene trees simulated from an allopolyploid MUL-tree: <a href="example_data/ex1/auto_18/gene_trees_18.txt" download>gene_trees_18.txt</a></li>
 				</ol>
 
 				<h3>GRAMPA command</h3>
+
 				<p>Since in reality we wouldn't know whether there is an allo-, auto-, or no polyploidy in this tree, we want GRAMPA to search all nodes as possible
 					polyploid lineages. That means we don't specify <code class="cb">-h1</code> or <code class="cb">-h2</code>.
 
-				<pre><code class="gp_cmd">python grampa.py -s spec_tree_18.tre -g gene_trees_18.txt \
-		-o auto_example_output -f auto_test -v 0</code></pre>
+				<center><pre class="cmd"><code>python grampa.py -s spec_tree_18.tre -g gene_trees_18.txt -o auto_example_output -f auto_test -v 0</code></pre></center>
 
 				<h3>Outputs</h3>
+
 				<p>The above command would create the directory <code class="cb">auto_example_output</code> with four output files</p>
+
 				<ul>
 					<li><a href="example_data/ex1/auto_18/auto_example_output/auto_test_checknums.txt" download>auto_test_checknums.txt</a></li>
 					<li><a href="example_data/ex1/auto_18/auto_example_output/auto_test_det.txt" download>auto_test_det.txt</a></li>
 					<li><a href="example_data/ex1/auto_18/auto_example_output/auto_test_out.txt" download>auto_test_out.txt</a></li>
 					<li><a href="example_data/ex1/auto_18/auto_example_output/auto_test_trees_filtered.txt" download>auto_test_trees_filtered.txt</a></li>
 				</ul>
+
 				<p>Since we are trying to determine the mode of polyploidy, we are interested in the <code class="cb">auto_test_out.txt</code> file. This file contains
 					log info and the total reconciliation scores for each MUL-tree considered and looks something like this:</p>
 
@@ -163,14 +217,23 @@ Score = 4807
 </code></pre>
 
 				<p>GRAMPA tells us MUL-tree 57 is the lowest scoring tree:</p>
+
 				<center><code class="cb">(((B,A)&lt;1&gt;,((((x+,y+)&lt;2&gt;,z+)&lt;3&gt;,((x*,y*)&lt;4&gt;,z*)&lt;5&gt;)&lt;6&gt;,C)&lt;7&gt;)&lt;8&gt;,D)&lt;9&gt;</code></center>
-				<img class="pure-img" id="logo_main" src="example_data/ex1/auto_18/mt_57.png">
+
+				<div class="row img-row">
+					<div class="col-9-24 img-margin-left"></div>
+					<div class="col-6-24 img-col">
+						<img class="grid-img" src="example_data/ex1/auto_18/mt_57.png">
+					</div>
+					<div class="col-9-24 img-margin-right"></div>
+				</div>	
+
 				<p>Notice that this is the same topology that was used to simulate the gene-trees. GRAMPA has successfully identified an autopolyploid MUL-tree on the
 					correct branch!</p>
 
-				<div class="pure-g">
+				<div class="row">
 					<a name="nop"></a>
-					<div class="pure-u-1" id="jump_row">
+					<div class="col-1" id="jump_row">
 						<center>
 						<div id="jump_container">
 							Jump to section:
@@ -183,31 +246,45 @@ Score = 4807
 				</div>	
 
 				<h1>No polyploidy</h1>
+
 				<p>1000 gene trees were simulated with gain and loss <a href="https://github.com/arvestad/jprime" target="_blank">JPrIME</a> based on the
 					following singly-labeled tree:</p>
-				<img class="pure-img" id="logo_main" src="example_data/ex1/nop_33/nop_s.png">
+
+				<div class="row img-row">
+					<div class="col-9-24 img-margin-left"></div>
+					<div class="col-6-24 img-col">
+						<img class="grid-img" src="example_data/ex1/nop_33/nop_s.png">
+					</div>
+					<div class="col-9-24 img-margin-right"></div>
+				</div>	
+
 				<p>In this scenario, no polyploidy has occurred and this is the same tree we give to GRAMPA.</p>
+
 				<p>So, the input files for this search are:</p>
+
 				<ol>
 					<li>Singly-labeled species tree: <a href="example_data/ex1/nop_33/spec_tree_33.tre" download>spec_tree_33.tre</a></li>
 					<li>1000 gene trees simulated from an allopolyploid MUL-tree: <a href="example_data/ex1/nop_33/gene_trees_33.txt" download>gene_trees_33.txt</a></li>
 				</ol>
 
 				<h3>GRAMPA command</h3>
-				<p>Since in reality we wouldn't know whether there is an allo-, auto-, or no polyploidy in this tree, we want GRAMPA to search all nodes as possible
-					polyploid lineages. That means we don't specify <code class="cb">-h1</code> or <code class="cb">-h2</code>.
 
-				<pre><code class="gp_cmd">python grampa.py -s spec_tree_33.tre -g gene_trees_33.txt \
-		-o nop_example_output -f nop_test -v 0</code></pre>
+				<p>Since in reality we wouldn't know whether there is an allo-, auto-, or no polyploidy in this tree, we want GRAMPA to search all nodes as possible
+					polyploid lineages. That means we don't specify <code class="inline">-h1</code> or <code class="inline">-h2</code>.
+
+				<center><pre class="cmd"><code>python grampa.py -s spec_tree_33.tre -g gene_trees_33.txt -o nop_example_output -f nop_test -v 0</code></pre></center>
 
 				<h3>Outputs</h3>
+
 				<p>The above command would create the directory <code class="cb">nop_example_output</code> with four output files</p>
+
 				<ul>
 					<li><a href="example_data/ex1/nop_33/nop_example_output/nop_test_checknums.txt" download>nop_test_checknums.txt</a></li>
 					<li><a href="example_data/ex1/nop_33/nop_example_output/nop_test_det.txt" download>nop_test_det.txt</a></li>
 					<li><a href="example_data/ex1/nop_33/nop_example_output/nop_test_out.txt" download>nop_test_out.txt</a></li>
 					<li><a href="example_data/ex1/nop_33/nop_example_output/nop_test_trees_filtered.txt" download>nop_test_trees_filtered.txt</a></li>
 				</ul>
+
 				<p>Since we are trying to determine the mode of polyploidy, we are interested in the <code class="cb">nop_test_out.txt</code> file. This file contains
 					log info and the total reconciliation scores for each MUL-tree considered and looks something like this:</p>
 
@@ -228,13 +305,22 @@ Score = 4115
 </code></pre>
 
 				<p>GRAMPA tells us that the singly-labeled tree is the lowest scoring tree:</p>
+
 				<center><code class="cb">((((((x,y)&lt;1&gt;,z)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,C)&lt;5&gt;,D)&lt;6&gt;</code></center>
-				<img class="pure-img" id="logo_main" src="example_data/ex1/nop_33/nop_s.png">
+
+				<div class="row img-row">
+					<div class="col-9-24 img-margin-left"></div>
+					<div class="col-6-24 img-col">
+						<img class="grid-img" src="example_data/ex1/nop_33/nop_s.png">
+					</div>
+					<div class="col-9-24 img-margin-right"></div>
+				</div>	
+
 				<p>Notice that this is the same topology that was used to simulate the gene-trees. GRAMPA has successfully determined that no polyploidy has
 					occurred among these lineages!</p>
 			</div>
 		</div>
-		<div class="pure-u-3-24" id="margin"></div>
+		<div class="col-3-24" id="margin"></div>
 	</div>
 
     {footer}
