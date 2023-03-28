@@ -17,15 +17,14 @@
 #### Thomas GWC, Ather SH, Hahn MW. 2017. Gene-tree reconciliation with MUL-trees to resolve polyploid events. Systematic Biology. 66(6):1007-1018. https://doi.org/10.1093/sysbio/syx044
 
 ## Version History
-#### This is version 1.3, released February 14, 2020
-##### Note: as of this version I am recommending Python 3. Python 2 will no longer be supported going forward.
+#### This is version 1.3, released March 24, 2023
 
 Change log:
-* Added the `--numtrees` option to quickly calculate the number of MUL-trees possible for a given input.
-* Added the `--version` option to quickly print out the version info.
-* Implemented error checking for the psutil module when `--stats` is used.
-* General upkeep.
+* Re-factor of much of the code that handles inputs and outputs.
+* Reformatted output files to be easier to handle when post-processing (see the [website README](https://gwct.github.io/grampa/readme.html) for more info).
+* Removed `-d` in favor of `--st-only` and `--no-st`
 
+###### Version 1.3 (February 14, 2020): Added the `--numtrees` and `--version` options. Dropped support for Python 2.
 ###### Version 1.2 (April 16, 2017): Added the `-p` option so users can specify the number of processes GRAMPA should utilize.
 ###### Version 1.1 (March 22, 2017): Gene tree filtering step added and several other functions.
 ###### Version 1.0 (Summer, 2016): First release and implementation of MUL-tree reconciliation algorithm.
