@@ -335,7 +335,7 @@ print("Generating " + pagefile + "...");
 title = "GRAMPA - Identify"
 
 head = RC.readHead(title, pagefile);
-nav = RC.readNav(pagefile);
+nav = RC.readNav(pagefile, "", "results/yeast/", "results/wheat/");
 footer = RC.readFooter();
 
 outfilename = "../../" + pagefile;

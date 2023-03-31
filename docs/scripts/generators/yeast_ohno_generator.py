@@ -136,7 +136,7 @@ print("Generating " + pagefile + "...");
 title = "GRAMPA - Yeast Ohnologs"
 
 head = RC.readResultsHead(title);
-nav = RC.readNav(pagefile);
+nav = RC.readNav(pagefile, "../../", "", "../wheat/");
 footer = RC.readFooter();
 
 p1 = '<div id="bd28b00b-12ea-4318-9a4f-4c887ec3dff5" style="height: 500; width: 1000px;" class="plotly-graph-div"></div><script type="text/javascript">window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("bd28b00b-12ea-4318-9a4f-4c887ec3dff5", [{"opacity": 0.6, "y": [25710, 26048, 26048, 26054, 26213, 26261, 26383, 26499, 26517, 26854, 26872, 26911, 28221], "type": "scatter", "mode": "markers", "x": ["<20>-<22>", "<20>-<21>", "<20>-<9>", "<20>-<23>", "<20>-HANAN", "<20>-<24>", "ST", "<20>-ZYGRO", "<20>-TORDC", "<20>-<8>", "<20>-<5>", "<20>-<7>", "<20>-<20>"]}], {"autosize": false, "title": "GRAMPA Results: yeast_ohno_out.txt", "paper_bgcolor": "#fffae6", "plot_bgcolor": "#e1e1ea", "yaxis": {"titlefont": {"color": "#737373", "family": "Arial, sans-serif", "size": 20}, "title": "Score"}, "height": 500, "width": 1000, "titlefont": {"family": "Arial, sans-serif", "size": 30}, "xaxis": {"tickangle": 90, "titlefont": {"color": "#737373", "family": "Arial, sans-serif", "size": 20}, "title": "H1-H2 Node"}, "margin": {"b": 150, "r": 20, "pad": 0, "t": 70, "l": 70}}, {"linkText": "Export to plot.ly", "showLink": true})</script>';

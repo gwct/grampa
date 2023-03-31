@@ -12,7 +12,7 @@ def readResultsHead(title):
     headfile = "../html-chunks/results_head.html";
     return open(headfile, "r").read().replace("TMPTITLE", title);
 
-def readNav(active_url):
+def readNav(active_url, path1, path2, path3):
     navfile = "../html-chunks/nav.html";
     navlines = open(navfile, "r").readlines()
     for x in range(len(navlines)):
@@ -20,6 +20,12 @@ def readNav(active_url):
             navlines[x] = navlines[x].replace(active_url, "#");
             if 'class="nav-link"' in navlines[x]:
                 navlines[x] = navlines[x].replace('class="nav-link"', 'class="nav-link" id="active"');
+        if "PATH_STR_REPLACE1" in navlines[x]:
+            navlines[x] = navlines[x].replace("PATH_STR_REPLACE1", path1);
+        if "PATH_STR_REPLACE2" in navlines[x]:
+            navlines[x] = navlines[x].replace("PATH_STR_REPLACE2", path2);
+        if "PATH_STR_REPLACE3" in navlines[x]:
+            navlines[x] = navlines[x].replace("PATH_STR_REPLACE3", path3);         
     return "".join(navlines);
 
 def readWheatNav(runtype):
