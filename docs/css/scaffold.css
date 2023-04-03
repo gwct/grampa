@@ -387,6 +387,48 @@ pre {
 /*------------------------------------------------------*/
 
 /*------------------------------------------------------*/
+/* Message box styles */
+
+#msg-cont {
+    width:100%;
+    display:flex;
+	justify-content:center;
+    align-items:center;
+    min-height:10vh;
+}
+#msg {
+    width:80%;
+}
+#msg-banner {
+    width:100%;
+	align-items:left;
+    background-color:#ffd9b3;
+    padding:5px;
+    font-size:1.4em;
+    border-left: 5px solid #db6d00;
+    border-top-left-radius:2px;
+    border-top-right-radius:2px;
+    box-shadow: 2px 2px 2px #cccccc;
+}
+#msg-text {
+    width:100%;
+	align-items:left;
+    background-color:#ffffff;
+	padding:1px 5px;
+	font-size:0.9em;
+    border-left: 5px solid #db6d00;
+    border-bottom-left-radius:2px;
+    border-bottom-right-radius:2px;
+    box-shadow: 2px 2px 2px #cccccc;
+}
+#msg-text p {
+    padding: 0px 20px;
+    font-style:italic;
+}
+
+/*------------------------------------------------------*/
+
+/*------------------------------------------------------*/
 /* Various element styles */
 
 #paper {

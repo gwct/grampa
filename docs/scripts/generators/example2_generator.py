@@ -29,6 +29,21 @@ html_template = """
 					simulated data. For more detailed info on the simulations check
 					<a href="http://biorxiv.org/content/early/2017/03/21/058149" target="_blank">our paper</a>.</h4>
 
+				<div id="msg-cont">
+					<div id="msg">
+						<div id="msg-banner">Important!</div>
+						<div id="msg-text">
+							<p>
+								These examples were done with earlier versions of GRAMPA (<1.4.0) so some of the command line options and output formats
+								may have changed, but the general idea and results remain the same. See the <a href="readme.html">README</a> for up-to-date info
+								on options and formats.
+							</p>
+							<p></p>
+						</div>
+					</div>
+				</div>
+				<div class="sep-div-2"></div>  
+
 				<h3>Inputs</h3>
 
 				<p>Suppose you have a set of species, of which you have evidence that a some may be the result of a polyploidization event. You also may have

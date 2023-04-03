@@ -17,7 +17,7 @@
 #### Thomas GWC, Ather SH, Hahn MW. 2017. Gene-tree reconciliation with MUL-trees to resolve polyploid events. Systematic Biology. 66(6):1007-1018. https://doi.org/10.1093/sysbio/syx044
 
 ## Version History
-#### This is version 1.3, released March 24, 2023
+#### This is version 1.4.0, released March 24, 2023
 
 Change log:
 * Re-factor of much of the code that handles inputs and outputs.

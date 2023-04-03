@@ -501,7 +501,7 @@ html_template = """
 
 					<a name="--multree"></a><h3><code class="inline">--multree</code> : Input MUL-tree flag</h3>
 						<ul>
-							<p>GRAMPA can accept both singly-labeled and MUL-trees as input. If your input species tree (<code class="cb">-s</code>) is a MUL-tree,
+							<p>GRAMPA can accept both singly-labeled and MUL-trees as input. If your input species tree (<code class="inline">-s</code>) is a MUL-tree,
 								you must set this flag so GRAMPA knows to read it as a MUL-tree. A MUL-tree represents a single possible polyploid scenario and it is
 								equivalent to entering a singly-labeled tree with a single H1 and H2 node specified.</p>
 						</ul>
@@ -522,7 +522,7 @@ html_template = """
 							<center><code class="cb">(((a,(x,(y,z)&lt;1&gt;)&lt;2&gt;)&lt;3&gt;,b)&lt;4&gt;,(c,d)&lt;5&gt;)&lt;6&gt;</code></center>
 						</ul>
 
-					<a name="--numtrees"></a><h3><code class="inline">--numtrees</code> : Building MUL-trees</h3>
+					<a name="--numtrees"></a><h3><code class="inline">--numtrees</code> : Counting MUL-trees</h3>
 						<ul>
 							<p>
 								This option quickly calculates how many MUL-trees are to be built with a given H1 and H2 set. If neither H1 or H2 are set
@@ -557,7 +557,7 @@ html_template = """
 								best setting for <code class="inline">-c</code>.</p>
 						</ul>
 
-					<a name="--st-only"></a><h3><code class="inline">--st-only</code> : Group counting</h3>
+					<a name="--st-only"></a><h3><code class="inline">--st-only</code> : Reconciling to input tree only</h3>
 						<ul>
 							<p>
                             	By default, GRAMPA reconciles the gene trees to all specified MUL-trees as well as the singly-labeled input species tree. Set this option to ONLY
@@ -565,7 +565,7 @@ html_template = """
                             </p>
 						</ul>                        
 
-					<a name="--no-st"></a><h3><code class="inline">--no-st</code> : Group counting</h3>
+					<a name="--no-st"></a><h3><code class="inline">--no-st</code> : Exclude reconciling to the input tree</h3>
 						<ul>
 							<p>
                             	By default, GRAMPA reconciles the gene trees to all specified MUL-trees as well as the singly-labeled input species tree. Set this option to SKIP
