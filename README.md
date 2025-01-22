@@ -52,7 +52,7 @@ Simply download the [latest release](https://github.com/gwct/grampa/releases/lat
 
 ## Usage
 
-*The following example commands assume an install from bioconda and use `grampa` to call the program. If you installed from source, see above for information on how to call the program*
+*The following example commands assume an install from bioconda and use `grampa` to call the program. If you installed from source, see above for information on how to call the program.*
 
 If necessary, you can run GRAMPA with some test files. You can do this easily by running the --tests command:
 
