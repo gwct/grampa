@@ -19,7 +19,7 @@ def readSpecTree(globs, label_opt=False):
 
 	if globs['mul-input-flag'] and any(tips.count(tip) not in [1,2] for tip in tips):
 		RC.errorOut("ST2", "You have entered a tree type (-t) of 'm', species in your tree should appear exactly once or twice.", globs);
-	elif any(tips.count(tip) > 1 for tip in tips):
+	elif not globs['mul-input-flag'] and any(tips.count(tip) > 1 for tip in tips):
 		RC.errorOut("ST3", "You have entered a tree type (-t) of 's' but there are labels in your tree that appear more than once!", globs);
 	# Some error checking based on the tip labels in the tree.
 
@@ -51,12 +51,12 @@ def readSpecTree(globs, label_opt=False):
 
 def hInParse(globs):
 	if globs['mul-input-flag']:
-		mul_copy_clade = [n for n in sinfo if sinfo[n][2] == 'tip' and '*' in n];
+		mul_copy_clade = [n for n in globs['st'] if globs['st'][n][2] == 'tip' and '*' in n];
 		mul_hybrid_clade = [n.replace("*","") for n in mul_copy_clade];
 		# Read the nodes with the added * to get the hybrid clades
 
-		mul_hybrid_node, mul_hybrid_mono = RT.LCA(mul_hybrid_clade, sinfo);
-		mul_copy_node, mul_copy_mono = RT.LCA(mul_copy_clade, sinfo);
+		mul_hybrid_node, mul_hybrid_mono = RT.LCA(mul_hybrid_clade, globs['st']);
+		mul_copy_node, mul_copy_mono = RT.LCA(mul_copy_clade, globs['st']);
 		# Get the LCA for both clades
 
 		if not mul_hybrid_mono or not mul_copy_mono:
