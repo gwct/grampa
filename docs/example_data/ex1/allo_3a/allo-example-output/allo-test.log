@@ -1,0 +1,83 @@
+# =========================================================================
+# Welcome to GRAMPA -- Gene tree reconciliations with MUL-trees.
+# Version 1.4.0 released on March 2023
+# GRAMPA was developed by Gregg Thomas, S. Hussain Ather, Matthew Hahn
+# Citation:      https://doi.org/10.1093/sysbio/syx044
+# Website:       https://gwct.github.io/grampa/
+# Report issues: https://github.com/gwct/grampa
+#
+# The date and time at the start is:  01.22.2025  10:34:49
+# Using Python executable located at: /n/home07/gthomas/miniconda3/envs/grampa-issue8-1/bin/python3.13
+# Using Python version:               3.13.1
+#
+# The program was called as:          /n/home07/gthomas/miniconda3/envs/grampa-issue8-1/bin/grampa -s spec_tree_3a.tre -g gene_trees_3a.txt -o allo-example-output -f allo-test -v 0
+#
+# -----------------------------------------------------------------------------------------------------------------------------
+# INPUT/OUTPUT INFO:
+# Species tree file:                    spec_tree_3a.tre
+# Gene tree file:                       gene_trees_3a.txt
+# Output directory:                     allo-example-output
+# Score file:                           allo-example-output/allo-test-scores.txt
+# Filtered gene trees:                  allo-example-output/allo-test-trees-filtered.txt
+# Check nums file:                      allo-example-output/allo-test-checknums.txt
+# Detailed mapping file:                allo-example-output/allo-test-detailed.txt
+# Duplication count file:               allo-example-output/allo-test-dup-counts.txt
+# -----------------------------------------------------------------------------------------------------------------------------
+# OPTIONS INFO:
+# Option                                Current setting               Current action
+# -h1                                   All                           GRAMPA will search these H1 nodes. If none are specified, all nodes will be searched as H1 nodes.
+# -h2                                   All                           GRAMPA will search these H2 nodes. If none are specified, all nodes will be searched as H2 nodes.
+# -c                                    8                             Gene trees with more than this number of groups/clades with polyploid species for a given h1/h2 combination will be skipped.
+# -f                                    allo-test                     All output files generated will have this string preprended to them.
+# -p                                    1                             GRAMPA will use this number of processes for LCA mapping.
+# -v                                    0                             Controls the amount of info printed to the screen as GRAMPA is running.
+# --multree                             False                         The tree input with -s will be read as singly-labeled tree.
+# --checknums                           False                         GRAMPA will count groups to filter gene trees and then perform reconciliations.
+# --no-st, --st-only                    default                       GRAMPA will perform reconciliations to all MUL-trees specified by -h1 and -h2 and the input species tree.
+# --maps                                False                         GRAMPA will only output duplication and loss counts in the detailed output file.
+# ------------------------------------------------------------------------------------------------------------------------------------------------------
+# Date        Time      Current step                                      Status                                  Elapsed time (s)    Step time (s)   
+# ------------------------------------------------------------------------------------------------------------------------------------------------------
+# 01.22.2025  10:34:49  Reading species tree                              Success: species tree read              0.36815             0.00307         
+# 01.22.2025  10:34:49  Parsing hybrid clades                             Success: got H nodes                    0.37295             0.00011         
+# 01.22.2025  10:34:49  Counting MUL-trees to be generated                Success: 127 total MUL-trees            0.37772             8e-05           
+# 01.22.2025  10:34:49  Building MUL-trees                                Success: 127 MUL-trees built            0.39328             0.01081         
+# 01.22.2025  10:34:49  Reading gene trees                                Success: 1000 gene trees read           0.55544             0.15745         
+# 01.22.2025  10:35:21  Collapsing gene tree groupings                    Success                                 32.34832            31.78778        
+# 01.22.2025  10:35:22  Filtering gene trees over group cap               Success: 13 gts over cap                33.1695             0.81608         
+# WARNING: Gene tree on line 177 is over the group cap in 5 MTs and will be filtered.
+# WARNING: Gene tree on line 263 is over the group cap in 1 MTs and will be filtered.
+# WARNING: Gene tree on line 350 is over the group cap in 2 MTs and will be filtered.
+# WARNING: Gene tree on line 525 is over the group cap in 2 MTs and will be filtered.
+# WARNING: Gene tree on line 562 is over the group cap in 5 MTs and will be filtered.
+# WARNING: Gene tree on line 581 is over the group cap in 10 MTs and will be filtered.
+# WARNING: Gene tree on line 635 is over the group cap in 1 MTs and will be filtered.
+# WARNING: Gene tree on line 664 is over the group cap in 2 MTs and will be filtered.
+# WARNING: Gene tree on line 747 is over the group cap in 2 MTs and will be filtered.
+# WARNING: Gene tree on line 765 is over the group cap in 13 MTs and will be filtered.
+# WARNING: Gene tree on line 785 is over the group cap in 3 MTs and will be filtered.
+# WARNING: Gene tree on line 877 is over the group cap in 2 MTs and will be filtered.
+# WARNING: Gene tree on line 903 is over the group cap in 2 MTs and will be filtered.
+# 01.22.2025  10:35:22  INFO: Filtered gene trees: 13
+# 01.22.2025  10:35:22  INFO: Final gene tree count for reconciliations: 987
+# 01.22.2025  10:35:22  Writing filtered gene trees to file               Success: 987 gene trees written         33.25487            0.00916         
+# ----------------------------------------
+# 01.22.2025  10:37:24  Reconciliation                                    Success                                 155.64531           122.38106       
+# 01.22.2025  10:37:32  Getting maps for lowest scoring MTs               Success                                 163.06909           7.41838         
+# 01.22.2025  10:37:32  Writing detailed output file                      Success                                 163.08659           0.01233         
+# 01.22.2025  10:37:32  Writing main output file                          Success                                 163.12056           0.02928         
+# ===============================================================================================================================================================================
+#
+# Done!
+# The date and time at the end is: 01.22.2025  10:37:32
+# Total execution time:            163.132 seconds.
+# Output directory for this run:   allo-example-output
+# Log file for this run:           allo-example-output/allo-test.log
+
+# GRAMPA finished with 13 WARNINGS -- check log file for more info
+# ----------------------------------------
+# The MUL-tree with the minimum parsimony score is MT-105:	((((((x+,y+)<1>,z+)<2>,B)<3>,A)<4>,(C,((x*,y*)<5>,z*)<6>)<7>)<8>,D)<9>
+# Score = 5018
+# ----------------------------------------
+# ===============================================================================================================================================================================
+#
