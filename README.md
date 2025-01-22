@@ -32,6 +32,8 @@ Change log:
 
 ## Installation
 
+GRAMPA is a set of Python scripts with no external dependencies. It can be installed in one of two ways:
+
 ### Install from [bioconda](https://anaconda.org/bioconda/grampa)
 
 ```
@@ -44,7 +46,7 @@ Once installed, the program can be called as `grampa` or `grampa.py`
 
 *Thanks to [nathanweeks](https://github.com/nathanweeks) for setting up the bioconda recipe!*
 
-### Install from source
+### Or install from source
 
 Simply download the [latest release](https://github.com/gwct/grampa/releases/latest), decompress, and run it. GRAMPA is a Python script with no external dependencies so it should work out of the box.
 
