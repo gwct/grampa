@@ -205,7 +205,7 @@ html_template = """
 					<li><a href="example_data/ex1/auto_18/auto-example-output/auto-test-checknums.txt" download>auto-test-checknums.txt</a></li>
 					<li><a href="example_data/ex1/auto_18/auto-example-output/auto-test-detailed.txt" download>auto-test-detailed.txt</a></li>
                     <li><a href="example_data/ex1/auto_18/auto-example-output/auto-test-dup-counts.txt" download>auto-test-dup-counts.txt</a></li>
-                    <li><a href="example_data/ex1/auto_18/auto-example-output/auto-test.log" download>auto-test,log</a></li>
+                    <li><a href="example_data/ex1/auto_18/auto-example-output/auto-test.log" download>auto-test.log</a></li>
 					<li><a href="example_data/ex1/auto_18/auto-example-output/auto-test-scores.txt" download>auto-test-scores.txt</a></li>
 					<li><a href="example_data/ex1/auto_18/auto-example-output/auto-test-trees-filtered.txt" download>auto-test-trees-filtered.txt</a></li>
 				</ul>
