@@ -32,20 +32,35 @@ Change log:
 
 ## Installation
 
-Simply download the program and run it. You may want to add the GRAMPA folder to your $PATH variable for ease of use.
-### The only dependency is Python 3 or higher
+### Install from [bioconda](https://anaconda.org/bioconda/grampa)
 
-GRAMPA is also available through [bioconda](https://anaconda.org/bioconda/grampa). Thanks to [nathanweeks](https://github.com/nathanweeks) for setting that up!
+```
+mamba install grampa
+```
+
+*Note that if you prefer `conda`, simply replace `mamba` with `conda` in the command above.*
+
+Once installed, the program can be called as `grampa` or `grampa.py`
+
+*Thanks to [nathanweeks](https://github.com/nathanweeks) for setting up the bioconda recipe!*
+
+### Install from source
+
+Simply download the [latest release](https://github.com/gwct/grampa/releases/latest), decompress, and run it. GRAMPA is a Python script with no external dependencies so it should work out of the box.
+
+*Note that if installed from source, you will have to invoke Python explicitly and provide the path to the GRAMPA script when you run it: `python /path/to/grampa.py`. You may want to add the GRAMPA folder to your $PATH variable for ease of use.*
 
 ## Usage
 
-The first thing you should do when you try to run GRAMPA is make sure everything is working with some test files. You can do this easily by running the --tests command:
+*The following example commands assume an install from bioconda and use `grampa` to call the program. If you installed from source, see above for information on how to call the program*
 
-`python grampa.py --tests`
+If necessary, you can run GRAMPA with some test files. You can do this easily by running the --tests command:
+
+`grampa --tests`
 
 If all tests pass, then you're good to go! Basic usage in a real case would be:
 
-`python grampa.py -s [species tree file] -g [gene trees file] -o [output directory]`
+`grampa -s [species tree file] -g [gene trees file] -o [output directory]`
 
 This would perform a full search for the optimal (lowest-scoring) MUL-tree on the input species tree. The other important options are `-h1` and `-h2`. Read more about them below and on the [project website](https://gwct.github.io/grampa/).
 

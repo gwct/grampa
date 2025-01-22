@@ -44,53 +44,129 @@ html_template = """
 
 				<h2>Installation</h2>
 
-				<div class="readme_divider"></div>
+					<div class="readme_divider"></div>
 
-				<p>Clone or download the github repo: <a href="https://github.com/gwct/grampa" target="_blank">GRAMPA github</a></p>
+					<h4>
+						<a href="https://bioconda.github.io/recipes/grampa/README.html" target="_blank">Install from bioconda</a>:
+					</h4>
 
-				<p>The only dependency is Python 3 or higher. You may want to add the GRAMPA folder to your $PATH variable for ease of use!</p>
+					<p>
+						You can use <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html" target="_blank">conda</a>
+						or <a href="https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html" target="_blank">mamba</a> to install GRAMPA. The following
+						example uses mamba, but if you prefer conda simply replace "mamba" with "conda" in the command.
+					</p>
 
+					<div class="row">
+						<div class="col-7-24 margin"></div>
+						<div class="col-10-24" id="install">
+							<center><pre class="cmd"><code>mamba install grampa</code></pre></center>
+						</div>
+						<div class="col-7-24 margin"></div>
+					</div>	
+
+					<p>
+						After installation, you can run the program with:
+					</p>
+
+					<div class="row">
+						<div class="col-7-24 margin"></div>
+						<div class="col-10-24" id="install">
+							<center><pre class="cmd"><code>grampa</code></pre> or <pre class="cmd"><code>grampa.py</code></pre></center>
+						</div>
+						<div class="col-7-24 margin"></div>
+					</div>
+
+					<div id="msg-cont">
+						<div id="msg">
+							<div id="msg-banner">Troubleshooting</div>
+							<div id="msg-text">
+								<p>
+									If you experience any problems with the above installation command, be sure you <a href="https://bioconda.github.io/" target="_blank">set up your conda channels</a>
+                                    for use with bioconda. You can also try specifying the channel directly in the command: <code class="inline">mamba install -c bioconda grampa</code></pre>, and try
+                                    installing in a fresh conda environment.
+								</p>
+								<p></p>
+							</div>
+						</div>
+					</div>                             
+                    
+                    <a name="source"></a>
+					<h4>
+						Install from source:
+					</h4>
+
+					<p>
+						Otherwise, just download the program straight <a href="https://github.com/gwct/grampa/releases/latest" target="_blank">from github</a> by clicking 
+						the download button below and then clicking the file containing the compressed source code in the format of your choice (.zip or .tar.gz). The program is 
+						just a python script with no other dependencies, so it should work out of the box!
+					</p>
+
+					<p>
+						If you install this way, you will need to run the program by invoking python and providing the full path to the script:
+					</p>
+
+					<div class="row">
+						<div class="col-7-24 margin"></div>
+						<div class="col-10-24" id="install">
+							<center><pre class="cmd"><code>python /path/to/grampa.py</code></pre></center>
+						</div>
+						<div class="col-7-24 margin"></div>
+					</div>
+
+					<div id="msg-cont">
+						<div id="msg">
+							<div id="msg-banner">Note</div>
+							<div id="msg-text">
+								<p>
+									The examples below call GRAMPA as <code class="inline">grampa</code> assuming it has been installed from bioconda. If you installed
+                                    from source, adjust the commands as described above.
+								</p>
+								<p></p>
+							</div>
+						</div>
+					</div>              
+                    
 				<h2>Usage</h2>
 
-				<div class="readme_divider"></div>
+					<div class="readme_divider"></div>
 
-				<p>The first thing you should do when you try to run GRAMPA is make sure everything is working with some test files. You can do this easily 
-					by running the <code class="inline">--tests</code> command:</p>
+					<p>The first thing you should do when you try to run GRAMPA is make sure everything is working with some test files. You can do this easily 
+						by running the <code class="inline">--tests</code> command:</p>
 
-				<center><code class="cb">python grampa.py --tests</code></center>
+					<center><code class="cb">grampa --tests</code></center>
 
-				<p>If all tests pass, then you're good to go! Basic usage in a real case would be:</p>
+					<p>If all tests pass, then you're good to go! Basic usage in a real case would be:</p>
 
-				<center><code class="cb">python grampa.py -s [species tree file] -g [gene trees file] -o [output directory]</code></center>
+					<center><code class="cb">grampa -s [species tree file] -g [gene trees file] -o [output directory]</code></center>
 
-				<p>This would perform a full search for the optimal (lowest scoring) MUL-tree on the input species tree.</p>
+					<p>This would perform a full search for the optimal (lowest scoring) MUL-tree on the input species tree.</p>
 
-				<a name="input"></a><h3>Input</h3>
+					<a name="input"></a><h3>Input</h3>
 
-				<p>There are two main inputs for the program:</p>
+					<p>There are two main inputs for the program:</p>
 
-				<ol>
-					<li>A file or string containing a Newick formatted <b>rooted</b> species tree (<code class="inline">-s</code>). This can be a singly labeled tree 
-						or a MUL-tree.</li>
-					<li>A file containing one or more Newick formatted <b>rooted</b> gene trees (one tree per line) (<code class="inline">-g</code>).</li>
-				</ol>
+					<ol>
+						<li>A file or string containing a Newick formatted <b>rooted</b> species tree (<code class="inline">-s</code>). This can be a singly labeled tree 
+							or a MUL-tree.</li>
+						<li>A file containing one or more Newick formatted <b>rooted</b> gene trees (one tree per line) (<code class="inline">-g</code>).</li>
+					</ol>
 
-				<p>Important: the tip labels of the gene tree MUST be formatted such that they end with _[species label], where [species label] corresponds
-					to a tip label in the species tree.</p>
+					<p>Important: the tip labels of the gene tree MUST be formatted such that they end with _[species label], where [species label] corresponds
+						to a tip label in the species tree.</p>
 
-				<a name="output"></a><h3>Output</h3>
+					<a name="output"></a><h3>Output</h3>
 
-				<p>All output files will be placed in the directory specified with <code class="inline">-o</code></p>
+					<p>All output files will be placed in the directory specified with <code class="inline">-o</code></p>
 
-				<p>GRAMPA creates four output files, a log file, and a filtered tree file (if necessary).</p>
+					<p>GRAMPA creates four output files, a log file, and a filtered tree file (if necessary).</p>
 
-				<p>GRAMPA also creates a directory within the output directory called <b>groups_dir</b>. This just stores the gene tree groupings for each MUL-tree
-					(in <a href="https://docs.python.org/2/library/pickle.html" target="_blank">pickled</a> format) so GRAMPA doesn't eat up a lot of RAM during
-					reconciliations. This can be ignored/deleted</p>
+					<p>GRAMPA also creates a directory within the output directory called <b>groups_dir</b>. This just stores the gene tree groupings for each MUL-tree
+						(in <a href="https://docs.python.org/2/library/pickle.html" target="_blank">pickled</a> format) so GRAMPA doesn't eat up a lot of RAM during
+						reconciliations. This can be ignored/deleted</p>
 
-				<ol>
-					<li><h4>grampa-scores.txt</h4>
-						<p>This is the main output file and contains the total reconciliation score for each MUL-tree considered, sorted in ascending order. </p>
+					<ol>
+						<li><h4>grampa-scores.txt</h4>
+							<p>This is the main output file and contains the total reconciliation score for each MUL-tree considered, sorted in ascending order. </p>
 
 <!--
 <pre><code>mul.tree        h1.node h2.node score   labeled.tree
@@ -107,39 +183,39 @@ html_template = """
 </code></pre>
 -->
 
-						<p>
-							The first line of this file contains the headers, defined as follows for each subsequent row:
-                        </p>
-                        
-						<div class="table-container">
-							<table class="grid-table">
-								<thead>
-                                	<tr>
-										<th>mul.tree</th>
-										<th>h1.node</th>
-										<th>h2.node</th>
-										<th>score</th>
-										<th>mul.tree</th>
-                                	</tr>
-                                </thead>
-								<tbody>
-									<tr>
-										<td>The ID of the MUL-tree</td>
-                                        <td>The H1 node in the species tree for the current MUL-tree</td>
-                                        <td>The H2 node in the species tree for the current MUL-tree</td>
-                                        <td>The total parsimony score for the current MUL-tree</td>
-                                        <td>The Newick formatted tree string for the MUL-tree, with hybrid clades indicated with *</td>
-                                    </tr>
-								</tbody>		
-							</table>
-						</div>
+							<p>
+								The first line of this file contains the headers, defined as follows for each subsequent row:
+							</p>
+							
+							<div class="table-container">
+								<table class="grid-table">
+									<thead>
+										<tr>
+											<th>mul.tree</th>
+											<th>h1.node</th>
+											<th>h2.node</th>
+											<th>score</th>
+											<th>mul.tree</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>The ID of the MUL-tree</td>
+											<td>The H1 node in the species tree for the current MUL-tree</td>
+											<td>The H2 node in the species tree for the current MUL-tree</td>
+											<td>The total parsimony score for the current MUL-tree</td>
+											<td>The Newick formatted tree string for the MUL-tree, with hybrid clades indicated with *</td>
+										</tr>
+									</tbody>		
+								</table>
+							</div>
 
-						<h3>
-							Please note that the input singly-labeled species tree always has the ID of 0
-                        </h3>
+							<h3>
+								Please note that the input singly-labeled species tree always has the ID of 0
+							</h3>
 
-					<li><h4>grampa-detailed.txt</h4>
-						<p>The secondary output file contains detailed output describing the reconciliation scores from each gene tree to the lowest scoring MUL-tree.</p>
+						<li><h4>grampa-detailed.txt</h4>
+							<p>The secondary output file contains detailed output describing the reconciliation scores from each gene tree to the lowest scoring MUL-tree.</p>
 
 <!--                        
 <pre><code>mul.tree	gene.tree	dups	losses	total.score
@@ -154,70 +230,70 @@ html_template = """
 </code></pre>
 -->
 
-						<p>
-							The first line of this file contains the headers, defined as follows for each subsequent row:
-                        </p>
+							<p>
+								The first line of this file contains the headers, defined as follows for each subsequent row:
+							</p>
 
-						<div class="table-container">
-							<table class="grid-table">
-								<thead>
-                                	<tr>
-										<th>mul.tree</th>
-										<th>gene.tree</th>
-										<th>dups</th>
-										<th>losses</th>
-										<th>total score</th>
-                                	</tr>
-                                </thead>
-								<tbody>
-									<tr>
-										<td>The ID of the MUL-tree</td>
-                                        <td>The ID of the gene tree being reconciled to the MUL-tree</td>
-                                        <td>The number of duplications on this gene tree given this MUL-tree</td>
-                                        <td>The number of losses on this gene tree given this MUL-tree</td>
-                                        <td>The sum of dups and losses for this gene tree and MUL-tree</td>
-                                    </tr>
-								</tbody>	
-							</table>
-						</div>
+							<div class="table-container">
+								<table class="grid-table">
+									<thead>
+										<tr>
+											<th>mul.tree</th>
+											<th>gene.tree</th>
+											<th>dups</th>
+											<th>losses</th>
+											<th>total score</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>The ID of the MUL-tree</td>
+											<td>The ID of the gene tree being reconciled to the MUL-tree</td>
+											<td>The number of duplications on this gene tree given this MUL-tree</td>
+											<td>The number of losses on this gene tree given this MUL-tree</td>
+											<td>The sum of dups and losses for this gene tree and MUL-tree</td>
+										</tr>
+									</tbody>	
+								</table>
+							</div>
 
-						<h3>
-                        	Note that the lowest score for some GT/MT combos can have multiple maps. In these cases, we report all possible scores.
-                        </h3>
+							<h3>
+								Note that the lowest score for some GT/MT combos can have multiple maps. In these cases, we report all possible scores.
+							</h3>
 
-                    <li><h4>grampa-dup-counts.txt</h4>
-						<p>
-							For the <b>6 lowest scoring MUL-trees</b>, GRAMPA counts the number of duplications along each branch in the MUL-tree summed
-                            over all gene trees.
-                        </p>
-                        
-						<p>
-							The first line of this file contains the headers, defined as follows for each subsequent row:
-                        </p>
+						<li><h4>grampa-dup-counts.txt</h4>
+							<p>
+								For the <b>6 lowest scoring MUL-trees</b>, GRAMPA counts the number of duplications along each branch in the MUL-tree summed
+								over all gene trees.
+							</p>
+							
+							<p>
+								The first line of this file contains the headers, defined as follows for each subsequent row:
+							</p>
 
-						<div class="table-container">
-							<table class="grid-table">
-								<thead>
-                                	<tr>
-										<th>mul.tree</th>
-										<th>node</th>
-										<th>dups</th>
-                                	</tr>
-                                </thead>
-								<tbody>
-									<tr>
-										<td>The ID of the MUL-tree</td>
-                                        <td>The node ID for the current MUL-tree</td>
-                                        <td>The total number of duplications over all gene tres along the branch above the node in the MUL-tree</td>
-                                    </tr>
-								</tbody>	
-							</table>
-						</div>                       
-                        
-					<li><h4>grampa-checknums.txt</h4>
-						<p>GRAMPA must calculate how many combinations of maps there are for each gene-tree/MUL-tree pair and filter out those that are over
-							the group cap in any combo before any reconciliations can be done. This filtering ensures that all MUL-trees are reconciled to
-							the same set of gene-trees. The number of groups for each gene-tree/MUL-tree is recorded in this file.</p>
+							<div class="table-container">
+								<table class="grid-table">
+									<thead>
+										<tr>
+											<th>mul.tree</th>
+											<th>node</th>
+											<th>dups</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>The ID of the MUL-tree</td>
+											<td>The node ID for the current MUL-tree</td>
+											<td>The total number of duplications over all gene tres along the branch above the node in the MUL-tree</td>
+										</tr>
+									</tbody>	
+								</table>
+							</div>                       
+							
+						<li><h4>grampa-checknums.txt</h4>
+							<p>GRAMPA must calculate how many combinations of maps there are for each gene-tree/MUL-tree pair and filter out those that are over
+								the group cap in any combo before any reconciliations can be done. This filtering ensures that all MUL-trees are reconciled to
+								the same set of gene-trees. The number of groups for each gene-tree/MUL-tree is recorded in this file.</p>
 
 <!--
 <pre><code>mul.tree        gene.tree       groups  fixed   combinations    over.cap.filtered
@@ -231,176 +307,176 @@ html_template = """
 </code></pre>
 -->
 
-						<p>
-							The first line of this file contains the headers, defined as follows for each subsequent row:
-                        </p>
+							<p>
+								The first line of this file contains the headers, defined as follows for each subsequent row:
+							</p>
+
+							<div class="table-container">
+								<table class="grid-table">
+									<thead>
+										<tr>
+											<th>mul.tree</th>
+											<th>gene.tree</th>
+											<th>groups</th>
+											<th>fixed</th>
+											<th>combinations</th>
+											<th>over.cap.filtered</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>The ID of the MUL-tree</td>
+											<td>The ID of the gene tree to be reconciled to the MUL-tree</td>
+											<td>The number of distinct hybrid clades in the gene tree</td>
+											<td>The number of hybrid clades in the gene tree that also group with a sister species from the singly-labeled tree</td>
+											<td>The total number of mappings to try for the gene tree with this MUL-tree</td>
+											<td>Either Y or N to indicate whether the number of groups exceeds the number set with -c</td>
+										</tr>
+									</tbody>	
+								</table>
+							</div>   
+							
+						<li><h4>grampa-trees-filtered.txt</h4>
+							<p>
+								A text file with the gene trees used for this GRAMPA run, after filtering by the group cap. One tree per line.
+							</p>
+						
+						<li><h4>grampa.log</h4>
+							<p>
+								A log file containing run time information and a summary of the lowest scoring MUL-tree.
+							</p>
+					</ol>
+
+					<div class="row">
+						<a name="options"></a>
+						<div class="col-1" id="jump_row">
+							<div id="jump_container">
+								<center>Jump to section:
+								<a class="jump_link" href="#install">Installation and Usage</a>
+								<a class="jump_link" href="#options">Options summary</a>
+								<a class="jump_link" href="#detail_options">Options details</a>
+								</center>
+							</div>
+						</div>
+					</div>	
+
+				<h2>Options Table</h2>
+					<div class="readme_divider"></div></br>
+
 
 						<div class="table-container">
-							<table class="grid-table">
+							<table class="stripe-table">
 								<thead>
-                                	<tr>
-										<th>mul.tree</th>
-										<th>gene.tree</th>
-										<th>groups</th>
-										<th>fixed</th>
-										<th>combinations</th>
-                                        <th>over.cap.filtered</th>
-                                	</tr>
-                                </thead>
+									<tr>
+										<th>Option</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+
 								<tbody>
 									<tr>
-										<td>The ID of the MUL-tree</td>
-                                        <td>The ID of the gene tree to be reconciled to the MUL-tree</td>
-                                        <td>The number of distinct hybrid clades in the gene tree</td>
-                                        <td>The number of hybrid clades in the gene tree that also group with a sister species from the singly-labeled tree</td>
-                                        <td>The total number of mappings to try for the gene tree with this MUL-tree</td>
-                                        <td>Either Y or N to indicate whether the number of groups exceeds the number set with -c</td>
-                                    </tr>
+										<td><code class="inline">-s</code></td>
+										<td>A file or string containing a bifurcating, rooted species tree in Newick format. This tree can either be singly-labeled or MUL.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">-g</code></td>
+										<td>A file containing one or more bifurcating, rooted, Newick formatted gene trees. Gene trees with polytomies are currently not supported
+											and will be automatically filtered from the analysis.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">-h1</code></td>
+										<td>A space separated list of nodes to search as the polyploid clade. If nothing is entered all nodes will be considered.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">-h2</code></td>
+										<td>A space separated list of nodes to search as possible parental lineages for all nodes specified with <code class="inline">-h1</code>. 
+											If nothing is entered all possible nodes for the current <b>h1</b> will be considered.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">-c</code></td>
+										<td>The maximum number of initial groups to consider for any gene tree. Default: 8, Max value: 18</td>
+									</tr>
+									<tr>
+										<td><code class="inline">-o</code></td>
+										<td>Output directory name. If the directory is not present, GRAMPA will created it for you.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">-f</code></td>
+										<td>By default, all output files created by GRAMPA will have the prefix '<b>grampa-</b>'. You can specify a different prefix 
+										with this option.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">-v</code></td>
+										<td>Control the amount of output printed to the screen. 0: print nothing. 1: print only some info at the start. 2: print all log info to screen. 
+										3 (default): print all log info to the screen as well as progress updates for certain steps.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">-p</code></td>
+										<td>The number of processes GRAMPA should use for reconciliations.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">--multree</code></td>
+										<td>Set this flag if your input species tree is a MUL-tree.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">--labeltree</code></td>
+										<td>The program will simply label your input species tree.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">--numtrees</code></td>
+										<td>The program will simply count the number of possible MUL-trees given <code class="inline">-s</code>. <code class="inline">-h1</code> and 
+										<code class="inline">-h2</code> may also be supplied.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">--buildmultrees</code></td>
+										<td>Build MUL-trees given <code class="inline">-s</code>, <code class="inline">-h1</code>, and <code class="inline">-h2</code> and write them 
+										to the log file.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">--checknums</code></td>
+										<td>If this flag is entered, the program will just calculate the number of groups per gene tree and exit. No reconciliations will be done.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">--st-only</code></td>
+										<td>Only do reconciliations to the input singly-labeled species tree.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">--no-st</code></td>
+										<td>Skip doing reconciliations to the input singly-labled species tree.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">--maps</code></td>
+										<td>Output the node maps for each reconciliation in addition to the scores. The maps will be placed in the detailed output file.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">--version</code></td>
+										<td>Print out version info and exit.</td>
+									</tr>
+									<tr>
+										<td><code class="inline">--tests</code></td>
+										<td>Run the tests script.</td>
+									</tr>
 								</tbody>	
 							</table>
 						</div>   
-                        
-                    <li><h4>grampa-trees-filtered.txt</h4>
-						<p>
-							A text file with the gene trees used for this GRAMPA run, after filtering by the group cap. One tree per line.
-                        </p>
-                    
-                    <li><h4>grampa.log</h4>
-						<p>
-							A log file containing run time information and a summary of the lowest scoring MUL-tree.
-                        </p>
-				</ol>
 
-				<div class="row">
-					<a name="options"></a>
-					<div class="col-1" id="jump_row">
-						<div id="jump_container">
-							<center>Jump to section:
-							<a class="jump_link" href="#install">Installation and Usage</a>
-							<a class="jump_link" href="#options">Options summary</a>
-							<a class="jump_link" href="#detail_options">Options details</a>
-							</center>
+					</br>
+					<div class="row">
+						<a name="detail_options"></a>
+						<div class="col-1" id="jump_row">
+							<div id="jump_container">
+								<center>Jump to section:
+								<a class="jump_link" href="#install">Installation and Usage</a>
+								<a class="jump_link" href="#options">Options summary</a>
+								<a class="jump_link" href="#detail_optoins">Options details</a>
+								</center>
+							</div>
 						</div>
 					</div>
-				</div>	
-
-				<h2>Options Table</h2>
-				<div class="readme_divider"></div></br>
-
-
-					<div class="table-container">
-						<table class="stripe-table">
-							<thead>
-								<tr>
-									<th>Option</th>
-									<th>Description</th>
-								</tr>
-							</thead>
-
-							<tbody>
-								<tr>
-									<td><code class="inline">-s</code></td>
-									<td>A file or string containing a bifurcating, rooted species tree in Newick format. This tree can either be singly-labeled or MUL.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">-g</code></td>
-									<td>A file containing one or more bifurcating, rooted, Newick formatted gene trees. Gene trees with polytomies are currently not supported
-										and will be automatically filtered from the analysis.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">-h1</code></td>
-									<td>A space separated list of nodes to search as the polyploid clade. If nothing is entered all nodes will be considered.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">-h2</code></td>
-									<td>A space separated list of nodes to search as possible parental lineages for all nodes specified with <code class="inline">-h1</code>. 
-										If nothing is entered all possible nodes for the current <b>h1</b> will be considered.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">-c</code></td>
-									<td>The maximum number of initial groups to consider for any gene tree. Default: 8, Max value: 18</td>
-								</tr>
-								<tr>
-									<td><code class="inline">-o</code></td>
-									<td>Output directory name. If the directory is not present, GRAMPA will created it for you.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">-f</code></td>
-									<td>By default, all output files created by GRAMPA will have the prefix '<b>grampa-</b>'. You can specify a different prefix 
-									with this option.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">-v</code></td>
-									<td>Control the amount of output printed to the screen. 0: print nothing. 1: print only some info at the start. 2: print all log info to screen. 
-									3 (default): print all log info to the screen as well as progress updates for certain steps.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">-p</code></td>
-									<td>The number of processes GRAMPA should use for reconciliations.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">--multree</code></td>
-									<td>Set this flag if your input species tree is a MUL-tree.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">--labeltree</code></td>
-									<td>The program will simply label your input species tree.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">--numtrees</code></td>
-									<td>The program will simply count the number of possible MUL-trees given <code class="inline">-s</code>. <code class="inline">-h1</code> and 
-									<code class="inline">-h2</code> may also be supplied.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">--buildmultrees</code></td>
-									<td>Build MUL-trees given <code class="inline">-s</code>, <code class="inline">-h1</code>, and <code class="inline">-h2</code> and write them 
-									to the log file.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">--checknums</code></td>
-									<td>If this flag is entered, the program will just calculate the number of groups per gene tree and exit. No reconciliations will be done.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">--st-only</code></td>
-									<td>Only do reconciliations to the input singly-labeled species tree.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">--no-st</code></td>
-									<td>Skip doing reconciliations to the input singly-labled species tree.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">--maps</code></td>
-									<td>Output the node maps for each reconciliation in addition to the scores. The maps will be placed in the detailed output file.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">--version</code></td>
-									<td>Print out version info and exit.</td>
-								</tr>
-								<tr>
-									<td><code class="inline">--tests</code></td>
-									<td>Run the tests script.</td>
-								</tr>
-							</tbody>	
-						</table>
-					</div>   
-
-				</br>
-				<div class="row">
-					<a name="detail_options"></a>
-					<div class="col-1" id="jump_row">
-						<div id="jump_container">
-							<center>Jump to section:
-							<a class="jump_link" href="#install">Installation and Usage</a>
-							<a class="jump_link" href="#options">Options summary</a>
-							<a class="jump_link" href="#detail_optoins">Options details</a>
-							</center>
-						</div>
-					</div>
-				</div>
 
 				<h2>Detailed options</h2>
 
-				<div class="readme_divider"></div></br>
+					<div class="readme_divider"></div></br>
 
 					<a name="-s"></a><h3><code class="inline">-s</code> : A rooted, Newick formatted species tree. This tree can be singly-labeled or MUL.</h3>
 						<ul>
@@ -416,13 +492,25 @@ html_template = """
 
 							<p>Entering a MUL-tree is the equivalent of entering a singly-labeled tree and specifying a single H1 and single H2 node. It represents a 
 								single scenario of polyploidy and can be used if you wish to count the number of duplications and losses on gene trees given that
-								scenario.</p>
-
-							<p><b>NOTE: If a MUL-tree is entered, the <code class="cb">--multree</code> flag must be set.</b></p>
-
+								scenario.
+                            </p>                          
+                            
 							<p>Example MUL-tree:</p>
 
 							<center><code class="cb">((((a,(x,(y,z))),b),(x,(y,z))),(c,d))</code></center>
+                            <br/>
+							<div id="msg-cont">
+								<div id="msg">
+									<div id="msg-banner">Note</div>
+									<div id="msg-text">
+										<p>
+											If a MUL-tree is entered, the <code class="inline">--multree</code> flag must be set.
+										</p>
+										<p></p>
+									</div>
+								</div>
+							</div>      
+                                                        
 						</ul>
 
 					<a name="-g"></a><h3><code class="inline">-g</code> : A file containing newick formatted gene trees.</h3>
@@ -515,7 +603,7 @@ html_template = """
 
 							<p>Then the command:</p>
 
-							<center><code class="cb">python grampa.py -s species.tree --labeltree</code></center>
+							<center><code class="cb">grampa -s species.tree --labeltree</code></center>
 
 							<p>Will simply print this to the screen as output:</p>
 
@@ -539,7 +627,7 @@ html_template = """
 
 							<p>Then the command:</p>
 
-							<center><code class="cb">python grampa.py -s species.tree -h1 "2" -h2 "4" -o multree_ex --buildmultrees</code></center>
+							<center><code class="cb">grampa -s species.tree -h1 "2" -h2 "4" -o multree_ex --buildmultrees</code></center>
 
 							<p>Will yield the following output in the main output file (<b>multree_ex/grampa-out.txt</b>):</p>
 

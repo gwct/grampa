@@ -41,5 +41,6 @@ def readFooter():
     from datetime import datetime
     footerfile = "../html-chunks/footer.html";
     now = datetime.now().strftime("%m/%d/%Y %H:%M:%S");
+    year = datetime.now().strftime("%Y");
     zone = subprocess.check_output("date +%Z").decode().strip();
-    return open(footerfile, "r").read().replace("DATETIME", now + " " + zone);
+    return open(footerfile, "r").read().replace("CURYEAR", year).replace("DATETIME", now + " " + zone);

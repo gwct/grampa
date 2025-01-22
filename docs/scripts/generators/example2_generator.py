@@ -27,21 +27,21 @@ html_template = """
 
 				<h4>Below are the inputs, commands, and outputs to do an analysis with GRAMPA to place a known WGD on a phylogeny. The inputs are based on
 					simulated data. For more detailed info on the simulations check
-					<a href="http://biorxiv.org/content/early/2017/03/21/058149" target="_blank">our paper</a>.</h4>
-
+					<a href="https://doi.org/10.1093/sysbio/syx044" target="_blank">our paper</a>.</h4>
+                
 				<div id="msg-cont">
 					<div id="msg">
-						<div id="msg-banner">Important!</div>
+						<div id="msg-banner">Note</div>
 						<div id="msg-text">
 							<p>
-								These examples were done with earlier versions of GRAMPA (<1.4.0) so some of the command line options and output formats
-								may have changed, but the general idea and results remain the same. See the <a href="readme.html">README</a> for up-to-date info
-								on options and formats.
+								The examples below call GRAMPA as <code class="inline">grampa</code> assuming it has been installed from bioconda. If you installed
+								from source, see <a href="readme.html#source">usage details in the README</a>.
 							</p>
 							<p></p>
 						</div>
 					</div>
-				</div>
+				</div>                
+                
 				<div class="sep-div-2"></div>  
 
 				<h3>Inputs</h3>
@@ -75,43 +75,45 @@ html_template = """
 				<h3>GRAMPA command</h3>
 
 				<p>Since we have some idea of the lineages involved in the polyploidization event, we would want to limit GRAMPA's search to those lineages
-					with the <code class="cb">-h1</code> and <code class="cb">-h2</code> search parameters.</p>
+					with the <code class="inline">-h1</code> and <code class="inline">-h2</code> search parameters.</p>
 
-				<center><pre class="cmd"><code>python grampa.py -s spec_tree_3a.tre -g gene_trees_3a.txt -h1 "x 1 2" -h2 "C D 5 6" -o ex2_output -f ex2_test -v 0</code></pre></center>
+				<center><pre class="cmd"><code>grampa -s spec_tree_3a.tre -g gene_trees_3a.txt -h1 "x 1 2" -h2 "C D 5 6" -o ex2_output -f ex2_test</code></pre></center>
 				
 				<p>Above we have specified <code class="inline">-h1</code> and <code class="inline">-h2</code> by using the node labels in the tree. Alternatively, we could specify
 					an equivalent <code class="inline">-h1</code> and <code class="inline">-h2</code> search by defining the labels based on the sets of tips that define them:</p>
 
-				<center><pre class="cmd"><code >python grampa.py -s spec_tree_3a.tre -g gene_trees_3a.txt -h1 "x x,y x,y,z" -h2 "C D A,x,y,z,B,C A,x,y,z,B,C,D" -o ex2_output -f ex2_test -v 0</code></pre></center>
+				<center><pre class="cmd"><code >grampa -s spec_tree_3a.tre -g gene_trees_3a.txt -h1 "x x,y x,y,z" -h2 "C D A,x,y,z,B,C A,x,y,z,B,C,D" -o ex2_output -f ex2_test</code></pre></center>
 				
 				<p>These two commands are equivalent. The second method is slightly more cumbersome, but does not require you to have internal labels on your tree.
 					Although, GRAMPA can easily add internal labels to your input tree with the <code class="inline">--labeltree</code> command.</p>
 
 				<h3>Outputs</h3>
 
-				<p>The above command would create the directory <b>ex2_output</b> with three output files</p>
+				<p>The above command would create the directory <code class="cb">ex2-output</code> with five output files</p>
 				<ul>
-					<li><a href="example_data/ex2/ex2_output/ex2_test_checknums.txt" download>ex2_test_checknums.txt</a></li>
-					<li><a href="example_data/ex2/ex2_output/ex2_test_det.txt" download>ex2_test_det.txt</a></li>
-					<li><a href="example_data/ex2/ex2_output/ex2_test_out.txt" download>ex2_test_out.txt</a></li>
+					<li><a href="example_data/ex2/ex2-output/ex2-test-checknums.txt" download>ex2-test-checknums.txt</a></li>
+					<li><a href="example_data/ex2/ex2-output/ex2-test-detailed.txt" download>ex2-test-detailed.txt</a></li>
+                    <li><a href="example_data/ex2/ex2-output/ex2-test-dup-counts.txt" download>ex2-test-dup-counts.txt</a></li>
+                    <li><a href="example_data/ex2/ex2-output/ex2-test.log" download>ex2-test.log</a></li>
+					<li><a href="example_data/ex2/ex2-output/ex2-test-scores.txt" download>ex2-test-scores.txt</a></li>
 				</ul>
-				<p>Since we are trying to determine the mode of polyploidy, we are interested in the <b>ex2_test_out.txt</b> file. This file contains
-					log info and the total reconciliation scores for each MUL-tree considered and looks something like this:</p>
+				<p>Since we are trying to determine the mode of polyploidy, we are interested in the <code class="cb">ex2-test-scores.txt</code> file. This file contains
+					the total reconciliation scores for each MUL-tree considered, sorted from lowest scoring tree to highest scoring tree, and looks something like this:</p>
 
-<pre><code># Tree #    H1 node H2 node Tree string Total score
-ST          ((((((x,y)&lt;1&gt;,z)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,C)&lt;5&gt;,D)&lt;6&gt; 8312
-MT-1    x   C   ((((((x+,y)&lt;1&gt;,z)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,(C,x*)&lt;5&gt;)&lt;6&gt;,D)&lt;7&gt;    9109
-MT-2    x   D   ((((((x+,y)&lt;1&gt;,z)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,C)&lt;5&gt;,(D,x*)&lt;6&gt;)&lt;7&gt;    8949
-MT-3    x   &lt;5&gt; (((((((x+,y)&lt;1&gt;,z)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,C)&lt;5&gt;,x*)&lt;6&gt;,D)&lt;7&gt;    9259
-MT-4    x   &lt;6&gt; (((((((x+,y)&lt;1&gt;,z)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,C)&lt;5&gt;,D)&lt;6&gt;,x*)&lt;7&gt;    9304
-.
-.
-.
-MT-11   &lt;2&gt; &lt;5&gt; (((((((x+,y+)&lt;1&gt;,z+)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,C)&lt;5&gt;,((x*,y*)&lt;6&gt;,z*)&lt;7&gt;)&lt;8&gt;,D)&lt;9&gt;  7598
-MT-12   &lt;2&gt; &lt;6&gt; (((((((x+,y+)&lt;1&gt;,z+)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,C)&lt;5&gt;,D)&lt;6&gt;,((x*,y*)&lt;7&gt;,z*)&lt;8&gt;)&lt;9&gt;  8845
-# ---------
-The MUL-tree with the minimum parsimony score is MT-9:  ((((((x+,y+)&lt;1&gt;,z+)&lt;2&gt;,B)&lt;3&gt;,A)&lt;4&gt;,(C,((x*,y*)&lt;5&gt;,z*)&lt;6&gt;)&lt;7&gt;)&lt;8&gt;,D)&lt;9&gt;
-Score = 5242
+<pre><code>mul.tree        h1.node h2.node score   labeled.tree
+9       <2>     C       5242    ((((((x+,y+)<1>,z+)<2>,B)<3>,A)<4>,(C,((x*,y*)<5>,z*)<6>)<7>)<8>,D)<9>
+11      <2>     <5>     7598    (((((((x+,y+)<1>,z+)<2>,B)<3>,A)<4>,C)<5>,((x*,y*)<6>,z*)<7>)<8>,D)<9>
+0       NA      NA      8312    ((((((x,y)<1>,z)<2>,B)<3>,A)<4>,C)<5>,D)<6>
+5       <1>     C       8506    ((((((x+,y+)<1>,z)<2>,B)<3>,A)<4>,(C,(x*,y*)<5>)<6>)<7>,D)<8>
+10      <2>     D       8618    ((((((x+,y+)<1>,z+)<2>,B)<3>,A)<4>,C)<5>,(D,((x*,y*)<6>,z*)<7>)<8>)<9>
+12      <2>     <6>     8845    (((((((x+,y+)<1>,z+)<2>,B)<3>,A)<4>,C)<5>,D)<6>,((x*,y*)<7>,z*)<8>)<9>
+6       <1>     D       8854    ((((((x+,y+)<1>,z)<2>,B)<3>,A)<4>,C)<5>,(D,(x*,y*)<6>)<7>)<8>
+7       <1>     <5>     8939    (((((((x+,y+)<1>,z)<2>,B)<3>,A)<4>,C)<5>,(x*,y*)<6>)<7>,D)<8>
+2       x       D       8949    ((((((x+,y)<1>,z)<2>,B)<3>,A)<4>,C)<5>,(D,x*)<6>)<7>
+1       x       C       9109    ((((((x+,y)<1>,z)<2>,B)<3>,A)<4>,(C,x*)<5>)<6>,D)<7>
+8       <1>     <6>     9202    (((((((x+,y+)<1>,z)<2>,B)<3>,A)<4>,C)<5>,D)<6>,(x*,y*)<7>)<8>
+3       x       <5>     9259    (((((((x+,y)<1>,z)<2>,B)<3>,A)<4>,C)<5>,x*)<6>,D)<7>
+4       x       <6>     9304    (((((((x+,y)<1>,z)<2>,B)<3>,A)<4>,C)<5>,D)<6>,x*)<7>
 </code></pre>
 
 				<p>GRAMPA tells us MUL-tree 9 is the lowest scoring tree:</p>
