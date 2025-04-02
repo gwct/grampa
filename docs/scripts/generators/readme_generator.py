@@ -151,8 +151,10 @@ html_template = """
 						<li>A file containing one or more Newick formatted <b>rooted</b> gene trees (one tree per line) (<code class="inline">-g</code>).</li>
 					</ol>
 
-					<p>Important: the tip labels of the gene tree MUST be formatted such that they end with _[species label], where [species label] corresponds
-						to a tip label in the species tree.</p>
+					<center><h4>
+                    	Important: the tip labels of the gene tree MUST be formatted as [unique gene ID]_[species label], where [species label] corresponds
+						to a tip label in the species tree.
+                    </h4></center>
 
 					<a name="output"></a><h3>Output</h3>
 
@@ -516,11 +518,22 @@ html_template = """
 					<a name="-g"></a><h3><code class="inline">-g</code> : A file containing newick formatted gene trees.</h3>
 
 						<ul>
-							<p>This file should contain one or more bifurcating, Newick formatted gene trees, with one tree per line in the file. Currentky, gene trees with
+							<p>This file should contain one or more bifurcating, Newick formatted gene trees, with one tree per line in the file. Currently, gene trees with
 								unresolved nodes (polytomies) are not supported as they falsely increase the number of losses counted in that tree.</p>
-								
-							<p><b>The tip labels in the gene trees must end with _[species label]</b> where [species label] matches a tip label in the species tree
-								This is necessary so GRAMPA can initialize the mappings correctly.</p>
+                                
+							<p>
+								<center><h4>The tip labels in the gene trees must be unique and must be formatted as [unique gene id]_[species label]</h4></center>
+                                 
+                                [species label] should match a tip label in the species tree. The [unique gene id] must be unique even if the genes are from the same species.
+                                This is necessary so GRAMPA can initialize the mappings correctly.
+                        	</p>
+                             
+                            <p>
+                             	For example, if you have two or more labels that read "Gene1_Species1", only one will be correctly read and the tree will likely be filtered out. 
+                                Instead, for each paralog/homoeolog, use a different unique gene id. For example, "Gene1_Species1", "Gene2_Species1" and so on. It is likely your 
+                                annotations already have unique gene IDs for each paralog/homoeolog, so	you can just use those.								
+							</p>
+
 
 							<p>Alternatively, if you wish to reconcile to only a single gene tree, you can simply paste the tree string into the command line.</p>
 						</ul>
