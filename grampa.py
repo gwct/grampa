@@ -110,7 +110,7 @@ def grampa(globs):
 
     if skipped_lines:
         for line_num in skipped_lines:
-            CORE.printWrite(globs['logfilename'], globs['log-v'], "# WARNING: Line " + str(line_num) + " could not be parsed as a tree and was skipped!");
+            CORE.printWrite(globs['logfilename'], globs['log-v'], "# WARNING: Gene tree on line " + str(line_num) + ": " + str(globs['gt-filtered'][line_num][0]));
             globs['warnings'] += 1;
 
     ###########################

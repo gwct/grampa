@@ -23,8 +23,18 @@ def readGeneTree(gene_tree_input):
 	num_tips = len([n for n in ginfo if ginfo[n][2] == 'tip']);
 	num_internal = len([n for n in ginfo if ginfo[n][2] != 'tip']);
 
-	if num_internal != (num_tips - 1):
-		gene_tree = ["# This line may not contain a tree, or if so it may be unrooted or contain a polytomy -- Filtering."];
+	non_bifurcating = RT.getPolytomies(ginfo);
+	if non_bifurcating != []:
+		root = RT.getRoot(ginfo);
+		filter_msg = "Tree contains non-bifurcating nodes";
+
+		if root in non_bifurcating:
+			filter_msg += ", including the parsed root (it may be unrooted)";
+
+		gene_tree = [filter_msg + " -- Filtering."];
+
+	#if num_internal != (num_tips - 1):
+		#gene_tree = ["# This line may not contain a tree, or if so it may be unrooted or contain a polytomy -- Filtering."];
 		return gene_num, gene_tree, True;
 	# Another check for gene tree parsing and formatting errors.
 

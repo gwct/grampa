@@ -134,12 +134,32 @@ def getCladeNode(c_spec, c_treedict):
 
 #############################################################################
 
+def getRoot(tree_dict):
+# This function returns the root node of the tree.
+	for node in tree_dict:
+		if tree_dict[node][2] == 'root':
+			return node;
+
+#############################################################################
+
 def pathToRoot(node, tree_dict):
 	ptr = [node];
 	while tree_dict[node][2] != 'root':
 		ptr.append(tree_dict[node][1]);
 		node = tree_dict[node][1];
 	return ptr;
+
+#############################################################################
+
+def getPolytomies(tree_dict):
+# This function returns a list of all polytomies in the tree.
+	polytomies = [];
+	for node in tree_dict:
+		if tree_dict[node][2] != 'tip':
+			desc = getDesc(node, tree_dict);
+			if len(desc) > 2:
+				polytomies.append(node);
+	return polytomies;
 
 #############################################################################
 
