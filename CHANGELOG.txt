@@ -1,3 +1,7 @@
+2025.04.05
+- Added more descriptive messages when trees are filtered, this required adding some tree functions (see below)
+- Added the getRoot() and getPolytomies() functions in recontree
+
 2025.01.22
 - Fixed bug when reading a MUL-tree with `--multree`
 
