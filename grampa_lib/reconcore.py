@@ -68,18 +68,22 @@ def getTime():
 
 #############################################################################
 
-def printWrite(o_name, v, o_line1, o_line2="", pad=0):
-#Function to print a string AND write it to the file.
+def printWrite(o_name, v, o_line1, o_line2="", pad=0, to_stderr=False):
+# Function to print a string AND write it to the file.
+    if to_stderr:
+        v = 2;
     if o_line2 == "":
         outline = o_line1;
     else:
         outline = o_line1 + "."*(pad-len(o_line1)) + o_line2;
-    if v in [2,3]:
-        print(outline);
+    if v in [2, 3]:
+        if to_stderr:
+            print(outline, file=sys.stderr);
+        else:
+            print(outline);
     if v != -1:
-        f = open(o_name, "a");
-        f.write(outline + "\n");
-        f.close();
+        with open(o_name, "a") as f:
+            f.write(outline + "\n");
 
 #############################################################################
 
@@ -200,20 +204,20 @@ def errorOut(errnum, errmsg, globs):
     fullmsg = "**Error " + str(errnum) + ": " + errmsg;
     border = "-" * len(fullmsg);
     fullstr = "\n" + border + "\n" + fullmsg + "\n" + border + "\n"
-    printWrite(globs['logfilename'], globs['log-v'], "\n" + border + "\n" + fullmsg + "\n" + border + "\n");
+    printWrite(globs['logfilename'], globs['log-v'], "\n" + border + "\n" + fullmsg + "\n" + border + "\n", to_stderr=True);
     # Format and print the error message
 
     if globs['warnings'] != 0:
         warnmsg = "**Additionally there were " + str(globs['warnings']) + " warnings. Check the log file for more info";
         warnborder = border = "-" * len(warnmsg);
-        printWrite(globs['logfilename'], globs['log-v'], "\n" + warnborder + "\n" + warnmsg + "\n" + warnborder + "\n");
+        printWrite(globs['logfilename'], globs['log-v'], "\n" + warnborder + "\n" + warnmsg + "\n" + warnborder + "\n", to_stderr=True);
     # Format and print information about warnings if there are any
 
     if globs['endprog']:
         globs['exit-code'] = 1;
         endProg(globs);
     else:
-        printWrite(globs['logfilename'], globs['log-v'], "\nScript call: " + " ".join(sys.argv));
+        printWrite(globs['logfilename'], globs['log-v'], "\nScript call: " + " ".join(sys.argv), to_stderr=True);
         sys.exit(1);
     # Exit the program
 
@@ -271,15 +275,17 @@ def osCheck(test_cmd):
 def testPrep():
 # Prepares the test command and calls the tests script.
     t_path = os.path.join(os.path.dirname(__file__), "tests.py");
-    pyver = sys.version[:3];
-    try:
-        python_cmd = "python" + pyver
-        test_cmd = [python_cmd, t_path, python_cmd];
-        subprocess.call(osCheck(test_cmd));
-    except OSError:
-        python_cmd = "python"
-        test_cmd = [python_cmd, t_path, python_cmd];
-        subprocess.call(osCheck(test_cmd));
+    test_cmd = [sys.executable, t_path, sys.executable];
+    subprocess.call(osCheck(test_cmd));
+    # pyver = sys.version[:3];
+    # try:
+    #     python_cmd = "python" + pyver
+    #     test_cmd = [python_cmd, t_path, python_cmd];
+    #     subprocess.call(osCheck(test_cmd));
+    # except OSError:
+    #     python_cmd = "python"
+    #     test_cmd = [python_cmd, t_path, python_cmd];
+    #     subprocess.call(osCheck(test_cmd));
 
 
 #############################################################################

@@ -1,4 +1,10 @@
-2025.04.05
+2025.04.06, 1.4.3
+- Removed old global_vars library (to legacy folder)
+- Refactored test script, which required changing some functions so they wrote to stderr instead of stdout
+- Added bioconda-test-data folder and archive in data/
+- Added bioconda_test.sh script
+
+2025.04.05, 1.4.2
 - Added more descriptive messages when trees are filtered, this required adding some tree functions (see below)
 - Added the getRoot() and getPolytomies() functions in recontree
 

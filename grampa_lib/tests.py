@@ -1,78 +1,113 @@
 import sys
 import os
 import subprocess
+import shutil
 import grampa_lib.reconcore as RC
 
-###############################
+def run_test(args, output_dir):
+    """
+    Run a test using subprocess and capture stderr output.
+    Returns an empty string if no error occurred, or the error message if one did.
+    Also removes the output directory if it exists.
+    """
+    try:
+        #print(f"Running command: {' '.join(args)}")
+        result = subprocess.run(args, capture_output=True, text=True, check=False);
+        error_message = result.stderr.strip();
+        #print(result.stderr)
+    except Exception as e:
+        error_message = str(e);
+    # Run the command and capture the output
+    
+    if os.path.exists(output_dir):
+        shutil.rmtree(output_dir);
+    # Remove the output directory after the test command
+    
+    return error_message;
 
-def catchErr(test, err_dict, p, t_file):
-	err = open(t_file, "r").read();
-	if err != "":
-		errors[test] = err;
-		RC.printWrite(outfilename, 1, "Failed!");
-	else:
-		RC.printWrite(outfilename, 1, "OK");
-		p += 1;
-	return err_dict, p;
+def main():
+    python_cmd = sys.argv[1];
+    grampath = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."));
+    grampath_script = os.path.join(grampath, "grampa.py");
+    # Get the absolute path of the grampa.py script, which is located in the parent directory of the current script
 
-###############################
+    test_base_dir = "bioconda-test-data";
+    test_dir = os.path.join(grampath, test_base_dir); # biocconda test dir
+    if not os.path.exists(test_dir):
+        test_dir = os.path.join(grampath, "data", test_base_dir); # local test dir
+    if not os.path.exists(test_dir):
+        print(f"Error: Test directory '{test_dir}' not found.");
+        sys.exit(1);
+    # Check if the test directory exists, and if not, print an error message and exit
+    # One for bioconda, one for local
 
-start = RC.getLogTime();
+    grampath_s = os.path.join(test_dir, "manual_species_tree.tre");
+    grampath_g = os.path.join(test_dir, "manual_gene_trees.txt");
+    # Get the paths to the species tree and gene trees files
 
-python_cmd = sys.argv[1];
-grampath = os.path.dirname(__file__)[:-10];
-grampath_script = os.path.join(grampath, "grampa.py");
-grampath_s = os.path.join(grampath, "data", "manual_species_tree.tre");
-grampath_g = os.path.join(grampath, "data", "manual_gene_trees.txt");
-grampa_out = os.path.join(grampath, "tests_out_3akjg4z");
-outfilename = os.path.join(grampath, "tests_log_" + start + ".txt");
-#RC.filePrep(outfilename);
+    grampa_out = os.path.join(grampath, "grampa-tests-out-3akjg4z");
+    # Create a temporary output directory for the tests
+    
+    print("\nRUNNING GRAMPA TESTS\n");
+    
+    tests = [
+        {
+            "display": "--labeltree test",
+            "args": [python_cmd, grampath_script, "-s", grampath_s, "-v", "0", "--labeltree"]
+        },
+        {
+            "display": "--buildmultrees test",
+            "args": [python_cmd, grampath_script, "-s", grampath_s, "-g", grampath_g,
+                    "-o", grampa_out, "-v", "0", "--buildmultrees"]
+        },
+        {
+            "display": "--checknum test",
+            "args": [python_cmd, grampath_script, "-s", grampath_s, "-g", grampath_g,
+                    "-o", grampa_out, "-v", "0", "--checknums"]
+        },
+        {
+            "display": "main test",
+            "args": [python_cmd, grampath_script, "-s", grampath_s, "-g", grampath_g,
+                    "-o", grampa_out, "-v", "0", "--maps"]
+        }
+    ];
+    # List of tests to run, each with a display name and command line arguments
+    # The display name is used for printing the test results
+    # The command line arguments are passed to the subprocess call
+    # The output directory is created and removed for each test
+    
+    errors = {};
+    numpass = 0;
+    fixed_width = 30;  # Adjust this width to get the desired number of dots
+    
+    for idx, test in enumerate(tests, start=1):
+        test_desc = f"{idx}: {test['display']}"
+        padded_desc = f"{test_desc:.<{fixed_width}}"
+        # Print the description immediately without newline
+        sys.stdout.write(padded_desc)
+        sys.stdout.flush()
+        # Run the test
+        error_message = run_test(test["args"], grampa_out)
+        result_str = "OK" if not error_message else "FAILED"
+        # Print the result on the same line
+        print(result_str)
+        errors[test['display']] = error_message
+        if not error_message:
+            numpass += 1
 
-with open(outfilename, "w") as outfile:
-	outfile.write("");
+    if numpass != len(tests):
+        print("\nSome tests failed. Please review the error details below:\n")
+        for test in tests:
+            if errors[test["display"]]:
+                print(f"{test['display']} failed with the following error:")
+                print(errors[test["display"]])
+                print()
+                print("+++")
+        sys.exit(1);
+    # If any test failed, print the error messages and exit with a non-zero status
+    else:
+        print("\nDone! All tests pass!\n")
+    # Otherwise, print a success message
 
-tmpfile = "tests_" + start + ".tmp";
-
-RC.printWrite(outfilename, 2, "\nRUNNING GRAMPA TESTS");
-RC.printWrite(outfilename, 2, start + "\n");
-
-tests = ["labeltree", "multree", "checknum", "main"]
-errors = {};
-for t in tests:
-	errors[t] = "";
-numpass = 0;
-
-RC.printWrite(outfilename, 2, "1: --labeltree test.........");
-os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -v 0 --labeltree 2> " + tmpfile);
-errors, numpass = catchErr("labeltree", errors, numpass, tmpfile);
-os.system("rm -rf " + grampa_out);
-
-RC.printWrite(outfilename, 2, "2: --buildmultrees test......");
-os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -g " + grampath_g + " -o " + grampa_out + " -v 0 --buildmultrees 2> " + tmpfile);
-errors, numpass = catchErr("multree", errors, numpass, tmpfile);
-os.system("rm -rf " + grampa_out);
-
-RC.printWrite(outfilename, 2, "3: --checknum test..........");
-os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -g " + grampath_g + " -o " + grampa_out + " -v 0 --checknums 2> " + tmpfile);
-errors, numpass = catchErr("checknum", errors, numpass, tmpfile);
-os.system("rm -rf " + grampa_out);
-
-RC.printWrite(outfilename, 2, "4: MAIN test................");
-os.system(python_cmd + " " + grampath_script + " -s " + grampath_s + " -g " + grampath_g + " -o " + grampa_out + " -v 0 --maps 2> " + tmpfile);
-errors, numpass = catchErr("main", errors, numpass, tmpfile);
-os.system("rm -rf " + grampa_out);
-
-if numpass == 4:
-	RC.printWrite(outfilename, 2, "\nDone! All tests pass!\n");
-else:
-	RC.printWrite(outfilename, 2, "\n" + str(4 - numpass) + " tests failed!");
-	print("Check the " + outfilename + " file for more info!");
-	RC.printWrite(outfilename, 2, "\n");
-	outfile = open(outfilename, "a");
-	for test in tests:
-		if errors[test] != "":
-			outfile.write(test + " failed with the following error:\n");
-			outfile.write(errors[test] + "\n\n");
-	outfile.close();
-
-os.system("rm " + tmpfile);
+if __name__ == '__main__':
+    main()
