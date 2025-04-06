@@ -22,11 +22,11 @@ unzip bioconda-test-data.zip
 echo " ** TEST DATA DOWNLOAD OK."
 
 echo " ** BEGIN GRAMPA TEST."
-if ! python grampa.py --tests; then
+if ! python grampa.py --tests; then # local version of command
   echo " ** ERROR: GRAMPA tests failed." >&2
   exit 1
 fi
 echo " ** GRAMPA TEST OK."
 
-rm bioconda-test-data.zip
-rm -rf bioconda-test-data
+rm bioconda-test-data.zip # for local testing
+rm -rf bioconda-test-data # for local testing
