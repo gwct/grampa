@@ -13,7 +13,7 @@ set -x
 
 echo " ** DOWNLOADING TEST DATA."
 
-if ! wget -q "https://github.com/gwct/grampa/raw/main/bioconda-test-data.zip"; then
+if ! wget -q "https://github.com/gwct/grampa/raw/main/data/bioconda-test-data.zip"; then
     echo "Failed to download $file" >&2
 exit 1
 fi
@@ -27,3 +27,6 @@ if ! python grampa.py --tests; then
   exit 1
 fi
 echo " ** GRAMPA TEST OK."
+
+rm bioconda-test-data.zip
+rm -rf bioconda-test-data
