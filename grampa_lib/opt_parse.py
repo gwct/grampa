@@ -51,7 +51,7 @@ def optParse(globs):
     parser.add_argument("--appendlog", dest="append_log_flag", help="Set this to keep the old log file even if --overwrite is specified. New log information will instead be appended to the previous log file.", action="store_true", default=False);
     # User options
     
-    parser.add_argument("--tests", dest="test_opt", help="Use 'grampa.py --tests' the first time you run grampa to run through all the options with pre-set input files.", action="store_true");
+    parser.add_argument("--tests", dest="test_opt", help="Use 'grampa.py --tests' the first time you run grampa to run through all the options with pre-set input files.", nargs="?", const=True, choices=["bioconda"]);
     # Test script option
 
     #parser.add_argument("--orthologies", dest="orth_opt", help=argparse.SUPPRESS, action="store_true");
@@ -92,7 +92,7 @@ def optParse(globs):
     # Parse the --norun option to just parse input info and exit
     
     if args.test_opt:
-        RC.testPrep();
+        RC.testPrep(args.test_opt);
         sys.exit();
     # Call of the tests script if --tests is set.
 

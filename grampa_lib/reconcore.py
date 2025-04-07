@@ -272,10 +272,12 @@ def osCheck(test_cmd):
 
 #############################################################################
 
-def testPrep():
+def testPrep(test_opt):
 # Prepares the test command and calls the tests script.
     t_path = os.path.join(os.path.dirname(__file__), "tests.py");
     test_cmd = [sys.executable, t_path, sys.executable];
+    if test_opt == "bioconda":
+        test_cmd += ["--bioconda"];
     subprocess.call(osCheck(test_cmd));
     # pyver = sys.version[:3];
     # try:

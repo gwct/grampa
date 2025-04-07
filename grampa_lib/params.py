@@ -26,8 +26,8 @@ class StrictDict(dict):
 
 def init():
     globs_init = {
-        'version' : '1.4.3',
-        'releasedate' : "April 06,2025",
+        'version' : '1.4.4',
+        'releasedate' : "April 07,2025",
         'authors' : "Gregg Thomas, S. Hussain Ather, Matthew Hahn",
         'doi' : 'https://doi.org/10.1093/sysbio/syx044',
         'http' : 'https://gwct.github.io/grampa/',

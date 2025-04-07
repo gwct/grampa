@@ -11,7 +11,7 @@ def run_test(args, output_dir):
     Also removes the output directory if it exists.
     """
     try:
-        #print(f"Running command: {' '.join(args)}")
+        print(f"Running command: {' '.join(args)}")
         result = subprocess.run(args, capture_output=True, text=True, check=False);
         error_message = result.stderr.strip();
         #print(result.stderr)
@@ -25,21 +25,26 @@ def run_test(args, output_dir):
     
     return error_message;
 
-def main():
-    python_cmd = sys.argv[1];
-    grampath = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."));
-    grampath_script = os.path.join(grampath, "grampa.py");
-    # Get the absolute path of the grampa.py script, which is located in the parent directory of the current script
+def main(test_opt):
+    if test_opt == "bioconda":
+        python_cmd = "";
+        grampath = ".";
+        grampath_script = "grampa";
+        test_dir = "bioconda-test-data";
+    # biconda tests
+    else:
+        python_cmd = sys.argv[1];
+        grampath = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."));
+        grampath_script = os.path.join(grampath, "grampa.py");
+        # Get the absolute path of the grampa.py script, which is located in the parent directory of the current script
 
-    test_base_dir = "bioconda-test-data";
-    test_dir = os.path.join(grampath, test_base_dir); # biocconda test dir
+        test_dir = os.path.join(grampath, "data", "bioconda-test-data");
+        # Get the path to the test directory, which is located in the data subdirectory of the grampa directory
+    # Local tests
+
     if not os.path.exists(test_dir):
-        test_dir = os.path.join(grampath, "data", test_base_dir); # local test dir
-    if not os.path.exists(test_dir):
-        print(f"Error: Test directory '{test_dir}' not found.");
+        print(f"Error: Test directory '{test_dir}' not found.", file=sys.stderr);
         sys.exit(1);
-    # Check if the test directory exists, and if not, print an error message and exit
-    # One for bioconda, one for local
 
     grampath_s = os.path.join(test_dir, "manual_species_tree.tre");
     grampath_g = os.path.join(test_dir, "manual_gene_trees.txt");
@@ -76,6 +81,12 @@ def main():
     # The command line arguments are passed to the subprocess call
     # The output directory is created and removed for each test
     
+    if test_opt == "bioconda":
+        for i in range(len(tests)):
+            tests[i]["args"].pop(0);
+    # Remove the first argument (python_cmd) from the command line arguments
+    # This is necessary for the bioconda tests, where the script is run directly
+
     errors = {};
     numpass = 0;
     fixed_width = 30;  # Adjust this width to get the desired number of dots
@@ -110,4 +121,7 @@ def main():
     # Otherwise, print a success message
 
 if __name__ == '__main__':
-    main()
+    test_opt = "";
+    if "--bioconda" in sys.argv:
+        test_opt = "bioconda";
+    main(test_opt);

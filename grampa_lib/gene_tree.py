@@ -20,8 +20,8 @@ def readGeneTree(gene_tree_input):
 		return gene_num, gene_tree, True;
 	# Tries the gene tree parsing code and if anything goes wrong, catches exception and filters the tree.
 
-	num_tips = len([n for n in ginfo if ginfo[n][2] == 'tip']);
-	num_internal = len([n for n in ginfo if ginfo[n][2] != 'tip']);
+	# num_tips = len([n for n in ginfo if ginfo[n][2] == 'tip']);
+	# num_internal = len([n for n in ginfo if ginfo[n][2] != 'tip']);
 
 	non_bifurcating = RT.getPolytomies(ginfo);
 	if non_bifurcating != []:

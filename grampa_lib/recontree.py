@@ -157,7 +157,7 @@ def getPolytomies(tree_dict):
 	for node in tree_dict:
 		if tree_dict[node][2] != 'tip':
 			desc = getDesc(node, tree_dict);
-			if len(desc) > 2:
+			if len(desc) != 2:
 				polytomies.append(node);
 	return polytomies;
 

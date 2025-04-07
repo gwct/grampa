@@ -36,6 +36,17 @@ def readSpecTree(globs, label_opt=False):
 		RC.errorOut("ST4", "Error reading species tree!");
 	# Reading the species tree file.
 
+	non_bifurcating = RT.getPolytomies(globs['st']);
+	if non_bifurcating != []:
+		root = RT.getRoot(globs['st']);
+		st_err_msg = "Species tree contains non-bifurcating nodes";
+
+		if root in non_bifurcating:
+			st_err_msg += ", including the parsed root (it may be unrooted)";
+
+		RC.errorOut("ST5", st_err_msg, globs);
+	# Check for polytomies in the species tree. If there are any, check if the root is one of them.
+
 	if label_opt:
 		print();
 		print("# The input species tree with internal nodes labeled:");

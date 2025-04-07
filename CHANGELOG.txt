@@ -1,3 +1,7 @@
+2025.04.07, 1.4.4
+- Added "bioconda" as an accepted argument for the --tests option
+- Added a check for non-bifurcating nodes in the species tree
+
 2025.04.06, 1.4.3
 - Removed old global_vars library (to legacy folder)
 - Refactored test script, which required changing some functions so they wrote to stderr instead of stdout
