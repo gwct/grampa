@@ -92,8 +92,8 @@ def optParse(globs):
     # Parse the --norun option to just parse input info and exit
     
     if args.test_opt:
-        RC.testPrep(args.test_opt);
-        sys.exit();
+        test_exit_code = RC.testPrep(args.test_opt);
+        sys.exit(test_exit_code);
     # Call of the tests script if --tests is set.
 
     ## Check run mode options.

@@ -1,5 +1,5 @@
 2025.04.07, 1.4.4
-- Added "bioconda" as an accepted argument for the --tests option
+- Added "bioconda" as an accepted argument for the --tests option so the tests work when building on bioconda
 - Added a check for non-bifurcating nodes in the species tree
 
 2025.04.06, 1.4.3

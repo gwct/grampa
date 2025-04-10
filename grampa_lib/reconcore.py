@@ -278,7 +278,8 @@ def testPrep(test_opt):
     test_cmd = [sys.executable, t_path, sys.executable];
     if test_opt == "bioconda":
         test_cmd += ["--bioconda"];
-    subprocess.call(osCheck(test_cmd));
+    test_exit_code = subprocess.call(osCheck(test_cmd));
+    return test_exit_code;
     # pyver = sys.version[:3];
     # try:
     #     python_cmd = "python" + pyver

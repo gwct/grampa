@@ -11,7 +11,7 @@ def run_test(args, output_dir):
     Also removes the output directory if it exists.
     """
     try:
-        print(f"Running command: {' '.join(args)}")
+        #print(f"Running command: {' '.join(args)}")
         result = subprocess.run(args, capture_output=True, text=True, check=False);
         error_message = result.stderr.strip();
         #print(result.stderr)
