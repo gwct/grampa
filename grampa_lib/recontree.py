@@ -53,8 +53,8 @@ def getBranchLength(bltree, spec_label):
 def remBranchLength(treestring):
 # Removes branch lengths from a tree.
 
-	treestring = re.sub('[)][\d\w<>.eE_:-]+', ')', treestring);
-	treestring = re.sub(':[\d.eE-]+', '', treestring);
+	treestring = re.sub(r'[)][\d\w<>.eE_:-]+', ')', treestring);
+	treestring = re.sub(r':[\d.eE-]+', '', treestring);
 	# treestring = re.sub('[)][\d.eE-]+:[\d.eE-]+', ')', treestring);
 	# treestring = re.sub(':[\d.eE-]+', '', treestring);
 	# treestring = re.sub('<[\d]+>', '', treestring);
@@ -320,13 +320,13 @@ def treeParse(tree, debug=0):
 		elif node + ":" in new_tree:
 		# If the node is followed immediately by a : then there is a branch length, but no support, to collect
 			supports[node] = "NA";
-			cur_bl = re.findall(node + ":[\d.Ee-]+", new_tree);
+			cur_bl = re.findall(node + r":[\d.Ee-]+", new_tree);
 			cur_bl = cur_bl[0].replace(node + ":", "");
 			bl[node] = cur_bl;
 
 		else:
 		# Otherwise we must collect both support and branch length or just support
-			cur_bsl = re.findall(node + "[\d*+.Ee-]+:[\d.Ee-]+", new_tree);
+			cur_bsl = re.findall(node + r"[\d*+.Ee-]+:[\d.Ee-]+", new_tree);
 			if cur_bsl:
 			# If the pattern above is found then the node has both support and branch length
 				cur_bs = cur_bsl[0].replace(node, "");
@@ -336,7 +336,7 @@ def treeParse(tree, debug=0):
 				bl[node] = cur_bl;
 			else:
 			# If it is not found then the branch only has a support label
-				cur_bs = re.findall(node + "[\w*+.<> -]+", new_tree);
+				cur_bs = re.findall(node + r"[\w*+.<> -]+", new_tree);
 				supports[node] = cur_bs;
 				bl[node] = "NA";
 
@@ -347,11 +347,11 @@ def treeParse(tree, debug=0):
 
 		match_node = node;
 		if "*" in node:
-			match_node = match_node.replace("*", "\*");
+			match_node = match_node.replace("*", r"\*");
 		if "^" in node:
-			match_node = match_node.replace("^", "\^");
+			match_node = match_node.replace("^", r"\^");
 		if "+" in node:
-			match_node = match_node.replace("+", "\+");
+			match_node = match_node.replace("+", r"\+");
 
 		anc_match = re.findall('[(),]' + match_node + '[(),]', new_tree);
 		anc_tree = new_tree[new_tree.index(anc_match[0]):][1:];

@@ -50,6 +50,6 @@ def detailedOut(gt, ginfo, maps, dups, losses):
 		if "*" not in cur_map:
 			cur_map += "+";
 		node_string = node + "[" + cur_map + "-" + str(dups[node]) + "]";
-		gt = re.sub("(?<![\[])" + node, node_string, gt);	
+		gt = re.sub(r"(?<![\[])" + node, node_string, gt);	
 
 	return gt;
